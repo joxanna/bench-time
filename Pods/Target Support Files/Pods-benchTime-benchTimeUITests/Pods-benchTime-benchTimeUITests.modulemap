@@ -1,0 +1,6 @@
+framework module Pods_benchTime_benchTimeUITests {
+  umbrella header "Pods-benchTime-benchTimeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module Pods_benchTime {
+  umbrella header "Pods-benchTime-umbrella.h"
+
+  export *
+  module * { export * }
+}

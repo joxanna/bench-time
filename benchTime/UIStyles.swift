@@ -1,0 +1,31 @@
+//
+//  UIStyles.swift
+//  benchTime
+//
+//  Created by Joanna Xue on 21/5/2024.
+//
+
+import Foundation
+import SwiftUI
+
+// Define a struct for global UI styles
+struct UIStyles {
+    
+    // Define global colors
+    struct Colors {
+//        static let primaryColor = Color(hex: "#3498db")
+//        static let secondaryColor = Color(hex: "#2ecc71")
+//        static let backgroundColor = Color(hex: "#ecf0f1")
+//        static let textColor = Color(hex: "#2c3e50")
+        static let lightGray = Color(red: 0.89, green: 0.89, blue: 0.89)
+        static let red = Color(red: 0.812, green: 0.259, blue: 0.259)
+        static let theme = UIColor.blue
+    }
+    
+    // Define global text styles
+    struct TextStyles {
+        static let title = Font.system(size: 24, weight: .bold, design: .default)
+        static let body = Font.system(size: 16, weight: .regular, design: .default)
+        static let caption = Font.system(size: 12, weight: .light, design: .default)
+    }
+}
