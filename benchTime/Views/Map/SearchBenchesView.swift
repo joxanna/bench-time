@@ -13,12 +13,13 @@ struct SearchBenchesView: View {
     @ObservedObject var benchQueryManager = BenchQueryManager.shared
     @StateObject private var locationManager = LocationManager.shared
     @State private var selectedAnnotation: MKAnnotation?
+    @State private var isSelected: Bool = false
 
     var body: some View {
         VStack {
             MapView(mapViewModel: benchQueryManager.mapViewModel, onRegionChange: { region in
                 benchQueryManager.fetchBenches(for: region)
-            }, selectedAnnotation: $selectedAnnotation)
+            }, selectedAnnotation: $selectedAnnotation, isSelected: $isSelected)
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 locationManager.requestLocation()
@@ -27,24 +28,19 @@ struct SearchBenchesView: View {
                 if let newLocation = newLocation {
                     let region = MKCoordinateRegion(
                         center: newLocation.coordinate,
-                        latitudinalMeters: 500,
-                        longitudinalMeters: 500)
+                        latitudinalMeters: 300,
+                        longitudinalMeters: 300)
                     benchQueryManager.mapViewModel.region = region
                     benchQueryManager.fetchBenches(for: region)
                 }
             }
-            
-//            if let annotation = selectedAnnotation {
-//                PullUpContainerView(annotationTitle: (annotation.title ?? "")!, annotationSubtitle: (annotation.subtitle ?? "")!)
-//                    .transition(.move(edge: .bottom))
-//            } else {
-//                Text("No annotation selected")
-//                    .foregroundColor(.gray)
-//                    .padding()
-//            }
-            
             Spacer()
         }
+        .sheet(isPresented: $isSelected) {
+            LargeModalView(title: "Show reviews", contentView: BenchReviewsView()) {
+                print("Refreshing...")
+            }
+        }
+        
     }
 }
-

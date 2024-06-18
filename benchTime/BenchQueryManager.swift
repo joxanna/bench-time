@@ -51,17 +51,20 @@ class BenchQueryManager: ObservableObject {
                     print("URLError code: \(urlError.code)")
                 }
             case .success(let elements):
-                print("Successful fetch to Overpass API")
                 self.elements = elements
-                print(elements)
                 
                 // Generate mapKit visualizations for the returned elements using a static visualization generator
                 let visualizations = OPVisualizationGenerator
                     .mapKitVisualizations(forElements: elements)
                 self.mapViewModel.addVisualizations(visualizations)
+                print("Successful fetch to Overpass API")
+                print(elements)
             }
             self.isLoading = false
         }
     }
+    
+    func getBench(latitude: Double, longitude: Double) {
         
+    }
 }

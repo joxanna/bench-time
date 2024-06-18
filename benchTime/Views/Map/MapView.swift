@@ -12,6 +12,7 @@ struct MapView: UIViewRepresentable {
     @ObservedObject var mapViewModel: MapViewViewModel
     var onRegionChange: ((MKCoordinateRegion) -> Void)?
     @Binding var selectedAnnotation: MKAnnotation?
+    @Binding var isSelected: Bool
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -46,6 +47,11 @@ struct MapView: UIViewRepresentable {
         
         if let selectedAnnotation = mapViewModel.selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
+            self.selectedAnnotation = selectedAnnotation
+            self.isSelected = true;
+            print("Selected Annotation: ", selectedAnnotation)
+        } else {
+            self.isSelected = false;
         }
     }
 
@@ -69,14 +75,6 @@ struct MapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             return mapViewModel.view(for: annotation)
         }
-        
-//        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//            parent.selectedAnnotation = view.annotation
-//        }
-//        
-//        func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//            parent.selectedAnnotation = nil
-//        }
         
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             parent.onRegionChange?(mapView.region)

@@ -41,7 +41,7 @@ class MapViewViewModel: NSObject, ObservableObject {
     func selectAnnotation(_ annotation: MKPointAnnotation) {
         selectedAnnotation = annotation
         if let coordinate = selectedAnnotation?.coordinate {
-            region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+            region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
         }
     }
     
