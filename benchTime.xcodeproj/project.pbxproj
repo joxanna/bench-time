@@ -22,7 +22,7 @@
 		FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64A2BF8B66900C054B2 /* MapView.swift */; };
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
-		FF557A742BFF0E8D0033ADD6 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationService.swift */; };
+		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A762BFF13CE0033ADD6 /* BTSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
@@ -44,6 +44,8 @@
 		FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */; };
 		FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */; };
 		FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */; };
+		FF9C308C2C215209003E90DF /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C308B2C215208003E90DF /* ReviewViewModel.swift */; };
+		FF9C308E2C2168EC003E90DF /* PullUpContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C308D2C2168EC003E90DF /* PullUpContainerView.swift */; };
 		FFB7D8A72BEF51F700DCD7DE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB7D8A62BEF51F700DCD7DE /* UserModel.swift */; };
 		FFCC4F7F2C19592700EFFAC9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F7E2C19592700EFFAC9 /* FirebaseAnalytics */; };
 		FFCC4F812C19592700EFFAC9 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F802C19592700EFFAC9 /* FirebaseAnalyticsSwift */; };
@@ -106,7 +108,7 @@
 		FF29D64A2BF8B66900C054B2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
-		FF557A732BFF0E8D0033ADD6 /* LocationService.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSearchBar.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -128,6 +130,8 @@
 		FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
 		FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldViewModifier.swift; sourceTree = "<group>"; };
 		FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
+		FF9C308B2C215208003E90DF /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
+		FF9C308D2C2168EC003E90DF /* PullUpContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpContainerView.swift; sourceTree = "<group>"; };
 		FFB7D8A62BEF51F700DCD7DE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FFCC4F922C197C1000EFFAC9 /* BenchQueryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchQueryManager.swift; sourceTree = "<group>"; };
 		FFCC4F942C197E2D00EFFAC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 			children = (
 				FF29D64A2BF8B66900C054B2 /* MapView.swift */,
 				FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */,
+				FF9C308D2C2168EC003E90DF /* PullUpContainerView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				FF15393A2BFF412F00DFB92A /* MapViewModel.swift */,
+				FF9C308B2C215208003E90DF /* ReviewViewModel.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -339,7 +345,7 @@
 				FFD1FB492BE9F29800671C1A /* benchTime.entitlements */,
 				FFD1FB4A2BE9F29800671C1A /* Preview Content */,
 				FF81E1C72BECA6350023E743 /* AuthenticationManager.swift */,
-				FF557A732BFF0E8D0033ADD6 /* LocationService.swift */,
+				FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */,
 				FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */,
 				FF7053F62BFB4AA500965435 /* ImageUploader.swift */,
 				FF7053FE2BFC5CA200965435 /* UIStyles.swift */,
@@ -646,16 +652,18 @@
 				FF7053F12BFACC7800965435 /* ReviewModel.swift in Sources */,
 				FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */,
 				FF1B113B2BEA0C7F00676036 /* RegisterView.swift in Sources */,
-				FF557A742BFF0E8D0033ADD6 /* LocationService.swift in Sources */,
+				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
 				FF81E1C82BECA6350023E743 /* AuthenticationManager.swift in Sources */,
 				FFCC4F932C197C1100EFFAC9 /* BenchQueryManager.swift in Sources */,
 				FF1B11482BEA138E00676036 /* LoginViewViewModel.swift in Sources */,
+				FF9C308E2C2168EC003E90DF /* PullUpContainerView.swift in Sources */,
 				FF81E1CA2BECAFCE0023E743 /* SettingsView.swift in Sources */,
 				FF1539382BFF40D600DFB92A /* MapViewViewModel.swift in Sources */,
 				FFB7D8A72BEF51F700DCD7DE /* UserModel.swift in Sources */,
+				FF9C308C2C215209003E90DF /* ReviewViewModel.swift in Sources */,
 				FF7053ED2BFACB9A00965435 /* NewReviewView.swift in Sources */,
 				FF7054032BFC7EA300965435 /* UpdateReviewView.swift in Sources */,
 				FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */,
@@ -850,6 +858,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = benchTime/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show benches around you.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show benches around you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -902,6 +912,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = benchTime/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show benches around you.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show benches around you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

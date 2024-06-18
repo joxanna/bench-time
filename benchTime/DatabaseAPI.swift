@@ -164,7 +164,9 @@ extension DatabaseAPI {
                                    rating: reviewData["rating"] as? Double ?? 0,
                                    imageURLs: reviewData["imageURLs"] as? [String] ?? [],
                                    createdTimestamp: reviewData["createdTimestamp"] as? String ?? "",
-                                   updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? ""
+                                   updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? "",
+                                   latitude: reviewData["latitude"] as? Double ?? 0,
+                                   longitude: reviewData["longitude"] as? Double ?? 0
                                 )
             }
             
@@ -211,7 +213,9 @@ extension DatabaseAPI {
                                    rating: reviewData["rating"] as? Double ?? 0,
                                    imageURLs: reviewData["imageURLs"] as? [String] ?? [],
                                    createdTimestamp: reviewData["createdTimestamp"] as? String ?? "",
-                                   updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? ""
+                                   updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? "",
+                                   latitude: reviewData["latitude"] as? Double ?? 0,
+                                   longitude: reviewData["longitude"] as? Double ?? 0
                                 )
             }
             // Sort reviews by createdTimestamp
@@ -254,7 +258,9 @@ extension DatabaseAPI {
                                      rating: reviewData["rating"] as? Double ?? 0,
                                      imageURLs: reviewData["imageURLs"] as? [String] ?? [],
                                      createdTimestamp: reviewData["createdTimestamp"] as? String ?? "",
-                                     updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? ""
+                                     updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? "",
+                                     latitude: reviewData["latitude"] as? Double ?? 0,
+                                     longitude: reviewData["longitude"] as? Double ?? 0
                                   )
             
             completion(review, nil)

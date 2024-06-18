@@ -20,7 +20,7 @@ struct RootView: View {
                     }
                     .padding(.top, 10)
                 
-                MapView()
+                SearchBenchesView()
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }

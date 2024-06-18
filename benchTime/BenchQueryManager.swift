@@ -17,7 +17,7 @@ class BenchQueryManager: ObservableObject {
     private var client: OPClient
     var mapViewModel: MapViewViewModel
     var elements = [Int: OPElement]()
-    var loadingStatusDidChangeTo: ((_ isLoading: Bool) -> Void)?
+    var isLoading: Bool = false
     
     private init() {
         client = OPClient()
@@ -26,18 +26,23 @@ class BenchQueryManager: ObservableObject {
         print("Initialised endpoint: ", client.endpoint.urlString)
     }
     
-    func fetchBenches() {
-        loadingStatusDidChangeTo?(true)
+    func fetchBenches(for region: MKCoordinateRegion) {
+        self.isLoading = true
+        
+        let minLat = region.center.latitude - region.span.latitudeDelta / 2
+        let maxLat = region.center.latitude + region.span.latitudeDelta / 2
+        let minLon = region.center.longitude - region.span.longitudeDelta / 2
+        let maxLon = region.center.longitude + region.span.longitudeDelta / 2
 
         let query = """
         [out:json];
-        node["amenity"="bench"](around:200,52.5160,13.3779);
+        node["amenity"="bench"](\(minLat),\(minLon),\(maxLat),\(maxLon));
         out body;
         """
 
         print("Query: ", query)
-
         print("Making request...")
+        
         client.fetchElements(query: query) { result in
             switch result {
             case .failure(let error):
@@ -54,9 +59,9 @@ class BenchQueryManager: ObservableObject {
                 let visualizations = OPVisualizationGenerator
                     .mapKitVisualizations(forElements: elements)
                 self.mapViewModel.addVisualizations(visualizations)
-                print(visualizations)
             }
-            self.loadingStatusDidChangeTo?(false)
+            self.isLoading = false
         }
     }
+        
 }

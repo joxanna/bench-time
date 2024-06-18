@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import SwiftOverpassAPI
 
-class MapViewViewModel: NSObject, MapViewModel {
+class MapViewViewModel: NSObject, ObservableObject, MapViewModel {
     
     // All MapKit Overpass Visualizations
     var visualizations = [Int: OPMapKitVisualization]()
@@ -24,6 +24,16 @@ class MapViewViewModel: NSObject, MapViewModel {
             setRegion?(region)
         }
     }
+    
+//    @Published var selectedAnnotation: MKPointAnnotation?
+//    
+//    func selectAnnotation(_ annotation: MKPointAnnotation) {
+//        selectedAnnotation = annotation
+//    }
+//    
+//    func deselectAnnotation() {
+//        selectedAnnotation = nil
+//    }
     
     // Reuse identifier for marker annotation views.
     private let markerReuseIdentifier = "MarkerAnnotationView"

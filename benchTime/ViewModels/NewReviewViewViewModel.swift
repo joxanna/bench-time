@@ -25,7 +25,8 @@ class NewReviewViewViewModel: ObservableObject {
             return
         }
         
-        let newReview = ReviewModel(uid: uid, title: title, description: description, rating: Double(rating), imageURLs: imageURLs)
+        let newReview = ReviewModel(uid: uid, title: title, description: description, 
+                                    rating: Double(rating), imageURLs: imageURLs, latitude: 53.1332, longitude: 12.3426)
         
         DatabaseAPI.shared.createReview(review: newReview) { error in
             if let error = error {

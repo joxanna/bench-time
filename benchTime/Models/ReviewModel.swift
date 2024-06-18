@@ -17,8 +17,11 @@ struct ReviewModel: Hashable, Identifiable {
     var createdTimestamp: String = ""
     var updatedTimestamp: String = ""
     
+    var latitude: Double = Double.nan
+    var longitude: Double = Double.nan
+    
     // hold data to create
-    init(uid: String, title: String, description: String, rating: Double, imageURLs: [String]) {
+    init(uid: String, title: String, description: String, rating: Double, imageURLs: [String], latitude: Double, longitude: Double) {
         self.uid = uid
         self.title = title
         self.description = description
@@ -29,10 +32,13 @@ struct ReviewModel: Hashable, Identifiable {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let currentDate = Date()
         self.createdTimestamp = dateFormatter.string(from: currentDate)
+        
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     // actual full review
-    init(id: String, uid: String, title: String, description: String, rating: Double, imageURLs: [String], createdTimestamp: String, updatedTimestamp: String) {
+    init(id: String, uid: String, title: String, description: String, rating: Double, imageURLs: [String], createdTimestamp: String, updatedTimestamp: String, latitude: Double, longitude: Double) {
         self.id = id
         self.uid = uid
         self.title = title
@@ -41,8 +47,10 @@ struct ReviewModel: Hashable, Identifiable {
         self.imageURLs = imageURLs
         self.createdTimestamp = createdTimestamp
         self.updatedTimestamp = updatedTimestamp
+        self.latitude = latitude
+        self.longitude = longitude
     }
-    
+        
     // updateable
     init(title: String, description: String, rating: Double) {
         self.title = title
@@ -64,12 +72,21 @@ struct ReviewModel: Hashable, Identifiable {
             "rating": rating,
             "imageURLs": imageURLs,
             "createdTimestamp": createdTimestamp,
-            "updatedTimestamp": updatedTimestamp
+            "updatedTimestamp": updatedTimestamp,
+            "latitude": latitude,
+            "longitude": longitude,
             ]
     }
     
     func isEmpty() -> Bool {
-        return title.isEmpty || description.isEmpty || imageURLs == [] || uid!.isEmpty
+        guard let uid = uid, !uid.isEmpty else { return true }
+        guard !title.isEmpty else { return true }
+        guard !description.isEmpty else { return true }
+        guard !(imageURLs?.isEmpty ?? true) else { return true }
+        guard !latitude.isNaN else { return true }
+        guard !longitude.isNaN else { return true }
+        
+        return false
     }
     
     func hash(into hasher: inout Hasher) {

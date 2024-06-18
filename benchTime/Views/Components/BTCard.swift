@@ -8,7 +8,7 @@
 import SwiftUI
 import URLImage
 
-struct BTCard: View {
+struct BTCard: View {    
     let review: ReviewModel
     let currentUser: Bool
     var onUpdate: () -> Void
@@ -17,6 +17,7 @@ struct BTCard: View {
     @State private var isConfirmingAction = false
     
     @State private var ratingText: String = ""
+    @State private var addressText: String = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20.0) {
@@ -46,6 +47,16 @@ struct BTCard: View {
             
             Text(review.description)
                 .foregroundStyle(Color.black)
+            
+            if (addressText.isEmpty) {
+                Text("No address")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 14))
+            } else {
+                Text(addressText)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 14))
+            }
             
             HStack {
                 if (!review.updatedTimestamp.isEmpty) {
@@ -128,6 +139,16 @@ struct BTCard: View {
             } else {
                 // Rating has a decimal part, display it with one decimal place
                 self.ratingText = String(format: "(%.1f/5 stars)", review.rating)
+            }
+            
+            getAddress(latitude: review.latitude, longitude: review.longitude) { result, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    self.addressText = "No address"
+                }
+                else if let result = result {
+                    self.addressText = result
+                }
             }
         }
     }
