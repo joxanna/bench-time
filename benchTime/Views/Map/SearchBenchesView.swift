@@ -12,12 +12,13 @@ import CoreLocation
 struct SearchBenchesView: View {
     @ObservedObject var benchQueryManager = BenchQueryManager.shared
     @StateObject private var locationManager = LocationManager.shared
+    @State private var selectedAnnotation: MKAnnotation?
 
     var body: some View {
         VStack {
             MapView(mapViewModel: benchQueryManager.mapViewModel, onRegionChange: { region in
                 benchQueryManager.fetchBenches(for: region)
-            })
+            }, selectedAnnotation: $selectedAnnotation)
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 locationManager.requestLocation()
@@ -33,7 +34,17 @@ struct SearchBenchesView: View {
                 }
             }
             
-            Text("Pull up")
+//            if let annotation = selectedAnnotation {
+//                PullUpContainerView(annotationTitle: (annotation.title ?? "")!, annotationSubtitle: (annotation.subtitle ?? "")!)
+//                    .transition(.move(edge: .bottom))
+//            } else {
+//                Text("No annotation selected")
+//                    .foregroundColor(.gray)
+//                    .padding()
+//            }
+            
+            Spacer()
         }
     }
 }
+

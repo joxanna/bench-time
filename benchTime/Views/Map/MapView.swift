@@ -11,6 +11,7 @@ import MapKit
 struct MapView: UIViewRepresentable {
     @ObservedObject var mapViewModel: MapViewViewModel
     var onRegionChange: ((MKCoordinateRegion) -> Void)?
+    @Binding var selectedAnnotation: MKAnnotation?
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -42,6 +43,10 @@ struct MapView: UIViewRepresentable {
         }
         uiView.addAnnotations(mapViewModel.annotations)
         uiView.addOverlays(mapViewModel.overlays)
+        
+        if let selectedAnnotation = mapViewModel.selectedAnnotation {
+            uiView.selectAnnotation(selectedAnnotation, animated: true)
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -65,8 +70,22 @@ struct MapView: UIViewRepresentable {
             return mapViewModel.view(for: annotation)
         }
         
+//        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//            parent.selectedAnnotation = view.annotation
+//        }
+//        
+//        func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+//            parent.selectedAnnotation = nil
+//        }
+        
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             parent.onRegionChange?(mapView.region)
+        }
+        
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            if let annotation = view.annotation as? MKPointAnnotation {
+                mapViewModel.selectAnnotation(annotation)
+            }
         }
     }
 }

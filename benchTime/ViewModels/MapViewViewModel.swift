@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import SwiftOverpassAPI
 
-class MapViewViewModel: NSObject, ObservableObject, MapViewModel {
+class MapViewViewModel: NSObject, ObservableObject {
     
     // All MapKit Overpass Visualizations
     var visualizations = [Int: OPMapKitVisualization]()
@@ -25,16 +25,6 @@ class MapViewViewModel: NSObject, ObservableObject, MapViewModel {
         }
     }
     
-//    @Published var selectedAnnotation: MKPointAnnotation?
-//    
-//    func selectAnnotation(_ annotation: MKPointAnnotation) {
-//        selectedAnnotation = annotation
-//    }
-//    
-//    func deselectAnnotation() {
-//        selectedAnnotation = nil
-//    }
-    
     // Reuse identifier for marker annotation views.
     private let markerReuseIdentifier = "MarkerAnnotationView"
     
@@ -44,6 +34,21 @@ class MapViewViewModel: NSObject, ObservableObject, MapViewModel {
     var addOverlays: (([MKOverlay]) -> Void)?
     var removeAnnotations: (([MKAnnotation]) -> Void)?
     var removeOverlays: (([MKOverlay]) -> Void)?
+    
+    /* ------------- */
+    @Published var selectedAnnotation: MKPointAnnotation?
+    
+    func selectAnnotation(_ annotation: MKPointAnnotation) {
+        selectedAnnotation = annotation
+        if let coordinate = selectedAnnotation?.coordinate {
+            region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        }
+    }
+    
+    func deselectAnnotation() {
+        selectedAnnotation = nil
+    }
+    /* ------------- */
     
     // Function to register all reusable annotation views to the mapView
     func registerAnnotationViews(to mapView: MKMapView) {
