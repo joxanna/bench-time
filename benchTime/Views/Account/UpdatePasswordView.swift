@@ -57,12 +57,3 @@ struct UpdatePasswordView: View {
         .navigationBarTitle("Update Password")
     }
 }
-
-struct UpdatePasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            UpdatePasswordView()
-        }
-    }
-}
-

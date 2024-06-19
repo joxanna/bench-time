@@ -73,12 +73,3 @@ struct RegisterView: View {
         .padding(.bottom, 50)
     }
 }
-
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            RegisterView()
-        }
-    }
-}
-

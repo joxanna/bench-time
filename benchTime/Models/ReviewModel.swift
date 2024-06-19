@@ -10,6 +10,7 @@ import Foundation
 struct ReviewModel: Hashable, Identifiable {
     var id: String? = ""
     var uid: String?
+    var benchId: String?
     var title: String
     var description: String
     var rating: Double
@@ -21,8 +22,9 @@ struct ReviewModel: Hashable, Identifiable {
     var longitude: Double = Double.nan
     
     // hold data to create
-    init(uid: String, title: String, description: String, rating: Double, imageURLs: [String], latitude: Double, longitude: Double) {
+    init(uid: String, benchId: String, title: String, description: String, rating: Double, imageURLs: [String], latitude: Double, longitude: Double) {
         self.uid = uid
+        self.benchId = benchId
         self.title = title
         self.description = description
         self.rating = rating
@@ -38,9 +40,10 @@ struct ReviewModel: Hashable, Identifiable {
     }
     
     // actual full review
-    init(id: String, uid: String, title: String, description: String, rating: Double, imageURLs: [String], createdTimestamp: String, updatedTimestamp: String, latitude: Double, longitude: Double) {
+    init(id: String, uid: String, benchId: String, title: String, description: String, rating: Double, imageURLs: [String], createdTimestamp: String, updatedTimestamp: String, latitude: Double, longitude: Double) {
         self.id = id
         self.uid = uid
+        self.benchId = benchId
         self.title = title
         self.description = description
         self.rating = rating
@@ -67,6 +70,7 @@ struct ReviewModel: Hashable, Identifiable {
         return [
             "id": id,
             "uid": uid,
+            "benchId": benchId,
             "title": title,
             "description": description,
             "rating": rating,
@@ -80,6 +84,7 @@ struct ReviewModel: Hashable, Identifiable {
     
     func isEmpty() -> Bool {
         guard let uid = uid, !uid.isEmpty else { return true }
+        guard let benchId = benchId, !benchId.isEmpty else { return true }
         guard !title.isEmpty else { return true }
         guard !description.isEmpty else { return true }
         guard !(imageURLs?.isEmpty ?? true) else { return true }

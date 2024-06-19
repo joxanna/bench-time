@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseAuth
 
-
 class RegisterViewViewModel: ObservableObject {
     @Published var displayName = ""
     @Published var email = ""

@@ -11,7 +11,7 @@ import MapKit
 struct MapView: UIViewRepresentable {
     @ObservedObject var mapViewModel: MapViewViewModel
     var onRegionChange: ((MKCoordinateRegion) -> Void)?
-    @Binding var selectedAnnotation: MKAnnotation?
+    @Binding var selectedAnnotation: CustomPointAnnotation?
     @Binding var isSelected: Bool
 
     func makeUIView(context: Context) -> MKMapView {
@@ -25,14 +25,8 @@ struct MapView: UIViewRepresentable {
         mapViewModel.addAnnotations = { annotations in
             mapView.addAnnotations(annotations)
         }
-        mapViewModel.addOverlays = { overlays in
-            mapView.addOverlays(overlays)
-        }
         mapViewModel.removeAnnotations = { annotations in
             mapView.removeAnnotations(annotations)
-        }
-        mapViewModel.removeOverlays = { overlays in
-            mapView.removeOverlays(overlays)
         }
         
         return mapView
@@ -43,13 +37,11 @@ struct MapView: UIViewRepresentable {
             uiView.setRegion(region, animated: true)
         }
         uiView.addAnnotations(mapViewModel.annotations)
-        uiView.addOverlays(mapViewModel.overlays)
         
         if let selectedAnnotation = mapViewModel.selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
             self.selectedAnnotation = selectedAnnotation
             self.isSelected = true;
-            print("Selected Annotation: ", selectedAnnotation)
         } else {
             self.isSelected = false;
         }
@@ -68,10 +60,6 @@ struct MapView: UIViewRepresentable {
             self.mapViewModel = mapViewModel
         }
 
-        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            return mapViewModel.renderer(for: overlay)
-        }
-
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             return mapViewModel.view(for: annotation)
         }
@@ -81,7 +69,7 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            if let annotation = view.annotation as? MKPointAnnotation {
+            if let annotation = view.annotation as? CustomPointAnnotation {
                 mapViewModel.selectAnnotation(annotation)
             }
         }

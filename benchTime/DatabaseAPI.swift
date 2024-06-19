@@ -159,6 +159,7 @@ extension DatabaseAPI {
                 // Parse review data and return a ReviewModel instance
                 return ReviewModel(id: key,
                                    uid: reviewUID,
+                                   benchId: reviewData["benchId"] as? String ?? "",
                                    title: reviewData["title"] as? String ?? "",
                                    description: reviewData["description"] as? String ?? "",
                                    rating: reviewData["rating"] as? Double ?? 0,
@@ -208,6 +209,7 @@ extension DatabaseAPI {
                 // Parse review data and return a ReviewModel instance
                 return ReviewModel(id: key,
                                    uid: reviewUID,
+                                   benchId: reviewData["benchId"] as? String ?? "",
                                    title: reviewData["title"] as? String ?? "",
                                    description: reviewData["description"] as? String ?? "",
                                    rating: reviewData["rating"] as? Double ?? 0,
@@ -232,7 +234,57 @@ extension DatabaseAPI {
         }
     }
 
-    func readReviewsByLocation(uid: String, completion: @escaping (Error?) -> Void) {
+    func readReviewsByBench(benchId: String, completion: @escaping ([ReviewModel]?, Error?) -> Void) {
+        print("Reading reviews for bench:", benchId)
+        
+        if benchId.isEmpty {
+            completion(nil, NSError(domain: "BenchTime", code: 1002, userInfo: [NSLocalizedDescriptionKey: "benchId must not be empty."]))
+            return
+        }
+        
+        let reviewRef = database.child("reviews")  // Reference to the "reviews" node
+
+        reviewRef.observeSingleEvent(of: .value, with: { snapshot in
+            guard let reviewDict = snapshot.value as? [String: Any] else {
+                // If no review data found, complete with an empty array
+                completion([], nil)
+                return
+            }
+
+            // Filter reviews by user ID
+            var reviews: [ReviewModel] = reviewDict.compactMap { (key, value) -> ReviewModel? in
+                guard let reviewData = value as? [String: Any],
+                      let reviewBenchId = reviewData["benchId"] as? String,
+                      reviewBenchId == benchId else {
+                    return nil // Skip reviews not belonging to the specified user
+                }
+                
+                // Parse review data and return a ReviewModel instance
+                return ReviewModel(id: key,
+                                   uid: reviewData["uid"] as? String ?? "",
+                                   benchId: benchId,
+                                   title: reviewData["title"] as? String ?? "",
+                                   description: reviewData["description"] as? String ?? "",
+                                   rating: reviewData["rating"] as? Double ?? 0,
+                                   imageURLs: reviewData["imageURLs"] as? [String] ?? [],
+                                   createdTimestamp: reviewData["createdTimestamp"] as? String ?? "",
+                                   updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? "",
+                                   latitude: reviewData["latitude"] as? Double ?? 0,
+                                   longitude: reviewData["longitude"] as? Double ?? 0
+                                )
+            }
+            // Sort reviews by createdTimestamp
+            reviews.sort(by: compareReviewsByDate)
+            
+            for review in reviews {
+                print("Review \(review.title) - Created: \(review.createdTimestamp)")
+            }
+            
+            completion(reviews, nil)
+        }) { error in
+            // Handle Firebase error
+            completion(nil, error)
+        }
     }
 
     func readReviewByID(id: String, completion: @escaping (ReviewModel?, Error?) -> Void) {
@@ -253,6 +305,7 @@ extension DatabaseAPI {
             
             let review = ReviewModel(id: id,
                                      uid: reviewData["uid"] as? String ?? "",
+                                     benchId: reviewData["benchId"] as? String ?? "",
                                      title: reviewData["title"] as? String ?? "",
                                      description: reviewData["description"] as? String ?? "",
                                      rating: reviewData["rating"] as? Double ?? 0,

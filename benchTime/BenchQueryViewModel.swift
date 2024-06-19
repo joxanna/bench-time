@@ -11,19 +11,23 @@ import CoreLocation
 import SwiftUI
 import MapKit
 
-class BenchQueryManager: ObservableObject {
-    static let shared = BenchQueryManager()
-    
-    private var client: OPClient
+class BenchQueryViewModel: ObservableObject {
+    var client: OPClient
     var mapViewModel: MapViewViewModel
     var elements = [Int: OPElement]()
+    
     var isLoading: Bool = false
     
-    private init() {
-        client = OPClient()
-        client.endpoint = .kumiSystems
-        mapViewModel = MapViewViewModel()
+    init() {
+        self.client = OPClient()
+        self.mapViewModel = MapViewViewModel()
+        self.client.endpoint = .kumiSystems
         print("Initialised endpoint: ", client.endpoint.urlString)
+    }
+    
+    func getBench(annotation: CustomPointAnnotation) -> OPElement? {
+        let id = annotation.id
+        return elements[id]
     }
     
     func fetchBenches(for region: MKCoordinateRegion) {
@@ -40,7 +44,6 @@ class BenchQueryManager: ObservableObject {
         out body;
         """
 
-        print("Query: ", query)
         print("Making request...")
         
         client.fetchElements(query: query) { result in
@@ -51,20 +54,13 @@ class BenchQueryManager: ObservableObject {
                     print("URLError code: \(urlError.code)")
                 }
             case .success(let elements):
-                self.elements = elements
-                
+                self.elements = elements // Update elements on the main thread
                 // Generate mapKit visualizations for the returned elements using a static visualization generator
-                let visualizations = OPVisualizationGenerator
-                    .mapKitVisualizations(forElements: elements)
+                let visualizations = OPVisualizationGenerator.mapKitVisualizations(forElements: elements)
                 self.mapViewModel.addVisualizations(visualizations)
                 print("Successful fetch to Overpass API")
-                print(elements)
+                self.isLoading = false // Update isLoading on the main thread
             }
-            self.isLoading = false
         }
-    }
-    
-    func getBench(latitude: Double, longitude: Double) {
-        
     }
 }

@@ -11,6 +11,7 @@ import URLImage
 struct BTCard: View {    
     let review: ReviewModel
     let currentUser: Bool
+    let address: Bool
     var onUpdate: () -> Void
     
     @State private var isLargeModalPresented = false
@@ -48,14 +49,16 @@ struct BTCard: View {
             Text(review.description)
                 .foregroundStyle(Color.black)
             
-            if (addressText.isEmpty) {
-                Text("No address")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 14))
-            } else {
-                Text(addressText)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 14))
+            if (address) {
+                if (addressText.isEmpty) {
+                    Text("No address")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 14))
+                } else {
+                    Text(addressText)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 14))
+                }
             }
             
             HStack {
@@ -141,13 +144,15 @@ struct BTCard: View {
                 self.ratingText = String(format: "(%.1f/5 stars)", review.rating)
             }
             
-            getAddress(latitude: review.latitude, longitude: review.longitude) { result, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    self.addressText = "No address"
-                }
-                else if let result = result {
-                    self.addressText = result
+            if (address) {
+                getAddress(latitude: review.latitude, longitude: review.longitude) { result, error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        self.addressText = "No address"
+                    }
+                    else if let result = result {
+                        self.addressText = result
+                    }
                 }
             }
         }

@@ -11,7 +11,6 @@
 		935627E9B726599B98FEC663 /* Pods_benchTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4BA9322A5A96EFBB09634 /* Pods_benchTime.framework */; };
 		DCD8CE588EC53675E29F9453 /* Pods_benchTimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04B4415C039DA9DEBCF331F /* Pods_benchTimeTests.framework */; };
 		FF1539382BFF40D600DFB92A /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */; };
-		FF15393B2BFF412F00DFB92A /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15393A2BFF412F00DFB92A /* MapViewModel.swift */; };
 		FF1B11372BEA012C00676036 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11362BEA012C00676036 /* LoginView.swift */; };
 		FF1B11392BEA04ED00676036 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11382BEA04ED00676036 /* HeaderView.swift */; };
 		FF1B113B2BEA0C7F00676036 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B113A2BEA0C7F00676036 /* RegisterView.swift */; };
@@ -26,7 +25,6 @@
 		FF557A762BFF13CE0033ADD6 /* BTSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
-		FF6FB9312C00157A0077AC2C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FB9302C00157A0077AC2C /* MapViewController.swift */; };
 		FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */; };
 		FF7053ED2BFACB9A00965435 /* NewReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7053EC2BFACB9A00965435 /* NewReviewView.swift */; };
 		FF7053F12BFACC7800965435 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7053F02BFACC7800965435 /* ReviewModel.swift */; };
@@ -57,7 +55,7 @@
 		FFCC4F8D2C19592700EFFAC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F8C2C19592700EFFAC9 /* FirebaseStorage */; };
 		FFCC4F8F2C19593300EFFAC9 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F8E2C19593300EFFAC9 /* URLImage */; };
 		FFCC4F912C19593300EFFAC9 /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F902C19593300EFFAC9 /* URLImageStore */; };
-		FFCC4F932C197C1100EFFAC9 /* BenchQueryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC4F922C197C1000EFFAC9 /* BenchQueryManager.swift */; };
+		FFCC4F932C197C1100EFFAC9 /* BenchQueryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */; };
 		FFD1FB442BE9F29300671C1A /* BenchTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB432BE9F29300671C1A /* BenchTimeApp.swift */; };
 		FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB452BE9F29300671C1A /* RootView.swift */; };
 		FFD1FB482BE9F29800671C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD1FB472BE9F29800671C1A /* Assets.xcassets */; };
@@ -97,7 +95,6 @@
 		D6A44048C93FC341D8E4D303 /* Pods-benchTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-benchTime.debug.xcconfig"; path = "Target Support Files/Pods-benchTime/Pods-benchTime.debug.xcconfig"; sourceTree = "<group>"; };
 		F235646EBF4C1BFBCE81E92A /* Pods-benchTime-benchTimeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-benchTime-benchTimeUITests.release.xcconfig"; path = "Target Support Files/Pods-benchTime-benchTimeUITests/Pods-benchTime-benchTimeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
-		FF15393A2BFF412F00DFB92A /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		FF1B11362BEA012C00676036 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FF1B11382BEA04ED00676036 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		FF1B113A2BEA0C7F00676036 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -112,7 +109,6 @@
 		FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSearchBar.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FF6FB9302C00157A0077AC2C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extensions.swift"; sourceTree = "<group>"; };
 		FF7053EC2BFACB9A00965435 /* NewReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReviewView.swift; sourceTree = "<group>"; };
 		FF7053F02BFACC7800965435 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
@@ -133,7 +129,7 @@
 		FF9C308B2C215208003E90DF /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		FF9C308F2C21815B003E90DF /* BenchReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchReviewsView.swift; sourceTree = "<group>"; };
 		FFB7D8A62BEF51F700DCD7DE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		FFCC4F922C197C1000EFFAC9 /* BenchQueryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchQueryManager.swift; sourceTree = "<group>"; };
+		FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchQueryViewModel.swift; sourceTree = "<group>"; };
 		FFCC4F942C197E2D00EFFAC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFD1FB402BE9F29300671C1A /* benchTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = benchTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD1FB432BE9F29300671C1A /* BenchTimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchTimeApp.swift; sourceTree = "<group>"; };
@@ -301,7 +297,6 @@
 		FFB3918F2C1AD57B002A53D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				FF15393A2BFF412F00DFB92A /* MapViewModel.swift */,
 				FF9C308B2C215208003E90DF /* ReviewViewModel.swift */,
 			);
 			path = Protocols;
@@ -350,8 +345,7 @@
 				FF7053F62BFB4AA500965435 /* ImageUploader.swift */,
 				FF7053FE2BFC5CA200965435 /* UIStyles.swift */,
 				FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */,
-				FF6FB9302C00157A0077AC2C /* MapViewController.swift */,
-				FFCC4F922C197C1000EFFAC9 /* BenchQueryManager.swift */,
+				FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */,
 			);
 			path = benchTime;
 			sourceTree = "<group>";
@@ -657,7 +651,7 @@
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
 				FF81E1C82BECA6350023E743 /* AuthenticationManager.swift in Sources */,
-				FFCC4F932C197C1100EFFAC9 /* BenchQueryManager.swift in Sources */,
+				FFCC4F932C197C1100EFFAC9 /* BenchQueryViewModel.swift in Sources */,
 				FF1B11482BEA138E00676036 /* LoginViewViewModel.swift in Sources */,
 				FF81E1CA2BECAFCE0023E743 /* SettingsView.swift in Sources */,
 				FF1539382BFF40D600DFB92A /* MapViewViewModel.swift in Sources */,
@@ -678,7 +672,6 @@
 				FF557A762BFF13CE0033ADD6 /* BTSearchBar.swift in Sources */,
 				FF7053F92BFB4EB500965435 /* ImageUploaderViewModel.swift in Sources */,
 				FF7054082BFC7F5000965435 /* UpdateReviewViewViewModel.swift in Sources */,
-				FF6FB9312C00157A0077AC2C /* MapViewController.swift in Sources */,
 				FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */,
 				FF1B11422BEA123400676036 /* BTCard.swift in Sources */,
 				FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */,
@@ -688,7 +681,6 @@
 				FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */,
 				FF29D6492BF8B65B00C054B2 /* HomeView.swift in Sources */,
 				FF7053FB2BFC249300965435 /* UpdateAccountDetailsViewViewModel.swift in Sources */,
-				FF15393B2BFF412F00DFB92A /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

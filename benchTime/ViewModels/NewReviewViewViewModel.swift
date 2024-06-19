@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftOverpassAPI
 
 class NewReviewViewViewModel: ObservableObject {
     @Published var uid: String
@@ -14,9 +15,15 @@ class NewReviewViewViewModel: ObservableObject {
     @Published var description = ""
     @Published var rating: Double = 0
     @Published var imageURLs: [String] = []
+    @Published var benchId: String
+    @Published var latitude: Double
+    @Published var longitude: Double
     
-    init() {
+    init(benchId: String, latitude: Double, longitude: Double) {
         uid = AuthenticationManager.shared.currentUser!.uid
+        self.benchId = benchId
+        self.latitude = latitude
+        self.longitude = longitude
     }
       
     func createReview(completion: @escaping (Error?) -> Void) {
@@ -25,8 +32,8 @@ class NewReviewViewViewModel: ObservableObject {
             return
         }
         
-        let newReview = ReviewModel(uid: uid, title: title, description: description, 
-                                    rating: Double(rating), imageURLs: imageURLs, latitude: 53.1332, longitude: 12.3426)
+        let newReview = ReviewModel(uid: uid, benchId: benchId, title: title, description: description,
+                                    rating: Double(rating), imageURLs: imageURLs, latitude: latitude, longitude: longitude)
         
         DatabaseAPI.shared.createReview(review: newReview) { error in
             if let error = error {

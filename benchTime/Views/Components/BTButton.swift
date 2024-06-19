@@ -26,10 +26,3 @@ struct BTButton: View {
         }
     }
 }
-
-#Preview {
-    BTButton(title: "Button", backgroundColor: Color.cyan) {
-        // action
-    }
-}
-

@@ -32,12 +32,6 @@ struct RootView: View {
                     }
                     .padding(.top, 10)
                 
-                NewReviewView()
-                    .tabItem {
-                        Label("New review", systemImage: "pencil")
-                    }
-                    .padding(.top, 10)
-                
                 SettingsView()
                     .tabItem {
                         Label("Settings", systemImage: "gear")

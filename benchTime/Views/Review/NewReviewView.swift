@@ -7,13 +7,18 @@
 
 import SwiftUI
 import FirebaseAuth
+import SwiftOverpassAPI
 
 struct NewReviewView: View {
-    @StateObject var viewModel = NewReviewViewViewModel()
+    @StateObject var viewModel: NewReviewViewViewModel
     @State private var selectedRating: Double = 0
     let options = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
 
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "review_images")
+    
+    init(benchId: String, latitude: Double, longitude: Double) {
+        _viewModel = StateObject(wrappedValue: NewReviewViewViewModel(benchId: benchId, latitude: latitude, longitude: longitude))
+    }
     
     var body: some View {
         ScrollView {

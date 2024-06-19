@@ -19,7 +19,7 @@ struct HomeView: View {
             VStack {
                 if let reviews = currentReviews {
                     ForEach(reviews) { review in
-                        BTCard(review: review, currentUser: false) {
+                        BTCard(review: review, currentUser: false, address: true) {
                             fetchReviews()
                         }
                     }

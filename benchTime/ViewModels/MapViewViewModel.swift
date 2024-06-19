@@ -9,12 +9,20 @@ import SwiftUI
 import MapKit
 import SwiftOverpassAPI
 
+class CustomPointAnnotation: MKPointAnnotation {
+    var id: Int
+    
+    init(id: Int) {
+        self.id = id
+    }
+}
+
 class MapViewViewModel: NSObject, ObservableObject {
     
     // All MapKit Overpass Visualizations
     var visualizations = [Int: OPMapKitVisualization]()
     
-    var annotations = [MKAnnotation]() // Annotations generated from center visualizations
+    var annotations = [CustomPointAnnotation]() // Annotations generated from center visualizations
     var overlays = [MKOverlay]() // Overlays generated from polygon/polyline type visualizations.
     
     // Variable for storing/setting the bound mapView's region
@@ -30,15 +38,13 @@ class MapViewViewModel: NSObject, ObservableObject {
     
     // Handler functions for set the bound mapView's region and adding/removing annotations and overlays
     var setRegion: ((MKCoordinateRegion) -> Void)?
-    var addAnnotations: (([MKAnnotation]) -> Void)?
-    var addOverlays: (([MKOverlay]) -> Void)?
-    var removeAnnotations: (([MKAnnotation]) -> Void)?
-    var removeOverlays: (([MKOverlay]) -> Void)?
+    var addAnnotations: (([CustomPointAnnotation]) -> Void)?
+    var removeAnnotations: (([CustomPointAnnotation]) -> Void)?
     
     /* ------------- */
-    @Published var selectedAnnotation: MKPointAnnotation?
+    @Published var selectedAnnotation: CustomPointAnnotation?
     
-    func selectAnnotation(_ annotation: MKPointAnnotation) {
+    func selectAnnotation(_ annotation: CustomPointAnnotation) {
         selectedAnnotation = annotation
         if let coordinate = selectedAnnotation?.coordinate {
             region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
@@ -63,19 +69,21 @@ class MapViewViewModel: NSObject, ObservableObject {
         self.visualizations = visualizations
         
         removeAnnotations?(annotations)
-        removeOverlays?(overlays)
         annotations = []
-        overlays = []
-        
-        var newAnnotations = [MKAnnotation]()
+     
+        var newAnnotations = [CustomPointAnnotation]()
         var polylines = [MKPolyline]()
         var polygons = [MKPolygon]()
         
         // For each visualization, append it to annotations, polylines, or polygons array depending on it's type.
-        for visualization in visualizations.values {
+        for (key, visualization) in visualizations {
             switch visualization {
             case .annotation(let annotation):
-                newAnnotations.append(annotation)
+                if var pointAnnotation = annotation as? MKPointAnnotation {
+                    let customAnnotation = CustomPointAnnotation(id: key)
+                    customAnnotation.coordinate = pointAnnotation.coordinate
+                    newAnnotations.append(customAnnotation)
+                }
             case .polyline(let polyline):
                 polylines.append(polyline)
             case .polylines(let newPolylines):
@@ -87,20 +95,11 @@ class MapViewViewModel: NSObject, ObservableObject {
             }
         }
         
-        // Create MultiPolygon and Multipolyline overlays for rendering all the polylgons and polylines respectively. This allows each polygon and polyline to share a renderer so that they can be efficiently displayed on the mapView.
-        let multiPolyline = MKMultiPolyline(polylines)
-        let multiPolygon = MKMultiPolygon(polygons)
-        
-        // Create an overlays array from the multiPolyline and multiPolygon
-        let newOverlays: [MKOverlay] = [multiPolyline, multiPolygon]
-        
         // Store the new annotations and overlays in their respective variables
         annotations = newAnnotations
-        overlays = newOverlays
         
         // Add the annotaitons and overlays to the mapView
         addAnnotations?(annotations)
-        addOverlays?(overlays)
     }
     
     // Function called to center the mapView on a particular visualization
@@ -154,40 +153,6 @@ class MapViewViewModel: NSObject, ObservableObject {
         
         // Set the mapView region to the new visualization-emcompassing region
         self.region = region
-    }
-    
-    // Renderers for various overlay types
-    func renderer(for overlay: MKOverlay) -> MKOverlayRenderer {
-        
-        let strokeWidth: CGFloat = 2
-        let strokeColor = UIStyles.Colors.theme
-        let fillColor = UIStyles.Colors.theme.withAlphaComponent(0.5)
-        
-        if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline: polyline)
-            renderer.strokeColor = strokeColor
-            renderer.lineWidth = strokeWidth
-            return renderer
-        } else if let polygon = overlay as? MKPolygon {
-            let renderer = MKPolygonRenderer(polygon: polygon)
-            renderer.fillColor = fillColor
-            renderer.strokeColor = strokeColor
-            renderer.lineWidth = strokeWidth
-            return renderer
-        }    else if let multiPolyline = overlay as? MKMultiPolyline {
-            let renderer = MKMultiPolylineRenderer(multiPolyline: multiPolyline)
-            renderer.strokeColor = strokeColor
-            renderer.lineWidth = strokeWidth
-            return renderer
-        } else if let multiPolygon = overlay as? MKMultiPolygon {
-            let renderer = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
-            renderer.fillColor = fillColor
-            renderer.strokeColor = strokeColor
-            renderer.lineWidth = strokeWidth
-            return renderer
-        } else {
-            return MKOverlayRenderer()
-        }
     }
     
     // Set the annotaiton view for annotations visualized on the mapView
