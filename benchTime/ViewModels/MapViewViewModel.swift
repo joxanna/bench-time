@@ -17,7 +17,7 @@ class CustomPointAnnotation: MKPointAnnotation {
     }
 }
 
-class MapViewViewModel: NSObject, ObservableObject {
+class MapViewViewModel: ObservableObject {
     
     // All MapKit Overpass Visualizations
     var visualizations = [Int: OPMapKitVisualization]()
@@ -42,17 +42,8 @@ class MapViewViewModel: NSObject, ObservableObject {
     var removeAnnotations: (([CustomPointAnnotation]) -> Void)?
     
     /* ------------- */
-    @Published var selectedAnnotation: CustomPointAnnotation?
-    
     func selectAnnotation(_ annotation: CustomPointAnnotation) {
-        selectedAnnotation = annotation
-        if let coordinate = selectedAnnotation?.coordinate {
-            region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
-        }
-    }
-    
-    func deselectAnnotation() {
-        selectedAnnotation = nil
+        region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
     }
     /* ------------- */
     
@@ -79,7 +70,7 @@ class MapViewViewModel: NSObject, ObservableObject {
         for (key, visualization) in visualizations {
             switch visualization {
             case .annotation(let annotation):
-                if var pointAnnotation = annotation as? MKPointAnnotation {
+                if let pointAnnotation = annotation as? MKPointAnnotation {
                     let customAnnotation = CustomPointAnnotation(id: key)
                     customAnnotation.coordinate = pointAnnotation.coordinate
                     newAnnotations.append(customAnnotation)

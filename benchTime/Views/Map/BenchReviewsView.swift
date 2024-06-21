@@ -36,7 +36,6 @@ struct BenchReviewsView: View {
                     if let reviews = benchReviews {
                         ForEach(reviews) { review in
                             BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
-                                fetchReviews()
                             }
                         }
                     } else {
@@ -70,11 +69,9 @@ struct BenchReviewsView: View {
             if let error = error {
                 // Handle the error
                 self.errorMessage = error.localizedDescription
-                print("Fail")
             } else if let reviews = reviews {
                 // Assign currentUserReviews here
                 self.benchReviews = reviews
-                print("Success")
             }
         }
     }

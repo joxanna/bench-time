@@ -54,7 +54,7 @@ func convertLatAndLongToAddress(latitude: Double, longitude: Double, completion:
             
             let address = addressComponents.joined(separator: ", ")
 
-            print("Reverse geocoded address: \(address)")
+//            print("Reverse geocoded address: \(address)")
             completion(address, nil)
         } else {
             print("No placemarks found.")

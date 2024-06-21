@@ -110,10 +110,11 @@ struct BTCard: View {
             .shadow(radius: 15))
         .padding()
         .sheet(isPresented: $isLargeModalPresented) {
-            LargeModalView(title: "Update review", contentView: UpdateReviewView(review: review)) {
-                onUpdate()
-                print("Refreshing...")
-            }
+            LargeModalView(title: "Update review", contentView: UpdateReviewView(review: review)) 
+//            {
+//                onUpdate()
+//                print("Refreshing...")
+//            }
         }
         .alert(isPresented: $isConfirmingAction) {
             Alert(

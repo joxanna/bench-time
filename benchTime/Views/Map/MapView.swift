@@ -11,8 +11,9 @@ import MapKit
 struct MapView: UIViewRepresentable {
     @ObservedObject var mapViewModel: MapViewViewModel
     var onRegionChange: ((MKCoordinateRegion) -> Void)?
-    @Binding var selectedAnnotation: CustomPointAnnotation?
+    
     @Binding var isSelected: Bool
+    @Binding var selectedAnnotation: CustomPointAnnotation?
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -33,17 +34,16 @@ struct MapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        print("Updating UI view...")
         if let region = mapViewModel.region {
             uiView.setRegion(region, animated: true)
         }
         uiView.addAnnotations(mapViewModel.annotations)
         
-        if let selectedAnnotation = mapViewModel.selectedAnnotation {
+        if let selectedAnnotation = selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
-            self.selectedAnnotation = selectedAnnotation
-            self.isSelected = true;
         } else {
-            self.isSelected = false;
+            uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
         }
     }
 
@@ -70,8 +70,28 @@ struct MapView: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             if let annotation = view.annotation as? CustomPointAnnotation {
+                parent.selectedAnnotation = annotation
+                parent.isSelected = true
                 mapViewModel.selectAnnotation(annotation)
+                print("-----ANNOTATION SELECTED")
+                print("Is selected: ", parent.isSelected)
+                print("Annotation: ", Int(parent.selectedAnnotation?.id ?? -1))
+
+                DispatchQueue.main.async {
+                    self.mapViewModel.objectWillChange.send()
+                }
+            }
+        }
+        
+        func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+            if let _ = view.annotation as? CustomPointAnnotation {
+                parent.selectedAnnotation = nil
+                parent.isSelected = false
+                print("-----ANNOTATION DE-SELECTED")
+                print("Is selected: ", parent.isSelected)
+                print("Annotation: ", Int(parent.selectedAnnotation?.id ?? -1))
             }
         }
     }
+
 }
