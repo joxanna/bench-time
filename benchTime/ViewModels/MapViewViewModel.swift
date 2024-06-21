@@ -45,6 +45,7 @@ class MapViewViewModel: ObservableObject {
     func selectAnnotation(_ annotation: CustomPointAnnotation) {
         region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
     }
+
     /* ------------- */
     
     // Function to register all reusable annotation views to the mapView

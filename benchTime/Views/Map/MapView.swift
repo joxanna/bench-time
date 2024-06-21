@@ -16,6 +16,7 @@ struct MapView: UIViewRepresentable {
     @Binding var selectedAnnotation: CustomPointAnnotation?
 
     func makeUIView(context: Context) -> MKMapView {
+        print("Making UI view")
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
@@ -54,6 +55,7 @@ struct MapView: UIViewRepresentable {
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
         var mapViewModel: MapViewViewModel
+        var isChangingRegion = false
 
         init(_ parent: MapView, mapViewModel: MapViewViewModel) {
             self.parent = parent
@@ -65,7 +67,13 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            if isChangingRegion {
+                isChangingRegion = false
+                return
+            }
+
             parent.onRegionChange?(mapView.region)
+            print("Region change")
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -73,13 +81,10 @@ struct MapView: UIViewRepresentable {
                 parent.selectedAnnotation = annotation
                 parent.isSelected = true
                 mapViewModel.selectAnnotation(annotation)
+                isChangingRegion = true // if changing region causes re-render
                 print("-----ANNOTATION SELECTED")
                 print("Is selected: ", parent.isSelected)
                 print("Annotation: ", Int(parent.selectedAnnotation?.id ?? -1))
-
-                DispatchQueue.main.async {
-                    self.mapViewModel.objectWillChange.send()
-                }
             }
         }
         
