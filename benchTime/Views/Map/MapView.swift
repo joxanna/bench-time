@@ -34,23 +34,31 @@ struct MapView: UIViewRepresentable {
         
         return mapView
     }
-
+    
     func updateUIView(_ uiView: MKMapView, context: Context) {
         print("-----Updating UI view")
+
+        // Update the region if it has changed and the change is not programmatic
         if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
+            print("Setting region to: \(region.center.latitude), \(region.center.longitude)")
             uiView.setRegion(region, animated: true)
         }
-        
-        uiView.addAnnotations(mapViewModel.annotations)
-        
+
+        // Remove all annotations and re-add them, including the search pin
+        uiView.removeAnnotations(uiView.annotations)
         if let searchPin = mapViewModel.searchPin {
+            print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
             uiView.addAnnotation(searchPin)
         }
-        
+        uiView.addAnnotations(mapViewModel.annotations)
+
+        // Select or deselect annotations as needed
         if let selectedAnnotation = selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
         } else {
-            uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
+            if let firstSelectedAnnotation = uiView.selectedAnnotations.first {
+                uiView.deselectAnnotation(firstSelectedAnnotation, animated: true)
+            }
         }
     }
 
