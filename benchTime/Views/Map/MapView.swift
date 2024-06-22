@@ -43,24 +43,32 @@ struct MapView: UIViewRepresentable {
             print("Setting region to: \(region.center.latitude), \(region.center.longitude)")
             uiView.setRegion(region, animated: true)
         }
+        
+        // Select or deselect annotations as needed
+        if let selectedAnnotation = selectedAnnotation {
+            uiView.selectAnnotation(selectedAnnotation, animated: true)
+        } else {
+            print("Deselect")
+            uiView.deselectAnnotation(selectedAnnotation, animated: true)
+        }
 
-        // Remove all annotations and re-add them, including the search pin
-        uiView.removeAnnotations(uiView.annotations)
+        // Remove annotations if isSelected is false
+        if !isSelected {
+            let annotationsToRemove = uiView.annotations.filter { annotation in
+                // Ensure not to remove the selectedAnnotation or the searchPin
+                return annotation !== selectedAnnotation && annotation !== mapViewModel.searchPin
+            }
+            uiView.removeAnnotations(annotationsToRemove)
+        }
+
+        // Add search pin and other annotations
         if let searchPin = mapViewModel.searchPin {
             print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
             uiView.addAnnotation(searchPin)
         }
         uiView.addAnnotations(mapViewModel.annotations)
-
-        // Select or deselect annotations as needed
-        if let selectedAnnotation = selectedAnnotation {
-            uiView.selectAnnotation(selectedAnnotation, animated: true)
-        } else {
-            if let firstSelectedAnnotation = uiView.selectedAnnotations.first {
-                uiView.deselectAnnotation(firstSelectedAnnotation, animated: true)
-            }
-        }
     }
+
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self, mapViewModel: mapViewModel)

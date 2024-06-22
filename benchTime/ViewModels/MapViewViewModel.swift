@@ -138,7 +138,6 @@ class MapViewViewModel: ObservableObject {
                 print("Search error: \(String(describing: error?.localizedDescription))")
                 return
             }
-            
             if let firstItem = response.mapItems.first {
                 print("Construct search pin")
                 let searchPin = MKPointAnnotation()

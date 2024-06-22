@@ -70,8 +70,8 @@ struct SearchBenchesView: View {
         }
         .sheet(isPresented: $isSelected, onDismiss: {
             print("-----Dismissing sheet")
-            isSelected = false
             selectedAnnotation = nil
+            isSelected = false
         }) {
             if let annotation = selectedAnnotation {
                 if let bench = benchQueryViewModel.getBench(annotation: annotation) {
@@ -79,8 +79,11 @@ struct SearchBenchesView: View {
                 }
             }
         }
-        .onChange(of: isSelected) { _,_ in
-            print("For first annotation render")
+        .onChange(of: isSelected) { _,newValue in
+            if !newValue {
+                self.selectedAnnotation = nil
+                self.isSelected = false
+            }
         }
     }
     
