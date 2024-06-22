@@ -58,10 +58,7 @@ struct SearchBenchesView: View {
                         isSearching = false
                     }
                     
-                    SearchBarView(searchText: $searchText, placeholder: "Search benches", onSearch: performSearch)
-                        .onTapGesture {
-                            isSearching = true
-                        }
+                    SearchBarView(searchText: $searchText, isSearching: $isSearching, placeholder: "Search benches", onSearch: performSearch)
                 }
                 
                 if (isLoading) {

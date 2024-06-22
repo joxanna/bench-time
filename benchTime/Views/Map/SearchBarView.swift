@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBarView: UIViewRepresentable {
     @Binding var searchText: String
+    @Binding var isSearching: Bool
     var placeholder: String
     var onSearch: ((String) -> Void)
 
@@ -35,20 +36,12 @@ struct SearchBarView: UIViewRepresentable {
         }
 
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            parent.isSearching = true
             parent.onSearch(parent.searchText)
         }
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             parent.searchText = searchText
-        }
-        
-        func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            // Handle clear button click
-            if text.isEmpty {
-                parent.searchText = "" // Clear searchText when clear button is clicked
-                return true
-            }
-            return true
         }
     }
 }
