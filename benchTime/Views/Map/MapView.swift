@@ -40,7 +40,12 @@ struct MapView: UIViewRepresentable {
         if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
             uiView.setRegion(region, animated: true)
         }
+        
         uiView.addAnnotations(mapViewModel.annotations)
+        
+        if let searchPin = mapViewModel.searchPin {
+            uiView.addAnnotation(searchPin)
+        }
         
         if let selectedAnnotation = selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
@@ -64,7 +69,11 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            return mapViewModel.view(for: annotation)
+            if annotation is CustomPointAnnotation {
+                return mapViewModel.viewBench(for: annotation)
+            } else {
+                return mapViewModel.viewSearch(for: annotation)
+            }
         }
         
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

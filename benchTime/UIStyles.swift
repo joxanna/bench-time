@@ -28,4 +28,16 @@ struct UIStyles {
         static let body = Font.system(size: 16, weight: .regular, design: .default)
         static let caption = Font.system(size: 12, weight: .light, design: .default)
     }
+    
+    struct Padding {
+        static let xsmall: CGFloat = 4
+        static let small: CGFloat = 8
+        static let medium: CGFloat = 12
+        static let large: CGFloat = 16
+    }
+    
+    struct SearchDistance {
+        static let lat: CGFloat = 300
+        static let lon: CGFloat = 300
+    }
 }

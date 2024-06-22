@@ -24,6 +24,15 @@ class MapViewViewModel: ObservableObject {
     
     var annotations = [CustomPointAnnotation]() // Annotations generated from center visualizations
     var overlays = [MKOverlay]() // Overlays generated from polygon/polyline type visualizations.
+    var searchPin: MKPointAnnotation? {
+        didSet {
+            if let searchPin = searchPin {
+                addSearchPin?(searchPin)
+            } else {
+                removeSearchPin?()
+            }
+        }
+    }
     
     // Variable for storing/setting the bound mapView's region
     var region: MKCoordinateRegion? {
@@ -40,14 +49,13 @@ class MapViewViewModel: ObservableObject {
     var setRegion: ((MKCoordinateRegion) -> Void)?
     var addAnnotations: (([CustomPointAnnotation]) -> Void)?
     var removeAnnotations: (([CustomPointAnnotation]) -> Void)?
+    var addSearchPin: ((MKPointAnnotation) -> Void)?
+    var removeSearchPin: (() -> Void)?
     
-    /* ------------- */
     func selectAnnotation(_ annotation: CustomPointAnnotation) {
-        region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
+        region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
     }
 
-    /* ------------- */
-    
     // Function to register all reusable annotation views to the mapView
     func registerAnnotationViews(to mapView: MKMapView) {
         mapView.register(
@@ -95,7 +103,7 @@ class MapViewViewModel: ObservableObject {
     }
     
     // Set the annotaiton view for annotations visualized on the mapView
-    func view(for annotation: MKAnnotation) -> MKAnnotationView? {
+    func viewBench(for annotation: MKAnnotation) -> MKAnnotationView? {
         guard let pointAnnotation = annotation as? MKPointAnnotation else {
             return nil
         }
@@ -105,5 +113,41 @@ class MapViewViewModel: ObservableObject {
         
         view.markerTintColor = UIStyles.Colors.theme
         return view
+    }
+    
+    func viewSearch(for annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let pointAnnotation = annotation as? MKPointAnnotation else {
+            return nil
+        }
+        let view = MKMarkerAnnotationView(
+            annotation: pointAnnotation,
+            reuseIdentifier: markerReuseIdentifier)
+        
+        view.markerTintColor = .red
+        return view
+    }
+    
+    func performSearch(query: String) {
+        print("-----SEARCHING")
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = query
+
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+            guard let response = response else {
+                print("Search error: \(String(describing: error?.localizedDescription))")
+                return
+            }
+
+            if let firstItem = response.mapItems.first {
+                print("Construct search pin")
+                let searchPin = MKPointAnnotation()
+                searchPin.title = firstItem.name
+                searchPin.coordinate = firstItem.placemark.coordinate
+                self.searchPin = searchPin
+                
+                self.region = MKCoordinateRegion(center: firstItem.placemark.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+            }
+        }
     }
 }

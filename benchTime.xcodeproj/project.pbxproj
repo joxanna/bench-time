@@ -22,7 +22,6 @@
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
-		FF557A762BFF13CE0033ADD6 /* BTSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
 		FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */; };
@@ -41,6 +40,7 @@
 		FF81E1CA2BECAFCE0023E743 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1C92BECAFCD0023E743 /* SettingsView.swift */; };
 		FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */; };
 		FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */; };
+		FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8D197A2C26D5F300AB957F /* SearchBarView.swift */; };
 		FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */; };
 		FF9C308C2C215209003E90DF /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C308B2C215208003E90DF /* ReviewViewModel.swift */; };
 		FF9C30902C21815B003E90DF /* BenchReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C308F2C21815B003E90DF /* BenchReviewsView.swift */; };
@@ -106,7 +106,6 @@
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
 		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTSearchBar.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extensions.swift"; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		FF81E1C92BECAFCD0023E743 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
 		FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldViewModifier.swift; sourceTree = "<group>"; };
+		FF8D197A2C26D5F300AB957F /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
 		FF9C308B2C215208003E90DF /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		FF9C308F2C21815B003E90DF /* BenchReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchReviewsView.swift; sourceTree = "<group>"; };
@@ -239,6 +239,7 @@
 			children = (
 				FF29D64A2BF8B66900C054B2 /* MapView.swift */,
 				FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */,
+				FF8D197A2C26D5F300AB957F /* SearchBarView.swift */,
 				FF9C308F2C21815B003E90DF /* BenchReviewsView.swift */,
 			);
 			path = Map;
@@ -260,7 +261,6 @@
 				FF7053FC2BFC37EE00965435 /* BTStars.swift */,
 				FF1B11412BEA123400676036 /* BTCard.swift */,
 				FF7054002BFC5D8800965435 /* LargeModalView.swift */,
-				FF557A752BFF13CE0033ADD6 /* BTSearchBar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -646,6 +646,7 @@
 				FF7053F12BFACC7800965435 /* ReviewModel.swift in Sources */,
 				FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */,
 				FF1B113B2BEA0C7F00676036 /* RegisterView.swift in Sources */,
+				FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */,
 				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
@@ -669,7 +670,6 @@
 				FF7053F32BFACF5300965435 /* NewReviewViewViewModel.swift in Sources */,
 				FF7054012BFC5D8800965435 /* LargeModalView.swift in Sources */,
 				FF1B113D2BEA0D8500676036 /* BTButton.swift in Sources */,
-				FF557A762BFF13CE0033ADD6 /* BTSearchBar.swift in Sources */,
 				FF7053F92BFB4EB500965435 /* ImageUploaderViewModel.swift in Sources */,
 				FF7054082BFC7F5000965435 /* UpdateReviewViewViewModel.swift in Sources */,
 				FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */,
