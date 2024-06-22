@@ -32,7 +32,7 @@ class BenchQueryViewModel: ObservableObject {
         print("-----Fetching from benchQueryModel")
         DispatchQueue.main.async {
             isLoading.wrappedValue = true
-            print("Is loading should be true: ", isLoading.wrappedValue)
+//            print("Is loading should be true: ", isLoading.wrappedValue)
         }
         
         let minLat = region.center.latitude - region.span.latitudeDelta / 2
@@ -62,7 +62,7 @@ class BenchQueryViewModel: ObservableObject {
                     self.mapViewModel.addVisualizations(visualizations)
                     print("Successful fetch to Overpass API")
                     isLoading.wrappedValue  = false // Update isLoading on the main thread
-                    print("Is loading should be false: ", isLoading.wrappedValue)
+//                    print("Is loading should be false: ", isLoading.wrappedValue)
                 }
             }
         }

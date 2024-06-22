@@ -43,5 +43,13 @@ struct SearchBarView: UIViewRepresentable {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             parent.searchText = searchText
         }
+        
+        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            parent.isSearching = true
+        }
+        
+        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            parent.isSearching = false
+        }
     }
 }
