@@ -16,8 +16,6 @@ class BenchQueryViewModel: ObservableObject {
     var mapViewModel: MapViewViewModel
     var elements = [Int: OPElement]()
     
-    var isLoading: Bool = false
-    
     init() {
         self.client = OPClient()
         self.mapViewModel = MapViewViewModel()
@@ -30,8 +28,12 @@ class BenchQueryViewModel: ObservableObject {
         return elements[id]
     }
     
-    func fetchBenches(for region: MKCoordinateRegion) {
-        self.isLoading = true
+    func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>) {
+        print("-----Fetching from benchQueryModel")
+        DispatchQueue.main.async {
+            isLoading.wrappedValue = true
+            print("Is loading should be true: ", isLoading.wrappedValue)
+        }
         
         let minLat = region.center.latitude - region.span.latitudeDelta / 2
         let maxLat = region.center.latitude + region.span.latitudeDelta / 2
@@ -43,23 +45,25 @@ class BenchQueryViewModel: ObservableObject {
         node["amenity"="bench"](\(minLat),\(minLon),\(maxLat),\(maxLon));
         out body;
         """
-
-        print("Making request...")
         
         client.fetchElements(query: query) { result in
-            switch result {
-            case .failure(let error):
-                print("Error fetching elements: \(error.localizedDescription)")
-                if let urlError = error as? URLError {
-                    print("URLError code: \(urlError.code)")
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print("Error fetching elements: \(error.localizedDescription)")
+                    if let urlError = error as? URLError {
+                        print("URLError code: \(urlError.code)")
+                    }
+                    isLoading.wrappedValue = false
+                case .success(let elements):
+                    self.elements = elements // Update elements on the main thread
+                    // Generate mapKit visualizations for the returned elements using a static visualization generator
+                    let visualizations = OPVisualizationGenerator.mapKitVisualizations(forElements: elements)
+                    self.mapViewModel.addVisualizations(visualizations)
+                    print("Successful fetch to Overpass API")
+                    isLoading.wrappedValue  = false // Update isLoading on the main thread
+                    print("Is loading should be false: ", isLoading.wrappedValue)
                 }
-            case .success(let elements):
-                self.elements = elements // Update elements on the main thread
-                // Generate mapKit visualizations for the returned elements using a static visualization generator
-                let visualizations = OPVisualizationGenerator.mapKitVisualizations(forElements: elements)
-                self.mapViewModel.addVisualizations(visualizations)
-                print("Successful fetch to Overpass API")
-                self.isLoading = false // Update isLoading on the main thread
             }
         }
     }

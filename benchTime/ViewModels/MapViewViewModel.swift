@@ -94,59 +94,6 @@ class MapViewViewModel: ObservableObject {
         addAnnotations?(annotations)
     }
     
-    // Function called to center the mapView on a particular visualization
-    func centerMap(onVisualizationWithId id: Int) {
-        guard let visualization = visualizations[id] else {
-            return
-        }
-        
-        let region: MKCoordinateRegion
-        let insetRatio: Double = -0.25
-        
-        let boundingRects: [MKMapRect]
-        
-        // If the visualization is an annotation then center on the annotation's coordinate. Otherwise, find the bounding rectangles of every object in the visualization
-        switch visualization {
-        case .annotation(let annotation):
-            region = MKCoordinateRegion(
-                center: annotation.coordinate,
-                latitudinalMeters: 500,
-                longitudinalMeters: 500)
-            self.region = region
-            return
-        case .polyline(let polyline):
-            boundingRects = [polyline.boundingMapRect]
-        case .polygon(let polygon):
-            boundingRects = [polygon.boundingMapRect]
-        case .polylines(let polylines):
-            boundingRects = polylines.map { $0.boundingMapRect }
-        case .polygons(let polygons):
-            boundingRects = polygons.map { $0.boundingMapRect }
-        }
-        
-        // Find a larger rectable that encompasses all the bounding rectangles for each individual object in the visualization.
-        guard
-            let minX = (boundingRects.map { $0.minX }).min(),
-            let maxX = (boundingRects.map { $0.maxX }).max(),
-            let minY = (boundingRects.map { $0.minY }).min(),
-            let maxY = (boundingRects.map { $0.maxY }).max()
-        else {
-            return
-        }
-        let width = maxX - minX
-        let height = maxY - minY
-        let rect = MKMapRect(x: minX, y: minY, width: width, height: height)
-        
-        // Pad the large rectangle by the specified ratio
-        let paddedRect = rect.insetBy(dx: width * insetRatio, dy: height * insetRatio)
-        
-        // Convert the rectangle to a MKCoordinateRegion
-        region = MKCoordinateRegion(paddedRect)
-        
-        // Set the mapView region to the new visualization-emcompassing region
-        self.region = region
-    }
-    
     // Set the annotaiton view for annotations visualized on the mapView
     func view(for annotation: MKAnnotation) -> MKAnnotationView? {
         guard let pointAnnotation = annotation as? MKPointAnnotation else {
@@ -158,16 +105,5 @@ class MapViewViewModel: ObservableObject {
         
         view.markerTintColor = UIStyles.Colors.theme
         return view
-    }
-    
-    // If the user changes the region through a gesture, set the stored region to nil. This will stop the mapView from recentering itself when the edge insets change.
-    func userDidGestureOnMapView(sender: UIGestureRecognizer) {
-        
-        if
-            sender.isKind(of: UIPanGestureRecognizer.self) ||
-            sender.isKind(of: UIPinchGestureRecognizer.self)
-        {
-            region = nil
-        }
     }
 }

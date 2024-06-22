@@ -14,28 +14,27 @@ struct SearchBenchesView: View {
     @StateObject var benchQueryViewModel = BenchQueryViewModel()
     @StateObject private var locationManager = LocationManager.shared
     
+    @State private var isLoading: Bool = false
     @State private var isSelected: Bool = false
     @State private var selectedAnnotation: CustomPointAnnotation? = nil
-    
-    @State private var renderCount = 0
 
     var body: some View {
         VStack {
             ZStack {
                 MapView(mapViewModel: benchQueryViewModel.mapViewModel,
-                    onRegionChange: { region in
-                        if !isSelected {
-                             benchQueryViewModel.fetchBenches(for: region)
+                    onRegionChange: { region, isLoading in
+                    if !isSelected {
+                            print("-----Fetching benches in onRegionChange")
+                            benchQueryViewModel.fetchBenches(for: region, isLoading: isLoading)
                         }
                     },
                     isSelected: $isSelected,
-                    selectedAnnotation: $selectedAnnotation)
+                    selectedAnnotation: $selectedAnnotation,
+                    isLoading: $isLoading
+                )
                 .edgesIgnoringSafeArea(.all)
                 .onAppear {
-                    locationManager.requestLocation()
-                }
-                .edgesIgnoringSafeArea(.all)
-                .onAppear {
+                    print("-----Requesting location on appear")
                     locationManager.requestLocation()
                 }
                 .onChange(of: locationManager.lastLocation) { _, newLocation in
@@ -45,23 +44,29 @@ struct SearchBenchesView: View {
                             latitudinalMeters: 300,
                             longitudinalMeters: 300)
                         benchQueryViewModel.mapViewModel.region = region
-                        benchQueryViewModel.fetchBenches(for: region)
+                        print("-----Fetching benches in onChange")
+                        benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
                     }
+                }
+                
+                if (isLoading) {
+                    ProgressView()
                 }
             }
             Spacer()
         }
         .sheet(isPresented: $isSelected, onDismiss: {
-            print("Dimissing")
+            print("-----Dismissing sheet")
             isSelected = false
             selectedAnnotation = nil
         }) {
-            if let selectedAnnotation = selectedAnnotation, let bench = benchQueryViewModel.getBench(annotation: selectedAnnotation) {
-                LargeModalView(title: "Bench reviews", contentView: BenchReviewsView(bench: bench, benchAnnotation: selectedAnnotation))
+            if let annotation = selectedAnnotation {
+                if let bench = benchQueryViewModel.getBench(annotation: annotation) {
+                    LargeModalView(title: "Bench reviews", contentView: BenchReviewsView(bench: bench, benchAnnotation: annotation))
+                }
             }
         }
         .onChange(of: isSelected) { _,_ in
-            print("IS SELECTED: ", isSelected)
         }
     }
 }

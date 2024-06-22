@@ -10,18 +10,19 @@ import MapKit
 
 struct MapView: UIViewRepresentable {
     @ObservedObject var mapViewModel: MapViewViewModel
-    var onRegionChange: ((MKCoordinateRegion) -> Void)?
+    var onRegionChange: ((MKCoordinateRegion, Binding<Bool>) -> Void)?
     
     @Binding var isSelected: Bool
     @Binding var selectedAnnotation: CustomPointAnnotation?
+    @Binding var isLoading: Bool
 
     func makeUIView(context: Context) -> MKMapView {
-        print("Making UI view")
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         
         mapViewModel.setRegion = { region in
+            context.coordinator.isProgrammaticRegionChange = true
             mapView.setRegion(region, animated: true)
         }
         mapViewModel.addAnnotations = { annotations in
@@ -35,8 +36,8 @@ struct MapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        print("Updating UI view...")
-        if let region = mapViewModel.region {
+        print("-----Updating UI view")
+        if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
             uiView.setRegion(region, animated: true)
         }
         uiView.addAnnotations(mapViewModel.annotations)
@@ -55,36 +56,34 @@ struct MapView: UIViewRepresentable {
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
         var mapViewModel: MapViewViewModel
-        var isChangingRegion = false
+        var isProgrammaticRegionChange = false
 
         init(_ parent: MapView, mapViewModel: MapViewViewModel) {
             self.parent = parent
             self.mapViewModel = mapViewModel
         }
-
+        
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             return mapViewModel.view(for: annotation)
         }
         
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-            if isChangingRegion {
-                isChangingRegion = false
+            if isProgrammaticRegionChange {
+                isProgrammaticRegionChange = false
                 return
             }
-
-            parent.onRegionChange?(mapView.region)
-            print("Region change")
+            print("-----Region change")
+            parent.onRegionChange?(mapView.region, parent.$isLoading)
+            isProgrammaticRegionChange = true // prevent re-render
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             if let annotation = view.annotation as? CustomPointAnnotation {
                 parent.selectedAnnotation = annotation
-                parent.isSelected = true
                 mapViewModel.selectAnnotation(annotation)
-                isChangingRegion = true // if changing region causes re-render
-                print("-----ANNOTATION SELECTED")
-                print("Is selected: ", parent.isSelected)
-                print("Annotation: ", Int(parent.selectedAnnotation?.id ?? -1))
+                parent.isSelected = true
+                isProgrammaticRegionChange = true // if changing region causes re-render
+                print("-----Annotation selected")
             }
         }
         
@@ -92,11 +91,8 @@ struct MapView: UIViewRepresentable {
             if let _ = view.annotation as? CustomPointAnnotation {
                 parent.selectedAnnotation = nil
                 parent.isSelected = false
-                print("-----ANNOTATION DE-SELECTED")
-                print("Is selected: ", parent.isSelected)
-                print("Annotation: ", Int(parent.selectedAnnotation?.id ?? -1))
+                print("-----Annotation de-selected")
             }
         }
     }
-
 }
