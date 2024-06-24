@@ -21,6 +21,28 @@ struct MapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         
+        // Add tracking button
+        let trackingButton = UIButton(type: .system)
+        trackingButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        trackingButton.tintColor = .systemBlue
+        trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .allTouchEvents)
+        mapView.addSubview(trackingButton)
+        
+        trackingButton.translatesAutoresizingMaskIntoConstraints = false
+        trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
+        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 72).isActive = true
+        
+        // Add compass
+        mapView.showsCompass = false
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.compassVisibility = .visible
+        
+        mapView.addSubview(compassButton)
+        
+        compassButton.translatesAutoresizingMaskIntoConstraints = false
+        compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
+        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: UIStyles.Padding.medium).isActive = true
+        
         mapViewModel.setRegion = { region in
             context.coordinator.isProgrammaticRegionChange = true
             mapView.setRegion(region, animated: true)
@@ -31,6 +53,8 @@ struct MapView: UIViewRepresentable {
         mapViewModel.removeAnnotations = { annotations in
             mapView.removeAnnotations(annotations)
         }
+        
+        context.coordinator.mapView = mapView
         
         return mapView
     }
@@ -48,20 +72,14 @@ struct MapView: UIViewRepresentable {
         if let selectedAnnotation = selectedAnnotation {
             uiView.selectAnnotation(selectedAnnotation, animated: true)
         } else {
-            print("Deselect")
-            uiView.deselectAnnotation(selectedAnnotation, animated: true)
+            uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
         }
 
         // Remove annotations if isSelected is false
         if !isSelected {
-            let annotationsToRemove = uiView.annotations.filter { annotation in
-                // Ensure not to remove the selectedAnnotation or the searchPin
-                return annotation !== selectedAnnotation && annotation !== mapViewModel.searchPin
-            }
-            uiView.removeAnnotations(annotationsToRemove)
+            uiView.removeAnnotations(uiView.annotations)
         }
-
-        // Add search pin and other annotations
+        
         if let searchPin = mapViewModel.searchPin {
             print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
             uiView.addAnnotation(searchPin)
@@ -78,6 +96,7 @@ struct MapView: UIViewRepresentable {
         var parent: MapView
         var mapViewModel: MapViewViewModel
         var isProgrammaticRegionChange = false
+        var mapView: MKMapView?
 
         init(_ parent: MapView, mapViewModel: MapViewViewModel) {
             self.parent = parent
@@ -92,11 +111,13 @@ struct MapView: UIViewRepresentable {
             }
         }
         
+
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
             if isProgrammaticRegionChange {
                 isProgrammaticRegionChange = false
                 return
             }
+            
             print("-----Region change")
             parent.onRegionChange?(mapView.region, parent.$isLoading)
             isProgrammaticRegionChange = true // prevent re-render
@@ -105,7 +126,7 @@ struct MapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             if let annotation = view.annotation as? CustomPointAnnotation {
                 parent.selectedAnnotation = annotation
-                mapViewModel.selectAnnotation(annotation)
+                mapViewModel.selectAnnotation(annotation, isTrackingModeFollow: mapView.userTrackingMode == .follow)
                 parent.isSelected = true
                 isProgrammaticRegionChange = true // if changing region causes re-render
                 print("-----Annotation selected")
@@ -119,5 +140,28 @@ struct MapView: UIViewRepresentable {
                 print("-----Annotation de-selected")
             }
         }
+        
+        func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+            // Check if user switched to follow mode
+            if mode == .follow {
+                // Preserve the search pin on the map
+                if let searchPin = mapViewModel.searchPin {
+                    print("Preserve search pin")
+                    mapView.addAnnotation(searchPin)
+                }
+            }
+        }
+        
+        @objc func trackingButtonTapped() {
+            print("-----Re-center")
+            if mapView?.userTrackingMode == .follow {
+                print("Don't follow")
+                mapView?.setUserTrackingMode(.none, animated: true)
+            } else {
+                print("Follow")
+                mapView?.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+            }
+        }
+
     }
 }

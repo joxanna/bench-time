@@ -52,8 +52,10 @@ class MapViewViewModel: ObservableObject {
     var addSearchPin: ((MKPointAnnotation) -> Void)?
     var removeSearchPin: (() -> Void)?
     
-    func selectAnnotation(_ annotation: CustomPointAnnotation) {
-        region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+    func selectAnnotation(_ annotation: CustomPointAnnotation, isTrackingModeFollow: Bool) {
+        if !isTrackingModeFollow {
+            region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+        }
     }
 
     // Function to register all reusable annotation views to the mapView
@@ -148,5 +150,9 @@ class MapViewViewModel: ObservableObject {
                 self.region = MKCoordinateRegion(center: firstItem.placemark.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
             }
         }
+    }
+    
+    func clearSearchPin() {
+        searchPin = nil
     }
 }
