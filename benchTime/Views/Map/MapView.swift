@@ -15,11 +15,23 @@ struct MapView: UIViewRepresentable {
     @Binding var isSelected: Bool
     @Binding var selectedAnnotation: CustomPointAnnotation?
     @Binding var isLoading: Bool
+    @Binding var isSearching: Bool
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
+        
+        // Add compass
+        mapView.showsCompass = false
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.compassVisibility = .visible
+        
+        mapView.addSubview(compassButton)
+        
+        compassButton.translatesAutoresizingMaskIntoConstraints = false
+        compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
+        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: UIStyles.Padding.medium).isActive = true
         
         // Add tracking button
         let trackingButton = UIButton(type: .system)
@@ -32,16 +44,25 @@ struct MapView: UIViewRepresentable {
         trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
         trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 72).isActive = true
         
-        // Add compass
-        mapView.showsCompass = false
-        let compassButton = MKCompassButton(mapView: mapView)
-        compassButton.compassVisibility = .visible
+        // Add pin button
+        let pinButton = UIButton(type: .system)
+        pinButton.setImage(UIImage(systemName: "mappin"), for: .normal)
+        pinButton.tintColor = .systemRed
+        pinButton.addTarget(context.coordinator, action: #selector(context.coordinator.pinButtonTapped), for: .allTouchEvents)
+        mapView.addSubview(pinButton)
         
-        mapView.addSubview(compassButton)
+        pinButton.translatesAutoresizingMaskIntoConstraints = false
+        pinButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
+        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 108).isActive = true
         
-        compassButton.translatesAutoresizingMaskIntoConstraints = false
-        compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
-        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: UIStyles.Padding.medium).isActive = true
+        if let imageView = pinButton.imageView {
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        }
+        
+        pinButton.isHidden = !mapViewModel.hasSearchPin
+        pinButton.tag = 3
         
         mapViewModel.setRegion = { region in
             context.coordinator.isProgrammaticRegionChange = true
@@ -60,31 +81,45 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        print("-----Updating UI view")
-
-        // Update the region if it has changed and the change is not programmatic
-        if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
-            print("Setting region to: \(region.center.latitude), \(region.center.longitude)")
-            uiView.setRegion(region, animated: true)
-        }
-        
-        // Select or deselect annotations as needed
-        if let selectedAnnotation = selectedAnnotation {
-            uiView.selectAnnotation(selectedAnnotation, animated: true)
+        if (isSearching) {
+            
         } else {
-            uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
-        }
+            print("-----Updating UI view")
+            // Update the region if it has changed and the change is not programmatic
+            if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
+                print("Setting region to: \(region.center.latitude), \(region.center.longitude)")
+                uiView.setRegion(region, animated: true)
+            }
+            
+            // Select or deselect annotations as needed
+            if let selectedAnnotation = selectedAnnotation {
+                print("Select annotation")
+                uiView.selectAnnotation(selectedAnnotation, animated: true)
+            } else {
+                print("De-select annotation")
+                uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
+            }
 
-        // Remove annotations if isSelected is false
-        if !isSelected {
-            uiView.removeAnnotations(uiView.annotations)
+            // Remove annotations if isSelected is false
+            if !isSelected {
+                print("Remove annotations")
+                uiView.removeAnnotations(uiView.annotations)
+            }
+            
+            if let searchPin = mapViewModel.searchPin {
+                print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
+                uiView.addAnnotation(searchPin)
+            }
+            
+            uiView.subviews.compactMap { $0 as? UIButton }.forEach {
+                if $0.tag == 3 { // Handle visibility of search pin button
+                    $0.isHidden = !mapViewModel.hasSearchPin
+                }
+            }
+
+            uiView.addAnnotations(mapViewModel.annotations)
+            print("Add annotations")
         }
-        
-        if let searchPin = mapViewModel.searchPin {
-            print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
-            uiView.addAnnotation(searchPin)
-        }
-        uiView.addAnnotations(mapViewModel.annotations)
     }
 
     
@@ -92,7 +127,7 @@ struct MapView: UIViewRepresentable {
         Coordinator(self, mapViewModel: mapViewModel)
     }
 
-    class Coordinator: NSObject, MKMapViewDelegate {
+    class Coordinator: NSObject, MKMapViewDelegate, UISearchBarDelegate {
         var parent: MapView
         var mapViewModel: MapViewViewModel
         var isProgrammaticRegionChange = false
@@ -113,14 +148,19 @@ struct MapView: UIViewRepresentable {
         
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            // Stop unwanted calls
             if isProgrammaticRegionChange {
                 isProgrammaticRegionChange = false
                 return
             }
+
+            if parent.isSearching {
+                return
+            }
             
-            print("-----Region change")
+            print("-----Region change triggered")
             parent.onRegionChange?(mapView.region, parent.$isLoading)
-            isProgrammaticRegionChange = true // prevent re-render
+            isProgrammaticRegionChange = true
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -157,11 +197,24 @@ struct MapView: UIViewRepresentable {
             if mapView?.userTrackingMode == .follow {
                 print("Don't follow")
                 mapView?.setUserTrackingMode(.none, animated: true)
+                // Fetch benches at current location
+                if let location = mapView?.userLocation.location {
+                    let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+                    mapView?.setRegion(region, animated: true)
+                }
             } else {
                 print("Follow")
                 mapView?.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+                
             }
         }
-
+        
+        @objc func pinButtonTapped() {
+            print("-----Pin button tapped")
+            if let searchPin = mapViewModel.searchPin {
+                let region = MKCoordinateRegion(center: searchPin.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+                mapView?.setRegion(region, animated: true)
+            }
+        }
     }
 }

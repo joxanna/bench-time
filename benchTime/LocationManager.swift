@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import Combine
 
 class LocationManager: NSObject, ObservableObject {
     static let shared = LocationManager()
@@ -21,20 +22,27 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func requestLocation() {
+    func requestLocation(completion: @escaping (CLLocation?, Error?) -> Void) {
+        self.locationRequestCompletion = completion
         locationManager.requestLocation()
     }
+    
+    private var locationRequestCompletion: ((CLLocation?, Error?) -> Void)?
 }
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             lastLocation = location
+            locationRequestCompletion?(location, nil)
+            locationRequestCompletion = nil
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
+        locationRequestCompletion?(nil, error)
+        locationRequestCompletion = nil
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

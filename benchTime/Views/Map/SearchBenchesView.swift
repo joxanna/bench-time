@@ -21,14 +21,11 @@ struct SearchBenchesView: View {
     
     @State private var searchText: String = ""
     @State private var isSearching: Bool = false // Track search state separately
-
-    @State private var isfirstRender: Bool = true
     
     var body: some View {
         VStack {
-            SearchBarView(searchText: $searchText, isSearching: $isSearching, placeholder: "Search benches", onSearch: performSearch)
+            SearchBarView(searchText: $searchText, isSearching: $isSearching, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
             Spacer()
-            
             ZStack {
                 ZStack(alignment: .top) {
                     MapView(mapViewModel: benchQueryViewModel.mapViewModel,
@@ -40,12 +37,13 @@ struct SearchBenchesView: View {
                         },
                         isSelected: $isSelected,
                         selectedAnnotation: $selectedAnnotation,
-                        isLoading: $isLoading
+                        isLoading: $isLoading,
+                        isSearching: $isSearching
                     )
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        isSearching = false
+                        print("STOP")
                     }
                 }
                 
@@ -58,7 +56,24 @@ struct SearchBenchesView: View {
         }
         .onAppear {
             print("-----Requesting location on appear")
-            locationManager.requestLocation()
+            locationManager.requestLocation { location, error in
+                if let error = error {
+                    print("Error fetching location: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let location = location {
+                    let region = MKCoordinateRegion(
+                        center: location.coordinate,
+                        latitudinalMeters: UIStyles.SearchDistance.lat,
+                        longitudinalMeters: UIStyles.SearchDistance.lon)
+                    benchQueryViewModel.mapViewModel.region = region
+                    benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
+                    print("IS FIRST RENDER")
+                } else {
+                    print("No location available.")
+                }
+            }
         }
         .sheet(isPresented: $isSelected, onDismiss: {
             print("-----Dismissing sheet")
@@ -78,16 +93,7 @@ struct SearchBenchesView: View {
             }
         }
         .onChange(of: locationManager.lastLocation) { _, newLocation in
-            if let newLocation = newLocation, !isSearching, !isSelected, isfirstRender { // Check if not searching or selected
-                let region = MKCoordinateRegion(
-                    center: newLocation.coordinate,
-                    latitudinalMeters: UIStyles.SearchDistance.lat,
-                    longitudinalMeters: UIStyles.SearchDistance.lon)
-                benchQueryViewModel.mapViewModel.region = region
-                print("-----Fetching benches in onChange")
-                benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
-                isfirstRender = false
-            }
+
         }
     }
     
@@ -107,6 +113,12 @@ struct SearchBenchesView: View {
         // Close keyboard
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         isSearching = false
+    }
+    
+    private func onSearchClear() {
+        print("-----CLEARING")
+        // Perform search logic based on searchText
+        benchQueryViewModel.mapViewModel.clearSearchPin()
     }
 }
 

@@ -33,6 +33,9 @@ class MapViewViewModel: ObservableObject {
             }
         }
     }
+    var hasSearchPin: Bool {
+        return searchPin != nil
+    }
     
     // Variable for storing/setting the bound mapView's region
     var region: MKCoordinateRegion? {
@@ -154,5 +157,9 @@ class MapViewViewModel: ObservableObject {
     
     func clearSearchPin() {
         searchPin = nil
+        // update map
+        if let region = region {
+            self.region = MKCoordinateRegion(center: region.center, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+        }
     }
 }
