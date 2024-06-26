@@ -21,10 +21,14 @@ struct SearchResultsView: View {
                 }) {
                     ResultCell(result: result)
                 }
+                .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
+                    return 0
+                }
             }
-            .padding(.top, 25)
-            .scrollContentBackground(.hidden)
+            .listStyle(.plain)
+            .listStyle(.insetGrouped) 
             .background(.white)
+            .scrollContentBackground(.hidden)
         }
     }
 }
@@ -47,11 +51,9 @@ struct ResultCell: View {
                     .lineLimit(nil)
             }
         }
-        .padding()
-        .padding(.trailing, 15)
+        .padding(.leading, 12)
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
         .frame(minHeight: 64)
-        .background(.clear)
     }
 }
 

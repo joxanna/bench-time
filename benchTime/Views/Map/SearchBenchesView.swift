@@ -46,6 +46,9 @@ struct SearchBenchesView: View {
                         print("STOP")
                     }
                     
+                    SearchBarView(searchText: $searchText, isSearching: $isSearching, searchResults: $searchResults, showSearchResults: $showSearchResults, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
+                        .frame(height: 44)
+                    
                     if showSearchResults {
                         SearchResultsView(searchResults: $searchResults,
                                           isSearching: $isSearching,
@@ -55,9 +58,8 @@ struct SearchBenchesView: View {
                                                 performSearch(query: searchText)
                                                 print("SELECTED RESULT")
                         })
+                        .padding(.top, 44)
                     }
-                    
-                    SearchBarView(searchText: $searchText, isSearching: $isSearching, searchResults: $searchResults, showSearchResults: $showSearchResults, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
                 }
                 
                 if isLoading {
