@@ -31,29 +31,29 @@ struct MapView: UIViewRepresentable {
         
         compassButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
-        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: UIStyles.Padding.medium).isActive = true
+        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 72).isActive = true
         
         // Add tracking button
         let trackingButton = UIButton(type: .system)
         trackingButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
         trackingButton.tintColor = .systemBlue
-        trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .allTouchEvents)
+        trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .touchUpInside)
         mapView.addSubview(trackingButton)
         
         trackingButton.translatesAutoresizingMaskIntoConstraints = false
         trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 72).isActive = true
+        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 124).isActive = true
         
         // Add pin button
         let pinButton = UIButton(type: .system)
         pinButton.setImage(UIImage(systemName: "mappin"), for: .normal)
         pinButton.tintColor = .systemRed
-        pinButton.addTarget(context.coordinator, action: #selector(context.coordinator.pinButtonTapped), for: .allTouchEvents)
+        pinButton.addTarget(context.coordinator, action: #selector(context.coordinator.pinButtonTapped), for: .touchUpInside)
         mapView.addSubview(pinButton)
         
         pinButton.translatesAutoresizingMaskIntoConstraints = false
         pinButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 108).isActive = true
+        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 160).isActive = true
         
         if let imageView = pinButton.imageView {
             imageView.translatesAutoresizingMaskIntoConstraints = false

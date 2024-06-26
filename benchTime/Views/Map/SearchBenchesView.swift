@@ -21,38 +21,52 @@ struct SearchBenchesView: View {
     
     @State private var searchText: String = ""
     @State private var isSearching: Bool = false // Track search state separately
+    @State private var searchResults: [MKLocalSearchCompletion] = []
+    @State private var showSearchResults: Bool = false
     
     var body: some View {
         VStack {
-            SearchBarView(searchText: $searchText, isSearching: $isSearching, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
-            Spacer()
             ZStack {
                 ZStack(alignment: .top) {
                     MapView(mapViewModel: benchQueryViewModel.mapViewModel,
-                        onRegionChange: { region, isLoading in
-                            if !isSearching, !isSelected { // Check if not searching or selected
-                                print("-----Fetching benches in onRegionChange")
-                                benchQueryViewModel.fetchBenches(for: region, isLoading: isLoading)
-                            }
-                        },
-                        isSelected: $isSelected,
-                        selectedAnnotation: $selectedAnnotation,
-                        isLoading: $isLoading,
-                        isSearching: $isSearching
+                            onRegionChange: { region, isLoading in
+                                if !isSearching, !isSelected { // Check if not searching or selected
+                                    print("-----Fetching benches in onRegionChange")
+                                    benchQueryViewModel.fetchBenches(for: region, isLoading: isLoading)
+                                }
+                            },
+                            isSelected: $isSelected,
+                            selectedAnnotation: $selectedAnnotation,
+                            isLoading: $isLoading,
+                            isSearching: $isSearching
                     )
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         print("STOP")
                     }
+                    
+                    if showSearchResults {
+                        SearchResultsView(searchResults: $searchResults,
+                                          isSearching: $isSearching,
+                                          onSelectResult: { result in
+                                                isSearching = true
+                                                searchText = result.uniqueIdentifier
+                                                performSearch(query: searchText)
+                                                print("SELECTED RESULT")
+                        })
+                    }
+                    
+                    SearchBarView(searchText: $searchText, isSearching: $isSearching, searchResults: $searchResults, showSearchResults: $showSearchResults, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
                 }
                 
-                if (isLoading) {
+                if isLoading {
                     ProgressView()
                         .scaleEffect(1.5)
                 }
             }
             Spacer()
+                .frame(height: 0.5)
         }
         .onAppear {
             print("-----Requesting location on appear")
@@ -117,7 +131,7 @@ struct SearchBenchesView: View {
     
     private func onSearchClear() {
         print("-----CLEARING")
-        // Perform search logic based on searchText
+        searchText = ""
         benchQueryViewModel.mapViewModel.clearSearchPin()
     }
 }
