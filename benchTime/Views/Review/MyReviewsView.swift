@@ -13,15 +13,20 @@ struct MyReviewsView: View {
     @State private var errorMessage: String?
     
     var body: some View {
-        ScrollView {
-            Text("My reviews")
-                .font(.headline)
+        ScrollView(showsIndicators: false) {
+            HStack {
+                Text("My reviews")
+                    .font(.headline)
+            }
+            .frame(height: 64)
+            
             VStack {
                 if let reviews = currentUserReviews {
                     ForEach(reviews) { review in
                         BTCard(review: review, currentUser: true, address: true) {
                             fetchReviews()
                         }
+                        .padding()
                     }
                 } else {
                     ProgressView() // Show loading indicator while reviews are being fetched

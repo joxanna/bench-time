@@ -16,19 +16,33 @@ struct UpdatePasswordView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                SecureField("Current password", text: $currentPassword, onCommit: {
-                    hideKeyboard()
-                })
-                    .formFieldViewModifier()
-                
-                SecureField("New password", text: $newPassword, onCommit: {
-                    hideKeyboard()
-                })
-                    .formFieldViewModifier()
-                
-                BTButton(title: "Update password", backgroundColor: Color.cyan) {
-                    Task {
+            Spacer()
+                .frame(height: 32)
+            
+            BTSecureField(label: "Current password", text:  $currentPassword)
+            
+            BTSecureField(label: "New password", text:  $newPassword)
+            
+            Spacer()
+            
+            if (!errorMessage.isEmpty) {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+                    .padding()
+            }
+            
+            if (isPasswordUpdated) {
+                Text("Password successfully updated!")
+                    .foregroundColor(.green)
+                    .padding()
+            }
+        }
+        .padding()
+        .navigationBarTitle("Update password")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if (!isEmpty()) {
+                    Button(action: {
                         authManager.updatePassword(currentPassword: currentPassword, newPassword: newPassword) { error in
                             if let error = error {
                                 errorMessage = error.localizedDescription
@@ -36,24 +50,22 @@ struct UpdatePasswordView: View {
                                 isPasswordUpdated = true
                             }
                         }
+                    }) {
+                        Text("Done")
+                            .foregroundColor(.cyan)
+                            .bold()
                     }
-                }
-                
-                if (!errorMessage.isEmpty) {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                }
-                
-                
-                if (isPasswordUpdated) {
-                    Text("Password successfully updated!")
-                        .foregroundColor(.green)
-                        .padding()
+                    .transition(.opacity)
                 }
             }
         }
-        .padding(25)
-        .navigationBarTitle("Update Password")
+        .animation(.default, value: isEmpty())
+    }
+    
+    func isEmpty() -> Bool {
+        if (!currentPassword.isEmpty && !newPassword.isEmpty) {
+            return false
+        }
+        return true
     }
 }

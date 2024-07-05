@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 struct FormFieldViewModifier: ViewModifier {
+    
     func body(content: Content) -> some View {
         content
-            .padding()
-            .background(Color.gray.opacity(0.1))
+            .padding(10)
+            .background(Color.gray.opacity(0.05))
             .cornerRadius(10)
     }
 }

@@ -23,16 +23,9 @@ struct NewReviewView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Title*")
-                TextField("Enter a title", text: $viewModel.title, onCommit: {
-                    hideKeyboard()
-                })
-                    .formFieldViewModifier()
+                BTFormField(label: "Title*", text:  $viewModel.title)
                 
-                Text("Description*")
-                TextEditor(text: $viewModel.description)
-                    .formFieldViewModifier()
-                    .frame(height: 200)
+                BTTextEditor(label: "Description*", text: $viewModel.description)
 
                 Text("Rating*")
                 HStack {
@@ -74,7 +67,7 @@ struct NewReviewView: View {
                     ImagePicker(image: $imageUploaderViewModel.image)
                 }
                 
-                BTButton(title: "Submit review", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                BTButton(title: "Post", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
                     viewModel.createReview() { error in
                         if let error = error {
                             print(error.localizedDescription)

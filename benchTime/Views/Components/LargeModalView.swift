@@ -9,16 +9,18 @@ import SwiftUI
 
 struct LargeModalView<Content: View>: View {
     @Environment(\.presentationMode) var presentationMode
-    var title: String
+    var title: String?
     var contentView: Content?
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text(title)
-                .font(.title)
-            
+        VStack {
+            if let title = title {
+                Text(title)
+                    .font(.title)
+                    .padding()
+            }
+
             contentView
         }
-        .padding()
     }
 }

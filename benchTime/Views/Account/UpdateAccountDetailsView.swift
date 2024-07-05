@@ -6,60 +6,90 @@
 //
 
 import SwiftUI
-import FirebaseAuth
+import URLImage
 
 struct UpdateAccountDetailsView: View {
     @StateObject var viewModel = UpdateAccountDetailsViewViewModel()
-    
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "profile_images")
 
-    
     var body: some View {
-        ZStack {
+        VStack {
+            Spacer()
+                .frame(height: 32)
             VStack {
-                TextField(viewModel.displayName, text: $viewModel.displayName, onCommit: {
-                    hideKeyboard()
-                })
-                    .formFieldViewModifier()
-                
-                VStack {
-                    if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                    } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
+                if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                } else {
+                    if viewModel.profileImageURL != "" {
+                        URLImage(URL(string: viewModel.profileImageURL)!) { image in
+                           image
+                               .resizable()
+                               .aspectRatio(contentMode: .fill)
+                       }
+                       .frame(width: 64, height: 64)
+                       .clipShape(Circle())
                     } else {
-                        Text("No Image Selected")
+                        Image("no-profile-image")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 64, height: 64)
+                            .clipShape(Circle())
                     }
-                    
-                    Button("Select Image") {
-                        imageUploaderViewModel.isShowingImagePicker = true
-                    }
-                }
-                .sheet(isPresented: $imageUploaderViewModel.isShowingImagePicker, onDismiss: {
-                    Task {
-                        await handleImageUpload()
-                    }
-                }){
-                    ImagePicker(image: $imageUploaderViewModel.image)
                 }
                 
-                BTButton(title: "Save profile", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
-                    viewModel.updateUser() { error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        } else {
-                            print("Review created successfully")
-                        }
-                    }
+                Button(action: {
+                    imageUploaderViewModel.isShowingImagePicker = true
+                    
+                }) {
+                    Text("Edit profile picture")
+                        .foregroundColor(.cyan)
+                        .bold()
                 }
-                .disabled(viewModel.isEmpty())
             }
-            .padding(25)
-            .navigationBarTitle("Account Details")
+            .sheet(isPresented: $imageUploaderViewModel.isShowingImagePicker, onDismiss: {
+                Task {
+                    await handleImageUpload()
+                }
+            }){
+                ImagePicker(image: $imageUploaderViewModel.image)
+            }
+            Spacer()
+                .frame(height: 24)
+            
+            BTFormField(label: "Display name", text:  $viewModel.displayName)
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height, alignment: .topLeading)
+        .navigationBarTitle("Update account details")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if !viewModel.isEmpty() {
+                    Button(action: {
+                        viewModel.updateUser() { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                print("Account updated successfully")
+                            }
+                        }
+                    }) {
+                        Text("Done")
+                            .foregroundColor(.cyan)
+                            .bold()
+                    }
+                    .transition(.opacity)
+                }
+            }
+        }
+        .animation(.default, value: viewModel.isEmpty()) 
+        .padding()
     }
     
     private func handleImageUpload() async {

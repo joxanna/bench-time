@@ -34,9 +34,9 @@ class UpdateAccountDetailsViewViewModel: ObservableObject {
     }
     
     func isEmpty() -> Bool {
-        if displayName == currentUserDetails?.displayName || profileImageURL == currentUserDetails?.profileImageURL {
-            return true
+        if displayName != currentUserDetails?.displayName || profileImageURL != currentUserDetails?.profileImageURL {
+            return false
         }
-        return false
+        return true
     }
 }

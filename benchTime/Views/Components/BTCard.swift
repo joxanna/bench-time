@@ -20,8 +20,37 @@ struct BTCard: View {
     @State private var ratingText: String = ""
     @State private var addressText: String = ""
     
+    @State private var user: UserModel?
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20.0) {
+            HStack {
+                if let user = user {
+                    // Display user details
+                    if user.profileImageURL != "" {
+                        URLImage(URL(string: user.profileImageURL)!) { image in
+                           // Use the loaded image
+                           image
+                               .resizable()
+                               .aspectRatio(contentMode: .fill)
+                       }
+                       .frame(width: 24, height: 24)
+                       .clipShape(Circle())
+                    } else {
+                        Image("no-profile-image")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 24, height: 24)
+                            .clipShape(Circle())
+                    }
+                    Spacer()
+                        .frame(width: 8)
+                    
+                    Text("\(user.displayName)")
+                        .font(.subheadline)
+                        .bold()
+                }
+            }
             // only 1 image for now
             AsyncImage(url: URL(string: review.imageURLs![0])) { image in
                 image
@@ -105,12 +134,14 @@ struct BTCard: View {
             }
         }
         .padding()
-        .background(Rectangle().foregroundColor(.white)
-            .cornerRadius(15)
-            .shadow(radius: 15))
-        .padding()
+        .background(
+            Rectangle().foregroundColor(.white)
+                .cornerRadius(15)
+                .shadow(color: .gray.opacity(0.3), radius: 6)
+        )
         .sheet(isPresented: $isLargeModalPresented) {
             LargeModalView(title: "Update review", contentView: UpdateReviewView(review: review)) 
+                .presentationDragIndicator(.visible)
 //            {
 //                onUpdate()
 //                print("Refreshing...")
@@ -156,6 +187,22 @@ struct BTCard: View {
                     }
                 }
             }
+            
+            fetchUser()
+        }
+    }
+    
+    func fetchUser() {
+        if let uid = review.uid {
+            DatabaseAPI.shared.readUser(uid: uid) { userDetails, error in
+                if error != nil {
+                    print("Read error")
+                } else {
+                    self.user = userDetails
+                }
+            }
+        } else {
+            print("No uid for review")
         }
     }
 }

@@ -12,67 +12,78 @@ import SwiftOverpassAPI
 struct BenchReviewsView: View {
     var bench: OPElement
     var benchAnnotation: CustomPointAnnotation
-    @State private var addressText: String = "No address"
-    
+
     @ObservedObject var authManager = AuthenticationManager.shared
-    @State private var benchReviews: [ReviewModel]?
-    @State private var errorMessage: String?
-    
+    @ObservedObject var benchReviewViewModel = BenchReviewsViewViewModel()
+
     var body: some View {
         NavigationView {
             VStack {
-                Text("ID: \(String(bench.id))")
-                Text(addressText)
-                
-                NavigationLink {
-                    NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)
-                } label: {
-                    Text("New Review")
-                        .foregroundColor(.cyan)
-                        .font(.headline)
-                }
-                
-                VStack {
-                    if let reviews = benchReviews {
-                        ForEach(reviews) { review in
-                            BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
-                            }
+                HStack {
+                    if let benchReviews = benchReviewViewModel.benchReviews {
+                        if benchReviews.count == 1 {
+                            Text("\(benchReviews.count) review")
+                                .font(.title3)
+                                .bold()
+                        } else {
+                            Text("\(benchReviews.count) reviews")
+                                .font(.title3)
+                                .bold()
                         }
-                    } else {
-                        ProgressView() // Show loading indicator while reviews are being fetched
+                    }
+                }
+                .padding(.top, 24)
+                
+                HStack {
+                    BTStars(rating: benchReviewViewModel.averageRating)
+                    Text(benchReviewViewModel.ratingText)
+                        .foregroundColor(.orange)
+                        .font(.caption)
+                }
+
+                HStack {
+                    Text(benchReviewViewModel.addressText)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)) {
+                        HStack {
+                            Text("New Review")
+                            Image(systemName: "square.and.pencil")
+                        }
+                        .font(.subheadline)
+                        .padding(12)
+                        .background(Color.cyan)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        if let benchReviews = benchReviewViewModel.benchReviews {
+                            ForEach(benchReviews) { review in
+                                BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
+                                }
+                                .padding()
+                            }
+                        } else {
+                            ProgressView()
+                        }
                     }
                 }
             }
         }
         .onAppear {
-            getAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude) { result, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                else if let result = result {
-                    self.addressText = result
-                }
-            }
+            benchReviewViewModel.getBenchAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)
             
-            fetchReviews()
-        }
-    }
-    
-    func fetchReviews() {
-        print("Fetching...")
-        guard let uid = authManager.currentUser?.uid else {
-            print("UID issue")
-            return
-        }
-        
-        DatabaseAPI.shared.readReviewsByBench(benchId: String(bench.id)) { reviews, error in
-            if let error = error {
-                // Handle the error
-                self.errorMessage = error.localizedDescription
-            } else if let reviews = reviews {
-                // Assign currentUserReviews here
-                self.benchReviews = reviews
-            }
+            benchReviewViewModel.fetchReviews(id: String(bench.id))
+            benchReviewViewModel.getAverageRating()
         }
     }
 }

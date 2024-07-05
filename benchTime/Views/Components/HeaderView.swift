@@ -10,11 +10,13 @@ import SwiftUI
 struct HeaderView: View {
     var body: some View {
         VStack {
-            Text("BENCH TIME")
-                .font(.title)
-                .fontWeight(.bold)
+            Image("bench-time")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.horizontal, 20)
             Text("by FILLET")
                 .font(.caption)
+                .foregroundColor(.orange)
         }
     }
 }

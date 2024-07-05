@@ -8,49 +8,60 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var authManager = AuthenticationManager.shared
-    @State private var currentReviews: [ReviewModel]?
-    @State private var errorMessage: String?
-    
+    @StateObject var homeViewModel = HomeViewViewModel()
+
     var body: some View {
-        ScrollView {
-            Text("Home Page")
-                .font(.headline)
-            VStack {
-                if let reviews = currentReviews {
-                    ForEach(reviews) { review in
-                        BTCard(review: review, currentUser: false, address: true) {
-                            fetchReviews()
-                        }
-                    }
-                } else {
-                    ProgressView() // Show loading indicator while reviews are being fetched
+        VStack {
+            if homeViewModel.headerVisible {
+                HStack {
+                    Image("BT")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 56, height: 56)
+                        .padding(.top, 8)
                 }
+                .frame(height: 64)
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .animation(.easeInOut, value: homeViewModel.headerVisible)
+            }
+            
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    GeometryReader { geo in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self, value: geo.frame(in: .global).minY)
+                    }
+                    .frame(height: 0)
+        
+                    if let reviews = homeViewModel.currentReviews {
+                        ForEach(reviews) { review in
+                            BTCard(review: review, currentUser: false, address: true) {
+                                homeViewModel.fetchReviews()
+                            }
+                            .padding()
+                        }
+                    } else {
+                        ProgressView()
+                    }
+                }
+            }
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                homeViewModel.updateHeaderVisibility(with: value)
             }
         }
         .onAppear {
-            fetchReviews()
+            homeViewModel.fetchReviews()
         }
     }
-    
-    func fetchReviews() {
-        print("Fetching...")
-        guard let uid = authManager.currentUser?.uid else {
-            print("UID issue")
-            return
-        }
-        
-        DatabaseAPI.shared.readAllReviews(uid: uid) { reviews, error in
-            if let error = error {
-                // Handle the error
-                self.errorMessage = error.localizedDescription
-                print("Fail")
-            } else if let reviews = reviews {
-                // Assign currentUserReviews here
-                self.currentReviews = reviews
-                print("Success")
-            }
-        }
-        
+}
+
+
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+//        value = nextValue()
+        print(value)
     }
 }

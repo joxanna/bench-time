@@ -24,10 +24,12 @@ class SearchBarUIView: UIView {
     }
     
     private func setupView() {
+        searchBar.backgroundImage = UIImage()
+
         backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         backButton.setTitleColor(.systemBlue, for: .normal)
         backButton.backgroundColor = UIColor.white
-        backButton.isHidden = true // Hide when no search is being conducted
+        backButton.isHidden = true
         
         // Customize button size
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -49,10 +51,12 @@ class SearchBarUIView: UIView {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        stackView.backgroundColor = UIColor.white
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 44)
+        return CGSize(width: UIScreen.main.bounds.width, height: 44)
     }
 }
 
@@ -81,7 +85,13 @@ struct SearchBarView: UIViewRepresentable {
         uiView.searchBar.text = searchText
         if isSearching {
             uiView.backButton.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                uiView.backButton.alpha = 1.0
+            }
         } else {
+            UIView.animate(withDuration: 0.3) {
+                uiView.backButton.alpha = 0.0
+            }
             uiView.backButton.isHidden = true
         }
     }

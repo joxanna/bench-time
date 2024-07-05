@@ -17,16 +17,9 @@ struct UpdateReviewView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Title")
-                TextField("Enter a title", text: $viewModel.title, onCommit: {
-                    hideKeyboard()
-                })
-                    .formFieldViewModifier()
+                BTFormField(label: "Title", text:  $viewModel.title)
                 
-                Text("Description")
-                TextEditor(text: $viewModel.description)
-                    .formFieldViewModifier()
-                    .frame(height: 200)
+                BTTextEditor(label: "Description", text: $viewModel.description)
 
                 Text("Rating")
                 HStack {
@@ -43,7 +36,7 @@ struct UpdateReviewView: View {
                     }
                 }
                 
-                BTButton(title: "Update review", backgroundColor: Color.cyan) {
+                BTButton(title: "Save", backgroundColor: Color.cyan) {
                     viewModel.updateReview(id: review.id!) { error in
                         if let error = error {
                             print(error.localizedDescription)

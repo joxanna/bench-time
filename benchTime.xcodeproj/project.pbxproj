@@ -17,6 +17,7 @@
 		FF1B113D2BEA0D8500676036 /* BTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B113C2BEA0D8500676036 /* BTButton.swift */; };
 		FF1B11422BEA123400676036 /* BTCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11412BEA123400676036 /* BTCard.swift */; };
 		FF1B11482BEA138E00676036 /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11472BEA138E00676036 /* LoginViewViewModel.swift */; };
+		FF2912302C3663BF00ADA699 /* BTFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29122F2C3663BF00ADA699 /* BTFormField.swift */; };
 		FF29D6492BF8B65B00C054B2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D6482BF8B65B00C054B2 /* HomeView.swift */; };
 		FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64A2BF8B66900C054B2 /* MapView.swift */; };
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
@@ -57,6 +58,9 @@
 		FFCC4F8F2C19593300EFFAC9 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F8E2C19593300EFFAC9 /* URLImage */; };
 		FFCC4F912C19593300EFFAC9 /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC4F902C19593300EFFAC9 /* URLImageStore */; };
 		FFCC4F932C197C1100EFFAC9 /* BenchQueryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */; };
+		FFCCCC752C36239D005EAF6F /* BTNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */; };
+		FFCCCC792C365187005EAF6F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCCCC782C365187005EAF6F /* UIApplication.swift */; };
+		FFCCCC7B2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCCCC7A2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift */; };
 		FFD1FB442BE9F29300671C1A /* BenchTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB432BE9F29300671C1A /* BenchTimeApp.swift */; };
 		FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB452BE9F29300671C1A /* RootView.swift */; };
 		FFD1FB482BE9F29800671C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFD1FB472BE9F29800671C1A /* Assets.xcassets */; };
@@ -64,6 +68,8 @@
 		FFD1FB562BE9F29800671C1A /* benchTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB552BE9F29800671C1A /* benchTimeTests.swift */; };
 		FFD1FB602BE9F29800671C1A /* benchTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB5F2BE9F29800671C1A /* benchTimeUITests.swift */; };
 		FFD1FB622BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB612BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift */; };
+		FFDCC4A92C3294E4004875E4 /* BenchReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */; };
+		FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */; };
 		FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */; };
 		FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */; };
 /* End PBXBuildFile section */
@@ -102,6 +108,7 @@
 		FF1B113C2BEA0D8500676036 /* BTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTButton.swift; sourceTree = "<group>"; };
 		FF1B11412BEA123400676036 /* BTCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCard.swift; sourceTree = "<group>"; };
 		FF1B11472BEA138E00676036 /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
+		FF29122F2C3663BF00ADA699 /* BTFormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTFormField.swift; sourceTree = "<group>"; };
 		FF29D6482BF8B65B00C054B2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FF29D64A2BF8B66900C054B2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
@@ -133,6 +140,9 @@
 		FFB7D8A62BEF51F700DCD7DE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchQueryViewModel.swift; sourceTree = "<group>"; };
 		FFCC4F942C197E2D00EFFAC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTNavigationItem.swift; sourceTree = "<group>"; };
+		FFCCCC782C365187005EAF6F /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		FFCCCC7A2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreKeyboardSafeAreaModifier.swift; sourceTree = "<group>"; };
 		FFD1FB402BE9F29300671C1A /* benchTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = benchTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD1FB432BE9F29300671C1A /* BenchTimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchTimeApp.swift; sourceTree = "<group>"; };
 		FFD1FB452BE9F29300671C1A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -144,6 +154,8 @@
 		FFD1FB5B2BE9F29800671C1A /* benchTimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = benchTimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD1FB5F2BE9F29800671C1A /* benchTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = benchTimeUITests.swift; sourceTree = "<group>"; };
 		FFD1FB612BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = benchTimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchReviewsViewViewModel.swift; sourceTree = "<group>"; };
+		FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
 		FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountDetailsView.swift; sourceTree = "<group>"; };
 		FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,6 +235,8 @@
 				FF7053FA2BFC249200965435 /* UpdateAccountDetailsViewViewModel.swift */,
 				FF7054072BFC7F5000965435 /* UpdateReviewViewViewModel.swift */,
 				FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */,
+				FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */,
+				FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -264,6 +278,8 @@
 				FF7053FC2BFC37EE00965435 /* BTStars.swift */,
 				FF1B11412BEA123400676036 /* BTCard.swift */,
 				FF7054002BFC5D8800965435 /* LargeModalView.swift */,
+				FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */,
+				FF29122F2C3663BF00ADA699 /* BTFormField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -293,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */,
+				FFCCCC7A2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift */,
 			);
 			name = ViewModifiers;
 			sourceTree = "<group>";
@@ -349,6 +366,7 @@
 				FF7053FE2BFC5CA200965435 /* UIStyles.swift */,
 				FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */,
 				FFCC4F922C197C1000EFFAC9 /* BenchQueryViewModel.swift */,
+				FFCCCC782C365187005EAF6F /* UIApplication.swift */,
 			);
 			path = benchTime;
 			sourceTree = "<group>";
@@ -646,12 +664,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1B11372BEA012C00676036 /* LoginView.swift in Sources */,
+				FF2912302C3663BF00ADA699 /* BTFormField.swift in Sources */,
+				FFCCCC752C36239D005EAF6F /* BTNavigationItem.swift in Sources */,
 				FF7053F12BFACC7800965435 /* ReviewModel.swift in Sources */,
 				FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */,
 				FF1B113B2BEA0C7F00676036 /* RegisterView.swift in Sources */,
 				FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */,
 				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
+				FFCCCC7B2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
 				FF81E1C82BECA6350023E743 /* AuthenticationManager.swift in Sources */,
@@ -667,6 +688,7 @@
 				FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */,
 				FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */,
 				FF7053FF2BFC5CA200965435 /* UIStyles.swift in Sources */,
+				FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */,
 				FF7053F72BFB4AA500965435 /* ImageUploader.swift in Sources */,
 				FFD1FB442BE9F29300671C1A /* BenchTimeApp.swift in Sources */,
 				FF1B11392BEA04ED00676036 /* HeaderView.swift in Sources */,
@@ -679,8 +701,10 @@
 				FF1B11422BEA123400676036 /* BTCard.swift in Sources */,
 				FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */,
 				FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */,
+				FFCCCC792C365187005EAF6F /* UIApplication.swift in Sources */,
 				FF7053FD2BFC37EE00965435 /* BTStars.swift in Sources */,
 				FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */,
+				FFDCC4A92C3294E4004875E4 /* BenchReviewsViewViewModel.swift in Sources */,
 				FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */,
 				FF4336AF2C2B8C4F00671537 /* SearchResultsView.swift in Sources */,
 				FF29D6492BF8B65B00C054B2 /* HomeView.swift in Sources */,
@@ -869,8 +893,8 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -923,8 +947,8 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

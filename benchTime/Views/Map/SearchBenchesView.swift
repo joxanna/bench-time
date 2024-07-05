@@ -98,7 +98,8 @@ struct SearchBenchesView: View {
         }) {
             if let annotation = selectedAnnotation {
                 if let bench = benchQueryViewModel.getBench(annotation: annotation) {
-                    LargeModalView(title: "Bench reviews", contentView: BenchReviewsView(bench: bench, benchAnnotation: annotation))
+                    LargeModalView(contentView: BenchReviewsView(bench: bench, benchAnnotation: annotation))
+                        .presentationDragIndicator(.visible)
                 }
             }
         }

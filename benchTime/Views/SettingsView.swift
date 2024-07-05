@@ -18,59 +18,117 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                if let user = authManager.currentUserDetails {
-                    // Display user details
-                    Text("Email: \(user.email)")
-                    Text("Display Name: \(user.displayName)")
-                    
-                    if user.profileImageURL != "" {
-                        URLImage(URL(string: user.profileImageURL)!) { image in
-                           // Use the loaded image
-                           image
-                               .resizable()
-                               .aspectRatio(contentMode: .fit)
-                       }
-                       .frame(width: 100, height: 100) // Adjust size as needed
-                    } else {
-                        Text("No Profile Image")
+            VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 32)
+                
+                Text("Profile")
+                    .font(.title2)
+                    .bold()
+                HStack {
+                    if let user = authManager.currentUserDetails {
+                        // Display user details
+                        if user.profileImageURL != "" {
+                            URLImage(URL(string: user.profileImageURL)!) { image in
+                               // Use the loaded image
+                               image
+                                   .resizable()
+                                   .aspectRatio(contentMode: .fill)
+                           }
+                           .frame(width: 64, height: 64)
+                           .clipShape(Circle())
+                        } else {
+                            Image("no-profile-image")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 64, height: 64)
+                                .clipShape(Circle())
+                        }
+                        Spacer()
+                            .frame(width: 16)
+                        
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("Display name:")
+                                    .font(.subheadline)
+                                    .bold()
+                                Text("\(user.displayName)")
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                                .frame(height: 8)
+                            HStack {
+                                Text("Email:")
+                                    .font(.subheadline)
+                                    .bold()
+                                Text("\(user.email)")
+                                    .font(.subheadline)
+                            }
+                        }
+                    } else if let error = error {
+                        // Display error
+                        Text("Error: \(error.localizedDescription)")
                     }
-                } else if let error = error {
-                    // Display error
-                    Text("Error: \(error.localizedDescription)")
-                } else {
-                    // Display loading state
-                    Text("Loading user details...")
+                }
+                .padding(.leading, 8)
+                
+                Spacer()
+                    .frame(height: 32)
+                
+                Text("Settings")
+                    .font(.title2)
+                    .bold()
+                
+                NavigationLink(destination: UpdateAccountDetailsView()) {
+                    BTNavigationItem(icon: "person.circle", title: "Update account details", color: .black)
                 }
                 
-                List {
-                    NavigationLink(destination: UpdateAccountDetailsView()) {
-                        Text("Update Account Details")
-                    }
-                    
-                    NavigationLink(destination: UpdatePasswordView()) {
-                        Text("Update Password")
-                    }
-                    
-                    Button("Stand up") {
-                        Task {
-                            authManager.signOut() { error in
-                                if let error = error {
-                                    print(error.localizedDescription)
-                                }
+                NavigationLink(destination: UpdatePasswordView()) {
+                    BTNavigationItem(icon: "key", title: "Update password", color: .black)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    Task {
+                        authManager.signOut() { error in
+                            if let error = error {
+                                print(error.localizedDescription)
                             }
                         }
                     }
-                    .foregroundColor(.cyan)
-                    
-                    Button("Delete Account") {
-                        isConfirmingAction.toggle()
+                }) {
+                    HStack {
+                        Text("Stand up")
+                            .foregroundColor(.cyan)
+                            .bold()
+                        Spacer()
                     }
-                    .foregroundColor(.red)
+                    .frame(maxWidth: .infinity)
                 }
-                .navigationBarTitle("Settings")
+                .frame(height: 44, alignment: .leading)
+                
+                Button(action: {
+                    isConfirmingAction.toggle()
+                }) {
+                    HStack {
+                        Text("Delete account")
+                            .foregroundColor(.red)
+                            .bold()
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .foregroundColor(.red)
+                .frame(height: 44, alignment: .leading)
+                
+                Spacer()
+                    .frame(height: 24)
             }
+            .padding()
         }
+//        .ignoresSafeArea(.keyboard, edges: .all)
+        .frame(alignment: .topLeading)
         .alert(isPresented: $isConfirmingAction) {
             Alert(
                 title: Text("Confirm Action"),
