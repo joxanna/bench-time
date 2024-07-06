@@ -105,7 +105,7 @@ struct BenchReviewsView: View {
                         if let benchReviews = benchReviewViewModel.benchReviews {
                             ForEach(benchReviews) { review in
                                 BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
-                                    // need to fetch reviews
+                                    benchReviewViewModel.fetchReviews(id: String(bench.id))
                                 }
                                 .padding()
                             }
