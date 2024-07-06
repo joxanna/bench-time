@@ -9,30 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewViewModel()
-
+    
     var body: some View {
-        VStack {
-            if homeViewModel.headerVisible {
-                HStack {
-                    Image("BT")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 56, height: 56)
-                        .padding(.top, 8)
-                }
-                .frame(height: 64)
-                .transition(.move(edge: .top).combined(with: .opacity))
-                .animation(.easeInOut, value: homeViewModel.headerVisible)
-            }
-            
+        ZStack(alignment: .top) {
             ScrollView(showsIndicators: false) {
                 VStack {
-                    GeometryReader { geo in
-                        Color.clear
-                            .preference(key: ScrollOffsetPreferenceKey.self, value: geo.frame(in: .global).minY)
-                    }
-                    .frame(height: 0)
-        
                     if let reviews = homeViewModel.currentReviews {
                         ForEach(reviews) { review in
                             BTCard(review: review, currentUser: false, address: true) {
@@ -44,24 +25,37 @@ struct HomeView: View {
                         ProgressView()
                     }
                 }
+                .background(
+                    GeometryReader { geo in
+                        Color.clear
+                            .onChange(of: geo.frame(in: .named("scrollView")).minY) { newValue, _ in
+                                homeViewModel.updateScrollPosition(offset: newValue)
+                            }
+                    }
+                )
+                .padding(.top, 72)
             }
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                homeViewModel.updateHeaderVisibility(with: value)
+            .coordinateSpace(name: "scrollView")
+            .onAppear {
+                 // Disable bouncing
+                 UIScrollView.appearance().bounces = false
+             }
+            
+            if homeViewModel.headerVisible {
+                HStack {
+                    Image("BT")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 56, height: 56)
+                }
+                .frame(width: UIScreen.main.bounds.width, height: 80)
+                .background(.white)
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
         .onAppear {
             homeViewModel.fetchReviews()
         }
-    }
-}
-
-
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-//        value = nextValue()
-        print(value)
+        .animation(.snappy, value: homeViewModel.headerVisible)
     }
 }

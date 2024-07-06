@@ -9,6 +9,8 @@ import SwiftUI
 import URLImage
 
 struct UpdateAccountDetailsView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @StateObject var viewModel = UpdateAccountDetailsViewViewModel()
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "profile_images")
 
@@ -71,20 +73,23 @@ struct UpdateAccountDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !viewModel.isEmpty() {
-                    Button(action: {
-                        viewModel.updateUser() { error in
-                            if let error = error {
-                                print(error.localizedDescription)
-                            } else {
-                                print("Account updated successfully")
+                    NavigationLink(destination: SettingsView()) {
+                        Button(action: {
+                            viewModel.updateUser() { error in
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                } else {
+                                    print("Account updated successfully")
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             }
+                        }) {
+                            Text("Done")
+                                .foregroundColor(.cyan)
+                                .bold()
                         }
-                    }) {
-                        Text("Done")
-                            .foregroundColor(.cyan)
-                            .bold()
+                        .transition(.opacity)
                     }
-                    .transition(.opacity)
                 }
             }
         }

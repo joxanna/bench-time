@@ -25,4 +25,16 @@ class UpdateReviewViewViewModel: ObservableObject {
             }
         }
     }
+    
+    func isEmpty(review: ReviewModel) -> Bool {
+        if title.isEmpty || description.isEmpty {
+            return true
+        }
+        
+        if title != review.title || description != review.description || rating != review.rating {
+            return false
+        }
+        
+        return true
+    }
 }

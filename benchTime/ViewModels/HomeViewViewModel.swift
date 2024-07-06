@@ -14,7 +14,7 @@ class HomeViewViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     @Published var headerVisible: Bool = true
-    @Published var lastOffset: CGFloat = 0
+    @Published var lastScrollPosition: CGFloat = 0
     
     func fetchReviews() {
         print("Fetching...")
@@ -36,15 +36,14 @@ class HomeViewViewModel: ObservableObject {
         }
     }
     
-    func updateHeaderVisibility(with currentOffset: CGFloat) {
-        if currentOffset < lastOffset {
+    func updateScrollPosition(offset: CGFloat) {
+        if offset >= 0 {
+            self.headerVisible = true
+        } else if offset > lastScrollPosition {
+            headerVisible = true
+        } else if offset < lastScrollPosition {
             headerVisible = false
-        } else if currentOffset > lastOffset {
-            headerVisible = true
-        } else if currentOffset <= 10 {
-            headerVisible = true
         }
-        lastOffset = currentOffset
-        print(currentOffset)
+        lastScrollPosition = offset
     }
 }

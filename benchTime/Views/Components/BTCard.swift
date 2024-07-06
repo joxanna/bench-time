@@ -14,7 +14,6 @@ struct BTCard: View {
     let address: Bool
     var onUpdate: () -> Void
     
-    @State private var isLargeModalPresented = false
     @State private var isConfirmingAction = false
     
     @State private var ratingText: String = ""
@@ -48,6 +47,7 @@ struct BTCard: View {
                     
                     Text("\(user.displayName)")
                         .font(.subheadline)
+                        .foregroundStyle(Color.black)
                         .bold()
                 }
             }
@@ -84,9 +84,14 @@ struct BTCard: View {
                         .foregroundColor(.gray)
                         .font(.system(size: 14))
                 } else {
-                    Text(addressText)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 14))
+                    Button(action: {
+                        print("OPEN MAP")
+                    }) {
+                        Text("📍 \(addressText)")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 14))
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             
@@ -103,19 +108,18 @@ struct BTCard: View {
 
                 Spacer()
                 if (currentUser) {
-                    Button(action: {
-                        isLargeModalPresented.toggle()
-                    }) {
+                    NavigationLink(destination: UpdateReviewView(review: review, onDismiss: onUpdate)) {
                         ZStack {
                             Circle()
                                 .fill(UIStyles.Colors.lightGray)
                                 .frame(width: 30, height: 30)
-                            
+
                             Image(systemName: "pencil")
                                 .foregroundColor(.gray)
                                 .font(.system(size: 16))
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
                     
                     Button(action: {
                         isConfirmingAction.toggle()
@@ -139,14 +143,6 @@ struct BTCard: View {
                 .cornerRadius(15)
                 .shadow(color: .gray.opacity(0.3), radius: 6)
         )
-        .sheet(isPresented: $isLargeModalPresented) {
-            LargeModalView(title: "Update review", contentView: UpdateReviewView(review: review)) 
-                .presentationDragIndicator(.visible)
-//            {
-//                onUpdate()
-//                print("Refreshing...")
-//            }
-        }
         .alert(isPresented: $isConfirmingAction) {
             Alert(
                 title: Text("Confirm Action"),

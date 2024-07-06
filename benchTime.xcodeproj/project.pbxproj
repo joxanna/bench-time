@@ -22,6 +22,8 @@
 		FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64A2BF8B66900C054B2 /* MapView.swift */; };
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
 		FF4336AF2C2B8C4F00671537 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */; };
+		FF48F8782C39463000A41941 /* BTRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8772C39463000A41941 /* BTRating.swift */; };
+		FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */; };
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
@@ -113,6 +115,8 @@
 		FF29D64A2BF8B66900C054B2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
 		FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		FF48F8772C39463000A41941 /* BTRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTRating.swift; sourceTree = "<group>"; };
+		FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsViewViewModel.swift; sourceTree = "<group>"; };
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
 		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */,
 				FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */,
 				FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */,
+				FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				FF7054002BFC5D8800965435 /* LargeModalView.swift */,
 				FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */,
 				FF29122F2C3663BF00ADA699 /* BTFormField.swift */,
+				FF48F8772C39463000A41941 /* BTRating.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -672,6 +678,7 @@
 				FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */,
 				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
+				FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */,
 				FFCCCC7B2C36523F005EAF6F /* IgnoreKeyboardSafeAreaModifier.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
@@ -685,6 +692,7 @@
 				FF7053ED2BFACB9A00965435 /* NewReviewView.swift in Sources */,
 				FF7054032BFC7EA300965435 /* UpdateReviewView.swift in Sources */,
 				FF9C30902C21815B003E90DF /* BenchReviewsView.swift in Sources */,
+				FF48F8782C39463000A41941 /* BTRating.swift in Sources */,
 				FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */,
 				FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */,
 				FF7053FF2BFC5CA200965435 /* UIStyles.swift in Sources */,

@@ -8,54 +8,33 @@
 import SwiftUI
 
 struct MyReviewsView: View {
-    @ObservedObject var authManager = AuthenticationManager.shared
-    @State private var currentUserReviews: [ReviewModel]?
-    @State private var errorMessage: String?
+    @ObservedObject var myReviewsViewModel = MyReviewsViewViewModel()
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            HStack {
-                Text("My reviews")
-                    .font(.headline)
-            }
-            .frame(height: 64)
-            
-            VStack {
-                if let reviews = currentUserReviews {
-                    ForEach(reviews) { review in
-                        BTCard(review: review, currentUser: true, address: true) {
-                            fetchReviews()
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                HStack {
+                    Text("My reviews")
+                        .font(.headline)
+                }
+                .frame(height: 64)
+                
+                VStack {
+                    if let reviews = myReviewsViewModel.currentUserReviews {
+                        ForEach(reviews) { review in
+                            BTCard(review: review, currentUser: true, address: true) {
+                                myReviewsViewModel.fetchReviews()
+                            }
+                            .padding()
                         }
-                        .padding()
+                    } else {
+                        ProgressView()
                     }
-                } else {
-                    ProgressView() // Show loading indicator while reviews are being fetched
                 }
             }
         }
         .onAppear {
-            fetchReviews()
+            myReviewsViewModel.fetchReviews()
         }
-    }
-    
-    func fetchReviews() {
-        print("Fetching...")
-        guard let uid = authManager.currentUser?.uid else {
-            print("UID issue")
-            return
-        }
-        
-        DatabaseAPI.shared.readReviewsByUser(uid: uid) { reviews, error in
-            if let error = error {
-                // Handle the error
-                self.errorMessage = error.localizedDescription
-                print("Fail")
-            } else if let reviews = reviews {
-                // Assign currentUserReviews here
-                self.currentUserReviews = reviews
-                print("Success")
-            }
-        }
-        
     }
 }

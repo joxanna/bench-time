@@ -14,7 +14,8 @@ class BenchReviewsViewViewModel: ObservableObject {
     @Published var benchReviews: [ReviewModel]?
     @Published var errorMessage: String?
     @Published var averageRating: Double = 0.0
-    @Published var ratingText: String = ""
+    @Published var ratingText: String = "(0/5 stars)"
+    @Published var titleText: String = "0 reviews"
     
     func fetchReviews(id: String) {
         print("Fetching...")
@@ -24,31 +25,24 @@ class BenchReviewsViewViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
             } else if let reviews = reviews {
                 self.benchReviews = reviews
+                
+                if (reviews.count > 0) {
+                    var total: Double = 0
+                    for review in reviews {
+                        total += review.rating
+                    }
+                    
+                    self.averageRating = total / Double(reviews.count)
+                }
+
+                if reviews.count == 1 {
+                    self.titleText = "1 review"
+                } else {
+                    self.titleText = "\(reviews.count) reviews"
+                }
             }
         }
     }
-    
-    func getAverageRating() {
-        guard let reviews = benchReviews, !reviews.isEmpty else {
-            return
-        }
-        
-        var total: Double = 0
-        for review in reviews {
-            total += review.rating
-        }
-        
-        self.averageRating = total / Double(reviews.count)
-        
-        if averageRating.truncatingRemainder(dividingBy: 1) == 0 {
-            // Rating is a whole number, display it as an integer
-            self.ratingText = String(format: "(%.0f/5 stars)", averageRating)
-        } else {
-            // Rating has a decimal part, display it with one decimal place
-            self.ratingText = String(format: "(%.1f/5 stars)", averageRating)
-        }
-    }
-
     
     func getBenchAddress(latitude: Double, longitude: Double) {
         getAddress(latitude: latitude, longitude: longitude) { result, error in

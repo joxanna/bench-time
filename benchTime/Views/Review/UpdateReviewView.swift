@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct UpdateReviewView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     let review: ReviewModel
     @StateObject var viewModel = UpdateReviewViewViewModel()
-    
-    @State private var selectedRating: Double = 0
-    let options = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    var onDismiss: () -> Void
     
     var body: some View {
         ScrollView {
@@ -22,36 +22,37 @@ struct UpdateReviewView: View {
                 BTTextEditor(label: "Description", text: $viewModel.description)
 
                 Text("Rating")
-                HStack {
-                    BTStars(rating: selectedRating)
-                    Spacer()
-                    Picker("Rating", selection: $selectedRating) {
-                        ForEach(options, id: \.self) { option in
-                            Text(String(option)).tag(option)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .onChange(of: selectedRating) { _, newRating in
-                        viewModel.rating = newRating
-                    }
-                }
+                    .font(.caption)
+                    .padding(.top, 8)
+                    .padding(.bottom, 4)
+                BTRating(rating: $viewModel.rating)
+                    .padding(.bottom, 24)
+               
+                Spacer()
                 
-                BTButton(title: "Save", backgroundColor: Color.cyan) {
+                BTButton(title: "Save", backgroundColor: (viewModel.isEmpty(review: review) ? Color.gray : Color.cyan)) {
                     viewModel.updateReview(id: review.id!) { error in
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
                             print("Review updated successfully")
+                            onDismiss() 
+                            presentationMode.wrappedValue.dismiss()
                         }
                     }
                 }
+                .disabled(viewModel.isEmpty(review: review))
+                
+                Spacer()
+                    .frame(height: 16)
             }
             .padding()
         }
         .onAppear() {
             viewModel.title = review.title
             viewModel.description = review.description
-            selectedRating = review.rating
+            viewModel.rating = review.rating
         }
+        .navigationBarTitle("Edit review")
     }
 }

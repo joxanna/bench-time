@@ -27,8 +27,10 @@ class UpdateAccountDetailsViewViewModel: ObservableObject {
         DatabaseAPI.shared.updateUser(uid: uid, newData: newData, oldData: AuthenticationManager.shared.currentUserDetails!) { error in
             if let error = error {
                 print(error.localizedDescription)
+                completion(error)
             } else {
                 print("User updated successfully")
+                completion(nil)
             }
         }
     }

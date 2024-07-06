@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UpdatePasswordView: View {
     @ObservedObject var authManager = AuthenticationManager.shared
+    @Environment(\.presentationMode) var presentationMode
+    
     @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
     @State private var errorMessage: String = ""
@@ -42,20 +44,23 @@ struct UpdatePasswordView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if (!isEmpty()) {
-                    Button(action: {
-                        authManager.updatePassword(currentPassword: currentPassword, newPassword: newPassword) { error in
-                            if let error = error {
-                                errorMessage = error.localizedDescription
-                            } else {
-                                isPasswordUpdated = true
+                    NavigationLink(destination: SettingsView()) {
+                        Button(action: {
+                            authManager.updatePassword(currentPassword: currentPassword, newPassword: newPassword) { error in
+                                if let error = error {
+                                    errorMessage = error.localizedDescription
+                                } else {
+                                    isPasswordUpdated = true
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             }
+                        }) {
+                            Text("Done")
+                                .foregroundColor(.cyan)
+                                .bold()
                         }
-                    }) {
-                        Text("Done")
-                            .foregroundColor(.cyan)
-                            .bold()
+                        .transition(.opacity)
                     }
-                    .transition(.opacity)
                 }
             }
         }

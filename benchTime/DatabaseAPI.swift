@@ -64,7 +64,7 @@ extension DatabaseAPI {
         for (key, value) in newData.toDictionary() {
             if (value as! String != ""){
                 print("Updating", key, "to", value ?? "default value")
-                if (key == "profileImageURL" && oldData.profileImageURL != "") {
+                if (key == "profileImageURL" && oldData.profileImageURL != newData.profileImageURL) {
                     deleteImageFromStorage(imageURL: oldData.profileImageURL) { error in
                         if let error = error {
                             print("Failed to delete old profile picture \(oldData.profileImageURL): \(error.localizedDescription)")
@@ -388,7 +388,7 @@ extension DatabaseAPI {
                         completion(error)
                     }
                 }
-            } else if let doubleValue = value as? Double {
+            } else if let doubleValue = value as? Double, !doubleValue.isNaN {
                 print("Updating", key, "to", doubleValue, "previous value:")
                 // don't update photos... for now
                 database.child(reviews).child(id).child(key).setValue(doubleValue) { error, _ in
