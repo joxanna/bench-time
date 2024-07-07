@@ -46,8 +46,8 @@ struct RegisterView: View {
                         
                     }
                 }
-                if (errorMessage != "") {
-                    Text(errorMessage).foregroundColor(.red)
+                .alert(isPresented: .constant(!errorMessage.isEmpty)) {
+                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
                 }
             }
             .padding(25)

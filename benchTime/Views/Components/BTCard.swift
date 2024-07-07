@@ -27,14 +27,24 @@ struct BTCard: View {
                 if let user = user {
                     // Display user details
                     if user.profileImageURL != "" {
-                        URLImage(URL(string: user.profileImageURL)!) { image in
-                           // Use the loaded image
-                           image
-                               .resizable()
-                               .aspectRatio(contentMode: .fill)
-                       }
-                       .frame(width: 24, height: 24)
-                       .clipShape(Circle())
+//                        URLImage(URL(string: user.profileImageURL)!) { image in
+//                           // Use the loaded image
+//                           image
+//                               .resizable()
+//                               .aspectRatio(contentMode: .fill)
+//                       }
+//                       .frame(width: 24, height: 24)
+//                       .clipShape(Circle())
+                        
+                        AsyncImage(url: URL(string: user.profileImageURL)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 24, height: 24)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                        }
                     } else {
                         Image("no-profile-image")
                             .resizable()

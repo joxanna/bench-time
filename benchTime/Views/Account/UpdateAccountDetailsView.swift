@@ -30,13 +30,15 @@ struct UpdateAccountDetailsView: View {
                         .clipShape(Circle())
                 } else {
                     if viewModel.profileImageURL != "" {
-                        URLImage(URL(string: viewModel.profileImageURL)!) { image in
-                           image
-                               .resizable()
-                               .aspectRatio(contentMode: .fill)
-                       }
-                       .frame(width: 64, height: 64)
-                       .clipShape(Circle())
+                        AsyncImage(url: URL(string: viewModel.profileImageURL)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 64, height: 64)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                        }
                     } else {
                         Image("no-profile-image")
                             .resizable()
