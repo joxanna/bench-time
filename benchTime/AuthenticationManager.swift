@@ -35,6 +35,8 @@ class AuthenticationManager : ObservableObject {
         Auth.auth().addStateDidChangeListener{[weak self] _, user in
             self?.handleAuthStateChange(user: user)
         }
+        
+        assignCurrentUser()
     }
     
     private func handleAuthStateChange(user: User?) {
@@ -99,7 +101,15 @@ class AuthenticationManager : ObservableObject {
         }
     }
     
-    func checkCurrentUser() {
+    private func assignCurrentUser() {
+        if let user = Auth.auth().currentUser {
+            handleAuthStateChange(user: user)
+        } else {
+            handleAuthStateChange(user: nil)
+        }
+    }
+    
+    private func checkCurrentUser() {
         let user = Auth.auth().currentUser
         self.showSignInView = user == nil
     }

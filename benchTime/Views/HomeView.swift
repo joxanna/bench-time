@@ -12,50 +12,68 @@ struct HomeView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    if let reviews = homeViewModel.currentReviews {
-                        ForEach(reviews) { review in
-                            BTCard(review: review, currentUser: false, address: true) {
-                                homeViewModel.fetchReviews()
-                            }
-                            .padding()
+            ScrollViewReader { proxy in
+                VStack(spacing: 0) {
+                    // Header
+                    if homeViewModel.headerVisible {
+                        HStack {
+                            Image("BT")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 56, height: 56)
+                                .onTapGesture {
+                                    withAnimation {
+                                        scrollToTop(proxy: proxy)
+                                        print("TO THE TOP")
+                                    }
+                                }
                         }
-                    } else {
-                        ProgressView()
+                        .frame(width: UIScreen.main.bounds.width, height: 64)
+                        .background(Color.white)
+                        .transition(.move(edge: .top))
                     }
-                }
-                .background(
-                    GeometryReader { geo in
-                        Color.clear
-                            .onChange(of: geo.frame(in: .named("scrollView")).minY) { newValue, _ in
-                                homeViewModel.updateScrollPosition(offset: newValue)
+                    
+                    // Scrollable content
+                    ScrollView(showsIndicators: false) {
+                        VStack {
+                            if let reviews = homeViewModel.currentReviews {
+                                ForEach(reviews) { review in
+                                    BTCard(review: review, currentUser: false, address: true) {
+                                        homeViewModel.fetchReviews()
+                                    }
+                                    .padding()
+                                }
+                            } else {
+                                ProgressView()
                             }
+                        }
+                        .background(
+                            GeometryReader { geo in
+                                Color.clear
+                                    .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
+                                        homeViewModel.updateScrollPosition(offset: newValue)
+                                    }
+                            }
+                        )
+                        .padding(.top, 8)
+                        .id("scrollToTop") // Adding the id for scroll to top
                     }
-                )
-                .padding(.top, 72)
-            }
-            .coordinateSpace(name: "scrollView")
-            .onAppear {
-                 // Disable bouncing
-                 UIScrollView.appearance().bounces = false
-             }
-            
-            if homeViewModel.headerVisible {
-                HStack {
-                    Image("BT")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 56, height: 56)
+                    .coordinateSpace(name: "scrollView")
+                    .onAppear {
+                        // Disable bouncing
+                        UIScrollView.appearance().bounces = false
+                    }
                 }
-                .frame(width: UIScreen.main.bounds.width, height: 80)
-                .background(.white)
-                .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
         .onAppear {
+            print("LOADING HOME")
             homeViewModel.fetchReviews()
         }
-        .animation(.snappy, value: homeViewModel.headerVisible)
+        .animation(.easeInOut, value: homeViewModel.headerVisible) // Changed animation to easeInOut
+    }
+    
+    private func scrollToTop(proxy: ScrollViewProxy) {
+        proxy.scrollTo("scrollToTop", anchor: .top)
     }
 }

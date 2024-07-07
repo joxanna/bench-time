@@ -18,6 +18,7 @@ class HomeViewViewModel: ObservableObject {
     
     func fetchReviews() {
         print("Fetching...")
+        
         guard let uid = authManager.currentUser?.uid else {
             print("UID issue")
             return
