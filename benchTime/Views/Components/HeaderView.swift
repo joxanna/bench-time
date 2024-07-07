@@ -13,6 +13,7 @@ struct HeaderView: View {
             Image("bench-time")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 100)
                 .padding(.horizontal, 20)
             Text("by FILLET")
                 .font(.caption)

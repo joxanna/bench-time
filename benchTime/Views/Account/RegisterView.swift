@@ -14,6 +14,7 @@ struct RegisterView: View {
 
     var body: some View {
         VStack {
+            Spacer()
             HeaderView()
             VStack {
                 BTFormField(label: "Display name", text:  $viewModel.displayName)
@@ -62,7 +63,8 @@ struct RegisterView: View {
                         .font(.headline)
                 }
             }
-            .padding(.bottom, 50)
+            Spacer()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }

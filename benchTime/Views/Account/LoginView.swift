@@ -14,8 +14,9 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             HeaderView()
-
+            
             VStack {
                 BTFormField(label: "Email address", text:  $viewModel.email)
                 
@@ -61,7 +62,8 @@ struct LoginView: View {
                         .font(.headline)
                 }
             }
-            .padding(.bottom, 50)
+            Spacer()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
