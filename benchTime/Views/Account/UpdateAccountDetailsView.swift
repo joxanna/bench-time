@@ -22,6 +22,7 @@ struct UpdateAccountDetailsView: View {
                 if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
+                        .frame(width: 64, height: 64)
                 } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
                     Image(uiImage: image)
                         .resizable()
@@ -30,13 +31,16 @@ struct UpdateAccountDetailsView: View {
                         .clipShape(Circle())
                 } else {
                     if viewModel.profileImageURL != "" {
-                        URLImage(URL(string: viewModel.profileImageURL)!) { image in
-                           image
-                               .resizable()
-                               .aspectRatio(contentMode: .fill)
-                       }
-                       .frame(width: 64, height: 64)
-                       .clipShape(Circle())
+                        AsyncImage(url: URL(string: viewModel.profileImageURL)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 64, height: 64)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            ProgressView()
+                                .frame(width: 64, height: 64)
+                        }
                     } else {
                         Image("no-profile-image")
                             .resizable()
@@ -48,12 +52,13 @@ struct UpdateAccountDetailsView: View {
                 
                 Button(action: {
                     imageUploaderViewModel.isShowingImagePicker = true
-                    
+                    imageUploaderViewModel.selectNewImage()
                 }) {
                     Text("Edit profile picture")
-                        .foregroundColor(.cyan)
+                        .foregroundColor(imageUploaderViewModel.isLoading ? .cyan : .gray)
                         .bold()
                 }
+                .disabled(imageUploaderViewModel.isLoading)
             }
             .sheet(isPresented: $imageUploaderViewModel.isShowingImagePicker, onDismiss: {
                 Task {
@@ -93,7 +98,7 @@ struct UpdateAccountDetailsView: View {
                 }
             }
         }
-        .animation(.default, value: viewModel.isEmpty()) 
+        .animation(.default, value: viewModel.isEmpty())
         .padding()
     }
     
@@ -105,4 +110,5 @@ struct UpdateAccountDetailsView: View {
         }
     }
 }
+
 
