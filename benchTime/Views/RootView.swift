@@ -10,39 +10,44 @@ import FirebaseAuth
 
 struct RootView: View {
     @ObservedObject var authManager = AuthenticationManager.shared
-    
+    @State private var selectedTab = 0 // HomeView tab index
+
     var body: some View {
         ZStack {
-            TabView {
+            TabView(selection: $selectedTab) {
                 HomeView()
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
-                    .padding(.top, 10)
+                    .tag(0) // Tag for HomeView
                 
                 SearchBenchesView()
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }
-                    .padding(.top, 10)
+                    .tag(1) // Tag for SearchBenchesView
                 
                 MyReviewsView()
                     .tabItem {
                         Label("My reviews", systemImage: "chair")
                     }
-                    .padding(.top, 10)
+                    .tag(2) // Tag for MyReviewsView
                 
                 SettingsView()
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
-                    .padding(.top, 10)
+                    .tag(3) // Tag for SettingsView
             }
-            
         }
         .fullScreenCover(isPresented: $authManager.showSignInView) {
             NavigationStack {
                 LoginView()
+            }
+        }
+        .onChange(of: authManager.showSignInView) { newValue, _ in
+            if !newValue {
+                selectedTab = 0
             }
         }
     }
