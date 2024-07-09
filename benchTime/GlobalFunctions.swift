@@ -9,8 +9,32 @@ import Foundation
 import SwiftUI
 import CoreLocation
 
-func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//extension UIApplication {
+//    var topSafeAreaInset: CGFloat {
+//        guard let windowScene = connectedScenes.first as? UIWindowScene,
+//              let window = windowScene.windows.first else {
+//            return 0
+//        }
+//        return window.safeAreaInsets.top
+//    }
+//
+//    var bottomSafeAreaInset: CGFloat {
+//        guard let windowScene = connectedScenes.first as? UIWindowScene,
+//              let window = windowScene.windows.first else {
+//            return 0
+//        }
+//        return window.safeAreaInsets.bottom
+//    }
+//}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+func scrollToTop(proxy: ScrollViewProxy) {
+    proxy.scrollTo("scrollToTop", anchor: .top)
 }
 
 func compareReviewsByDate(review1: ReviewModel, review2: ReviewModel) -> Bool {

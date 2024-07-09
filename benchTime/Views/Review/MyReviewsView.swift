@@ -12,29 +12,39 @@ struct MyReviewsView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView(showsIndicators: false) {
-                HStack {
-                    Text("My reviews")
-                        .font(.headline)
-                }
-                .frame(height: 64)
-                
-                VStack {
-                    if let reviews = myReviewsViewModel.currentUserReviews {
-                        ForEach(reviews) { review in
-                            BTCard(review: review, currentUser: true, address: true) {
-                                myReviewsViewModel.fetchReviews()
-                            }
-                            .padding()
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        HStack {
+                            Text("My reviews")
+                                .font(.headline)
                         }
-                    } else {
-                        ProgressView()
+                        .frame(height: 64)
+                        
+                        VStack {
+                            if let reviews = myReviewsViewModel.currentUserReviews {
+                                ForEach(reviews) { review in
+                                    BTCard(review: review, currentUser: true, address: true) {
+                                        myReviewsViewModel.fetchReviews()
+                                    }
+                                    .padding()
+                                }
+                            } else {
+                                ProgressView()
+                            }
+                        }
+                        .id("scrollToTop")
                     }
+                }
+                .onAppear {
+                    myReviewsViewModel.fetchReviews()
+                    scrollToTop(proxy: proxy)
                 }
             }
         }
-        .onAppear {
-            myReviewsViewModel.fetchReviews()
-        }
+    }
+    
+    func scrollToTop(proxy: ScrollViewProxy) {
+        proxy.scrollTo("scrollToTop", anchor: .top)
     }
 }
