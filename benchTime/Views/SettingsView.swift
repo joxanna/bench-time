@@ -24,7 +24,7 @@ struct SettingsView: View {
 //            VStack(alignment: .leading) {
 //                Spacer()
 //                    .frame(height: 32)
-//                
+//
 //                Text("Profile")
 //                    .font(.title2)
 //                    .bold()
@@ -53,24 +53,28 @@ struct SettingsView: View {
             HStack {
                 if let user = authManager.currentUserDetails {
                     // Display user details
-                    if user.profileImageURL != "" {
-                        AsyncImage(url: URL(string: user.profileImageURL)) { image in
-                            image
-//>>>>>>> Stashed changes
+                    HStack {
+                        if user.profileImageURL != "" {
+                            AsyncImage(url: URL(string: user.profileImageURL)) { image in
+                                image
+    //>>>>>>> Stashed changes
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                ProgressView()
+                            }
+                        } else {
+                            Image("no-profile-image")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 64, height: 64)
                                 .clipShape(Circle())
-                        } placeholder: {
-                            ProgressView()
                         }
-                    } else {
-                        Image("no-profile-image")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 64, height: 64)
-                            .clipShape(Circle())
                     }
+                    .frame(width: 64)
+                    
                     Spacer()
                         .frame(width: 16)
                     

@@ -26,6 +26,7 @@ struct BenchTimeApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .ignoresSafeArea(.keyboard, edges: .all)
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
     }
@@ -33,11 +34,9 @@ struct BenchTimeApp: App {
 
 extension UIApplication {
     func addTapGestureRecognizer() {
-        // Get the first connected window scene
         guard let windowScene = connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else { return }
-        
-        // Create a tap gesture recognizer to dismiss the keyboard
+
         let tapGesture = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing(_:)))
         tapGesture.requiresExclusiveTouchType = false
         tapGesture.cancelsTouchesInView = false
@@ -48,6 +47,6 @@ extension UIApplication {
 
 extension UIApplication: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true // Set to `false` if you don't want to detect taps during other gestures
+        return true
     }
 }

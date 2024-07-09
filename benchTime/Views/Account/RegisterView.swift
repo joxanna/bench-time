@@ -38,10 +38,6 @@ struct RegisterView: View {
                         }
                     }
                 }
-//<<<<<<< Updated upstream
-//                if (errorMessage != "") {
-//                    Text(errorMessage).foregroundColor(.red)
-//=======
                 .padding(25)
                 
                 VStack{
@@ -54,7 +50,6 @@ struct RegisterView: View {
                             .foregroundColor(.cyan)
                             .font(.headline)
                     }
-//>>>>>>> Stashed changes
                 }
                 Spacer()
             }
@@ -69,4 +64,5 @@ struct RegisterView: View {
         }
     }
 }
+
 

@@ -8,7 +8,7 @@
 import SwiftUI
 import URLImage
 
-struct BTCard: View {    
+struct BTCard: View {
     @StateObject private var viewModel: BTCardViewModel
     
     let currentUser: Bool
@@ -186,3 +186,4 @@ struct BTCard: View {
         }
     }
 }
+
