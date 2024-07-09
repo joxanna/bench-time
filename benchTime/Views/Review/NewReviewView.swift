@@ -34,7 +34,7 @@ struct NewReviewView: View {
                     .padding(.top, 8)
                     .padding(.bottom, 4)
                 BTRating(rating: $viewModel.rating)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, 16)
                 
                 Text("Image*")
                     .font(.caption)
@@ -43,27 +43,58 @@ struct NewReviewView: View {
                 
                 VStack {
                     if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                    } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(alignment: .center)
-                            .cornerRadius(15)
-                    }
-                    
-                    
-                    Button(action: {
-                        imageUploaderViewModel.isShowingImagePicker = true
-                    }) {
                         HStack {
                             Spacer()
-                            Image(systemName: "photo.badge.plus")
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                            Spacer()
+                        }
+                    } else {
+                        if (imageUploaderViewModel.imageURL == nil && !imageUploaderViewModel.isLoading) {
+                            Button(action: {
+                                imageUploaderViewModel.isShowingImagePicker = true
+                                imageUploaderViewModel.selectNewImage()
+                            }) {
+                                HStack {
+                                    Spacer()
+                                    Image(systemName: "photo.badge.plus")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 44, height: 44)
+                                        .foregroundColor(.cyan)
+                                    Spacer()
+                                }
+                            }
+                        }
+                    }
+                    
+                    ZStack(alignment: .topTrailing)  {
+                        if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
+                            Image(uiImage: image)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 44, height: 44)
-                            Spacer()
+                                .frame(alignment: .center)
+                                .cornerRadius(15)
+                        }
+                        
+                        if (imageUploaderViewModel.imageURL != nil) {
+                            Button(action: {
+                                imageUploaderViewModel.isShowingImagePicker = true
+                                imageUploaderViewModel.selectNewImage()
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(UIStyles.Colors.lightGray)
+                                        .frame(width: 44, height: 44)
+                                    
+                                    Image(systemName: "pencil")
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: 24))
+                                        .bold()
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .padding(10)
                         }
                     }
                 }
@@ -76,6 +107,7 @@ struct NewReviewView: View {
                 }
                 
                 Spacer()
+                    .frame(height: 24)
                 
                 BTButton(title: "Post", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
                     viewModel.createReview() { error in
@@ -101,7 +133,7 @@ struct NewReviewView: View {
     private func handleImageUpload() async {
         await imageUploaderViewModel.uploadImage()
         if let newImageURL = imageUploaderViewModel.imageURL?.absoluteString {
-            viewModel.imageURLs.append(newImageURL)
+            viewModel.imageURLs = [newImageURL]
         }
     }
 }
