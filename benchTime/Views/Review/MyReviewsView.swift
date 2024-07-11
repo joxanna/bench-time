@@ -13,14 +13,24 @@ struct MyReviewsView: View {
     var body: some View {
         NavigationView {
             ScrollViewReader { proxy in
-                ScrollView(showsIndicators: false) {
-                    VStack {
+                VStack {
+                    if myReviewsViewModel.headerVisible {
                         HStack {
                             Text("My reviews")
                                 .font(.headline)
                         }
+                        .onTapGesture {
+                            withAnimation {
+                                scrollToTop(proxy: proxy)
+                                print("TO THE TOP")
+                            }
+                        }
                         .frame(height: 64)
-                        
+                        .transition(.move(edge: .top))
+                        .zIndex(1)
+                    }
+                    
+                    ScrollView(showsIndicators: false) {
                         VStack {
                             if let reviews = myReviewsViewModel.currentUserReviews {
                                 ForEach(reviews) { review in
@@ -33,18 +43,26 @@ struct MyReviewsView: View {
                                 ProgressView()
                             }
                         }
+                        .background(
+                            GeometryReader { geo in
+                                Color.clear
+                                    .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
+                                        myReviewsViewModel.updateScrollPosition(offset: newValue)
+                                    }
+                            }
+                        )
                         .id("scrollToTop")
+                    }
+                    .refreshable {
+                        myReviewsViewModel.fetchReviews()
                     }
                 }
                 .onAppear {
                     myReviewsViewModel.fetchReviews()
                     scrollToTop(proxy: proxy)
                 }
+                .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
             }
         }
-    }
-    
-    func scrollToTop(proxy: ScrollViewProxy) {
-        proxy.scrollTo("scrollToTop", anchor: .top)
     }
 }

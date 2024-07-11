@@ -13,6 +13,10 @@ func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }
 
+func scrollToTop(proxy: ScrollViewProxy) {
+    proxy.scrollTo("scrollToTop", anchor: .top)
+}
+
 func compareReviewsByDate(review1: ReviewModel, review2: ReviewModel) -> Bool {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

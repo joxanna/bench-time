@@ -13,6 +13,9 @@ class MyReviewsViewViewModel: ObservableObject {
     @Published var currentUserReviews: [ReviewModel]?
     @Published var errorMessage: String?
     
+    @Published var headerVisible: Bool = true
+    @Published var lastScrollPosition: CGFloat = 0
+    
     func fetchReviews() {
         print("Fetching...")
         guard let uid = authManager.currentUser?.uid else {
@@ -32,5 +35,16 @@ class MyReviewsViewViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func updateScrollPosition(offset: CGFloat) {
+        if offset >= 0 {
+            self.headerVisible = true
+        } else if offset > lastScrollPosition {
+            headerVisible = true
+        } else if offset < lastScrollPosition {
+            headerVisible = false
+        }
+        lastScrollPosition = offset
     }
 }

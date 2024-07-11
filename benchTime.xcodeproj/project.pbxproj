@@ -44,6 +44,7 @@
 		FF81E1CA2BECAFCE0023E743 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1C92BECAFCD0023E743 /* SettingsView.swift */; };
 		FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */; };
 		FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */; };
+		FF8435872C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */; };
 		FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8D197A2C26D5F300AB957F /* SearchBarView.swift */; };
 		FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */; };
 		FF9C308C2C215209003E90DF /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C308B2C215208003E90DF /* ReviewViewModel.swift */; };
@@ -136,6 +137,7 @@
 		FF81E1C92BECAFCD0023E743 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF81E1CD2BECB5AD0023E743 /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
 		FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldViewModifier.swift; sourceTree = "<group>"; };
+		FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableBottomBouncingScrollView.swift; sourceTree = "<group>"; };
 		FF8D197A2C26D5F300AB957F /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		FF92819E2BF4358C00E1A85A /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
 		FF9C308B2C215208003E90DF /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */,
 				FF29122F2C3663BF00ADA699 /* BTFormField.swift */,
 				FF48F8772C39463000A41941 /* BTRating.swift */,
+				FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */,
 				FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */,
 				FF7053FF2BFC5CA200965435 /* UIStyles.swift in Sources */,
+				FF8435872C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift in Sources */,
 				FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */,
 				FF7053F72BFB4AA500965435 /* ImageUploader.swift in Sources */,
 				FFD1FB442BE9F29300671C1A /* BenchTimeApp.swift in Sources */,

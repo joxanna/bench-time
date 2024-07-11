@@ -55,7 +55,7 @@ struct UpdateAccountDetailsView: View {
                     imageUploaderViewModel.selectNewImage()
                 }) {
                     Text("Edit profile picture")
-                        .foregroundColor(imageUploaderViewModel.isLoading ? .cyan : .gray)
+                        .foregroundColor(imageUploaderViewModel.isLoading ? .gray : .cyan)
                         .bold()
                 }
                 .disabled(imageUploaderViewModel.isLoading)

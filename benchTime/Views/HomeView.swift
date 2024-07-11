@@ -31,10 +31,16 @@ struct HomeView: View {
                         .frame(width: UIScreen.main.bounds.width, height: 64)
                         .background(Color.white)
                         .transition(.move(edge: .top))
+                        .zIndex(1)
                     }
                     
                     // Scrollable content
-                    ScrollView(showsIndicators: false) {
+                    ScrollView(showsIndicators: false){
+//                        VStack {
+//                            // Your content here
+//                            Text("Hello, World!")
+//                        }
+                        
                         VStack {
                             if let reviews = homeViewModel.currentReviews {
                                 ForEach(reviews) { review in
@@ -59,9 +65,8 @@ struct HomeView: View {
                         .id("scrollToTop") // Adding the id for scroll to top
                     }
                     .coordinateSpace(name: "scrollView")
-                    .onAppear {
-                        // Disable bouncing
-                        UIScrollView.appearance().bounces = false
+                    .refreshable {
+                        homeViewModel.fetchReviews()
                     }
                 }
             }
@@ -70,10 +75,8 @@ struct HomeView: View {
             print("LOADING HOME")
             homeViewModel.fetchReviews()
         }
-        .animation(.easeInOut, value: homeViewModel.headerVisible) // Changed animation to easeInOut
-    }
-    
-    private func scrollToTop(proxy: ScrollViewProxy) {
-        proxy.scrollTo("scrollToTop", anchor: .top)
+        .animation(.easeInOut, value: homeViewModel.headerVisible)
     }
 }
+
+
