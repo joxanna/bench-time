@@ -10,7 +10,6 @@
 		6920F91929C7E1CF4FEFD9D8 /* Pods_benchTime_benchTimeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAFB74E6AC4A73AD79FC859 /* Pods_benchTime_benchTimeUITests.framework */; };
 		935627E9B726599B98FEC663 /* Pods_benchTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4BA9322A5A96EFBB09634 /* Pods_benchTime.framework */; };
 		DCD8CE588EC53675E29F9453 /* Pods_benchTimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04B4415C039DA9DEBCF331F /* Pods_benchTimeTests.framework */; };
-		FF13FAD72C3BBE500038B10D /* BTCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF13FAD62C3BBE500038B10D /* BTCardViewModel.swift */; };
 		FF1539382BFF40D600DFB92A /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */; };
 		FF1B11372BEA012C00676036 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11362BEA012C00676036 /* LoginView.swift */; };
 		FF1B11392BEA04ED00676036 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11382BEA04ED00676036 /* HeaderView.swift */; };
@@ -73,7 +72,7 @@
 		FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */; };
 		FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */; };
 		FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */; };
-		FFEDE5612C3CCA4F00EC9317 /* BTCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE5602C3CCA4F00EC9317 /* BTCardViewModel.swift */; };
+		FFEDE5612C3CCA4F00EC9317 /* BTCardViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE5602C3CCA4F00EC9317 /* BTCardViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,7 +160,7 @@
 		FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
 		FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountDetailsView.swift; sourceTree = "<group>"; };
 		FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
-		FFEDE5602C3CCA4F00EC9317 /* BTCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewModel.swift; sourceTree = "<group>"; };
+		FFEDE5602C3CCA4F00EC9317 /* BTCardViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,7 +241,7 @@
 				FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */,
 				FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */,
 				FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */,
-				FFEDE5602C3CCA4F00EC9317 /* BTCardViewModel.swift */,
+				FFEDE5602C3CCA4F00EC9317 /* BTCardViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -688,8 +687,7 @@
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
 				FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
-				FF13FAD72C3BBE500038B10D /* BTCardViewModel.swift in Sources */,
-				FFEDE5612C3CCA4F00EC9317 /* BTCardViewModel.swift in Sources */,
+				FFEDE5612C3CCA4F00EC9317 /* BTCardViewViewModel.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
 				FF81E1C82BECA6350023E743 /* AuthenticationManager.swift in Sources */,
 				FFCC4F932C197C1100EFFAC9 /* BenchQueryViewModel.swift in Sources */,

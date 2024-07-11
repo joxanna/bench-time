@@ -9,13 +9,13 @@ import SwiftUI
 import URLImage
 
 struct BTCard: View {
-    @StateObject private var viewModel: BTCardViewModel
+    @StateObject private var viewModel: BTCardViewViewModel
     
     let currentUser: Bool
     let address: Bool
         
     init(review: ReviewModel, currentUser: Bool, address: Bool, onUpdate: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: BTCardViewModel(review: review, onUpdate: onUpdate))
+        _viewModel = StateObject(wrappedValue: BTCardViewViewModel(review: review, onUpdate: onUpdate))
         self.currentUser = currentUser
         self.address = address
     }
