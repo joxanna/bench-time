@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyReviewsView: View {
     @ObservedObject var myReviewsViewModel = MyReviewsViewViewModel()
-    
+
     var body: some View {
         NavigationView {
             ScrollViewReader { proxy in
@@ -30,7 +30,8 @@ struct MyReviewsView: View {
                         .zIndex(1)
                     }
                     
-                    ScrollView(showsIndicators: false) {
+                     ScrollView(showsIndicators: false) {
+//                    NoBounceScrollView {
                         VStack {
                             if let reviews = myReviewsViewModel.currentUserReviews {
                                 ForEach(reviews) { review in
@@ -53,6 +54,7 @@ struct MyReviewsView: View {
                         )
                         .id("scrollToTop")
                     }
+                    .coordinateSpace(name: "scroll")
                     .refreshable {
                         myReviewsViewModel.fetchReviews()
                     }
@@ -64,5 +66,9 @@ struct MyReviewsView: View {
                 .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
             }
         }
+    }
+
+    private func scrollToTop(proxy: ScrollViewProxy) {
+        proxy.scrollTo("scrollToTop", anchor: .top)
     }
 }

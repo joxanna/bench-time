@@ -52,10 +52,25 @@ class NewReviewViewViewModel: ObservableObject {
         return title == "" || description == "" || imageURLs == []
     }
     
-    func reset() {
+    private func reset() {
         title = ""
         description = ""
         rating = 0
         imageURLs = []
+    }
+    
+    func clear() {
+        // delete images if uploaded
+        if !imageURLs.isEmpty {
+            for image in imageURLs {
+                DatabaseAPI.shared.deleteImageFromStorage(imageURL: image) { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+       reset()
     }
 }

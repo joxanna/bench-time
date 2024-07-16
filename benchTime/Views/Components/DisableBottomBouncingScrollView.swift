@@ -8,74 +8,83 @@
 import UIKit
 import SwiftUI
 
-struct UIScrollViewRepresentable<Content: View>: UIViewControllerRepresentable {
-    let content: () -> Content
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        let viewController = UIViewController()
-        let scrollView = UIScrollView(frame: viewController.view.bounds)
-        scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        let hostingController = UIHostingController(rootView: content())
-        hostingController.view.frame = scrollView.bounds
-        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        scrollView.addSubview(hostingController.view)
-        viewController.addChild(hostingController)
-        hostingController.didMove(toParent: viewController)
-        
-        // Adjust the scroll view content size to match the content view size
-        hostingController.view.onSizeChange { size in
-            scrollView.contentSize = size
-        }
-        
-        return viewController
+class CustomScrollView: UIScrollView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Ensure scroll view properties are correctly set
+        self.isScrollEnabled = true
+        self.showsVerticalScrollIndicator = false
     }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        // Access the scroll view and its hosting controller
-        guard let scrollView = uiViewController.view.subviews.first as? UIScrollView,
-              let hostingController = scrollView.subviews.first as? UIHostingController<Content> else {
-            return
-        }
-        
-        // Update the root view of the hosting controller
-        hostingController.rootView = content()
-        
-        // Update the frame of the hosting controller's view to match the scroll view's bounds
-        hostingController.view.frame = scrollView.bounds
-        
-        // Call onSizeChange to update the content size of the scroll view
-        hostingController.view.onSizeChange { size in
-            scrollView.contentSize = size
-        }
-    }
-
 }
 
-extension UIView {
-    func onSizeChange(_ handler: @escaping (CGSize) -> Void) {
-        let observer = self.observe(\.bounds, options: [.new]) { view, change in
-            if let newSize = change.newValue?.size {
-                handler(newSize)
+struct NoBounceScrollView<Content: View>: UIViewRepresentable {
+    var content: Content
+    
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    
+    func makeUIView(context: Context) -> CustomScrollView {
+        let scrollView = CustomScrollView()
+        scrollView.delegate = context.coordinator
+        scrollView.backgroundColor = .clear  // Set to clear if you want to see the background of the content
+        
+        let hostedView = UIHostingController(rootView: content)
+        hostedView.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.addSubview(hostedView.view)
+        
+        NSLayoutConstraint.activate([
+            hostedView.view.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            hostedView.view.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            hostedView.view.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            hostedView.view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            hostedView.view.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        context.coordinator.hostingController = hostedView
+
+        return scrollView
+    }
+    
+    func updateUIView(_ uiView: CustomScrollView, context: Context) {
+        print("Updating scroll view")
+        if let hostedView = context.coordinator.hostingController {
+            hostedView.rootView = content
+            
+            // Ensure content size is updated
+            let size = hostedView.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            uiView.contentSize = size
+            
+            uiView.setNeedsLayout()
+            uiView.layoutIfNeeded()
+            uiView.contentOffset = CGPoint(x: 0, y: 0)
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+
+    class Coordinator: NSObject, UIScrollViewDelegate {
+        var parent: NoBounceScrollView
+        var hostingController: UIHostingController<Content>?
+        
+        init(parent: NoBounceScrollView) {
+            self.parent = parent
+        }
+        
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            // Fix the bounce at the bottom
+            let contentHeight = scrollView.contentSize.height
+            let scrollViewHeight = scrollView.bounds.height
+            
+            if scrollView.contentOffset.y > contentHeight - scrollViewHeight {
+                scrollView.contentOffset.y = contentHeight - scrollViewHeight
             }
+       
+            // Additional scroll handling code here if needed
+            print("Scroll offset: \(scrollView.contentOffset.y)")
         }
-        
-        // Store the observer as an associated object to keep it alive
-        objc_setAssociatedObject(self, &AssociatedKeys.sizeChangeObserver, observer, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    }
-    
-    private struct AssociatedKeys {
-        static var sizeChangeObserver = "sizeChangeObserver"
     }
 }
-
-
-
-
-//func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//    // Fix the bounce at the bottom
-//    if scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.height {
-//        scrollView.contentOffset.y = scrollView.contentSize.height - scrollView.bounds.height
-//    }
-//}

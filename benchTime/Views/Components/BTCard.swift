@@ -21,27 +21,6 @@ struct BTCard: View {
     }
     
     var body: some View {
-//<<<<<<< Updated upstream
-//        VStack(alignment: .leading, spacing: 20.0) {
-//            HStack {
-//                if let user = user {
-//                    // Display user details
-//                    if user.profileImageURL != "" {
-//                        URLImage(URL(string: user.profileImageURL)!) { image in
-//                           // Use the loaded image
-//                           image
-//                               .resizable()
-//                               .aspectRatio(contentMode: .fill)
-//                       }
-//                       .frame(width: 24, height: 24)
-//                       .clipShape(Circle())
-//                    } else {
-//                        Image("no-profile-image")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fill)
-//                            .frame(width: 24, height: 24)
-//                            .clipShape(Circle())
-//=======
         ZStack {
             VStack(alignment: .leading, spacing: 20.0) {
                 HStack {
@@ -71,20 +50,22 @@ struct BTCard: View {
                             .font(.subheadline)
                             .foregroundStyle(Color.black)
                             .bold()
-//>>>>>>> Stashed changes
                     }
                 }
                 // only 1 image for now
                 AsyncImage(url: URL(string: viewModel.review.imageURLs![0])) { image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .clipped()
                         .cornerRadius(15)
+                        .frame(maxWidth: UIScreen.main.bounds.width)
+                        .aspectRatio(1, contentMode: .fit)
                 } placeholder: {
-                    Spacer()
                     ProgressView()
-                    Spacer()
+                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.width)
+                        .aspectRatio(1, contentMode: .fit)
                 }
+                
                 
                 HStack{
                     Text(viewModel.review.title)
@@ -171,7 +152,7 @@ struct BTCard: View {
             )
             .alert(isPresented: $viewModel.isConfirmingAction) {
                 Alert(
-                    title: Text("Confirm Action"),
+                    title: Text("Delete review"),
                     message: Text("Are you sure you want to delete this review?"),
                     primaryButton: .destructive(Text("Delete")) {
                         viewModel.deleteReview()
@@ -181,7 +162,14 @@ struct BTCard: View {
             }
             
             if (viewModel.isLoading) {
-                ProgressView()
+                ZStack {
+                    Rectangle()
+                        .fill(Color.white.opacity(0.6))
+                        .frame(width: 72, height: 72)
+                        .cornerRadius(15)
+                    ProgressView()
+                        .frame(width: 32, height: 32)
+                }
             }
         }
     }

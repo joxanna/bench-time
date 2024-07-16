@@ -27,6 +27,7 @@
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
+		FF5D30662C464C8300ED2A77 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30652C464C8300ED2A77 /* BottomSheet.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
 		FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */; };
 		FF7053ED2BFACB9A00965435 /* NewReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7053EC2BFACB9A00965435 /* NewReviewView.swift */; };
@@ -120,6 +121,7 @@
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
 		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		FF5D30652C464C8300ED2A77 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extensions.swift"; sourceTree = "<group>"; };
 		FF7053EC2BFACB9A00965435 /* NewReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReviewView.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */,
+				FF5D30652C464C8300ED2A77 /* BottomSheet.swift */,
 			);
 			name = ViewModifiers;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */,
 				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
+				FF5D30662C464C8300ED2A77 /* BottomSheet.swift in Sources */,
 				FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,

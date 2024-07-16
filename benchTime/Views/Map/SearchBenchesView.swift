@@ -103,6 +103,14 @@ struct SearchBenchesView: View {
                 }
             }
         }
+//        .bottomSheet(isExpanded: $isSelected) {
+//            if let annotation = selectedAnnotation {
+//                if let bench = benchQueryViewModel.getBench(annotation: annotation) {
+//                    LargeModalView(contentView: BenchReviewsView(bench: bench, benchAnnotation: annotation))
+//                        .presentationDragIndicator(.visible)
+//                }
+//            }
+//        }
         .onChange(of: isSelected) { _,newValue in
             if !newValue {
                 self.selectedAnnotation = nil
