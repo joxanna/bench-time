@@ -9,6 +9,8 @@ import SwiftUI
 import URLImage
 
 struct BTCard: View {
+    @EnvironmentObject private var rootViewModel: RootViewViewModel 
+    
     @StateObject private var viewModel: BTCardViewModel
     
     let currentUser: Bool
@@ -91,7 +93,7 @@ struct BTCard: View {
                             .font(.system(size: 14))
                     } else {
                         Button(action: {
-                            print("OPEN MAP")
+                            rootViewModel.openSearchBenchesView(withAddress: viewModel.addressText)
                         }) {
                             Text("📍 \(viewModel.addressText)")
                                 .foregroundColor(.gray)

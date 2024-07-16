@@ -22,10 +22,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct BenchTimeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var rootViewModel = RootViewViewModel()  // Initialize RootViewModel
     
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(rootViewModel)  // Provide RootViewModel to the environment
                 .ignoresSafeArea(.keyboard, edges: .all)
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }

@@ -59,42 +59,28 @@ import SwiftUI
 //    }
 //}
 
-//import SwiftUI
+//struct BottomSheet<Item: Identifiable, SheetContent: View>: ViewModifier {
+//    
+//    @Binding var item: Item?
 //
-//struct BottomSheet<Content: View>: ViewModifier {
-//    @Binding var isExpanded: Bool
-//    let content: Content
-//    
-//    init(isExpanded: Binding<Bool>, @ViewBuilder content: () -> Content) {
-//        self._isExpanded = isExpanded
-//        self.content = content()
-//    }
-//    
-//    func body(content: Content) -> some View {
-//        VStack {
-//            Spacer()
-//            self.content
-//                .background(Color.white)
-//                .cornerRadius(20)
-//                .transition(.move(edge: .bottom))
-//                .animation(.easeInOut(duration: 0.3), value: isExpanded)
-//                .gesture(
-//                    DragGesture()
-//                        .onChanged { value in
-//                            if value.translation.height < 0 {
-//                                isExpanded = true
-//                            } else if value.translation.height > 0 {
-//                                isExpanded = false
-//                            }
-//                        }
-//                )
-//                .frame(height: isExpanded ? nil : 300)  // Adjust the height of the bottom sheet
-//        }
+//    let onDismiss: (() -> Void)?
+//    @ViewBuilder let sheetContent: (Binding<Item>) -> SheetContent
+//
+//    @ViewBuilder func body(content: Content) -> some View {
+//        content
+//            .sheet(item: self.$item, onDismiss: self.onDismiss) { newItem in
+//                self.sheetContent(Binding {
+//                    newItem
+//                } set: {
+//                    self.item = $0
+//                }) // sheetContent
+//            } // .sheet
 //    }
 //}
 //
+//
 //extension View {
-//    func bottomSheet<Content: View>(isExpanded: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
-//        self.modifier(BottomSheet(isExpanded: isExpanded, content: content))
+//    @ViewBuilder func sheet<Item, Content>(item: Binding<Item?>, onDimiss: (() -> Void)? = nil, @ViewBuilder content: @escaping (Binding<Item>) -> Content) -> some View where Item: Identifiable, Content: View {
+//        self.modifier(SheetBinding(item: item, onDismiss: onDimiss, sheetContent: content))
 //    }
 //}
