@@ -31,7 +31,7 @@ struct MapView: UIViewRepresentable {
         
         compassButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
-        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 72).isActive = true
+        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 56).isActive = true
         
         // Add tracking button
         let trackingButton = UIButton(type: .system)
@@ -42,7 +42,7 @@ struct MapView: UIViewRepresentable {
         
         trackingButton.translatesAutoresizingMaskIntoConstraints = false
         trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 124).isActive = true
+        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 108).isActive = true
         
         // Add pin button
         let pinButton = UIButton(type: .system)
@@ -53,7 +53,7 @@ struct MapView: UIViewRepresentable {
         
         pinButton.translatesAutoresizingMaskIntoConstraints = false
         pinButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 160).isActive = true
+        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 144).isActive = true
         
         if let imageView = pinButton.imageView {
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,15 +81,10 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        if (isSearching) {
-            
-        } else {
+        uiView.isUserInteractionEnabled = !isSelected
+        
+        if !isSearching {
             print("-----Updating UI view")
-            // Update the region if it has changed and the change is not programmatic
-            if let region = mapViewModel.region, !context.coordinator.isProgrammaticRegionChange {
-                print("Setting region to: \(region.center.latitude), \(region.center.longitude)")
-                uiView.setRegion(region, animated: true)
-            }
             
             // Select or deselect annotations as needed
             if let selectedAnnotation = selectedAnnotation {
@@ -154,13 +149,13 @@ struct MapView: UIViewRepresentable {
                 return
             }
 
-            if parent.isSearching {
+            if parent.isSearching || !mapView.isUserInteractionEnabled {
+                isProgrammaticRegionChange = true
                 return
             }
             
             print("-----Region change triggered")
             parent.onRegionChange?(mapView.region, parent.$isLoading)
-            isProgrammaticRegionChange = true
         }
         
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -195,7 +190,6 @@ struct MapView: UIViewRepresentable {
         @objc func trackingButtonTapped() {
             print("-----Re-center")
             if mapView?.userTrackingMode == .follow {
-                print("Don't follow")
                 mapView?.setUserTrackingMode(.none, animated: true)
                 // Fetch benches at current location
                 if let location = mapView?.userLocation.location {
@@ -203,7 +197,6 @@ struct MapView: UIViewRepresentable {
                     mapView?.setRegion(region, animated: true)
                 }
             } else {
-                print("Follow")
                 mapView?.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
                 
             }

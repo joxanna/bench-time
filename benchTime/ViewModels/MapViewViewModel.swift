@@ -133,7 +133,7 @@ class MapViewViewModel: ObservableObject {
     }
     
     func performSearch(query: String) {
-        print("-----SEARCHING")
+        print("-----Searching")
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = query
 
@@ -144,7 +144,6 @@ class MapViewViewModel: ObservableObject {
                 return
             }
             if let firstItem = response.mapItems.first {
-                print("Construct search pin")
                 let searchPin = MKPointAnnotation()
                 searchPin.title = firstItem.name
                 searchPin.coordinate = firstItem.placemark.coordinate
@@ -156,10 +155,14 @@ class MapViewViewModel: ObservableObject {
     }
     
     func clearSearchPin() {
-        searchPin = nil
-        // update map
-        if let region = region {
-            self.region = MKCoordinateRegion(center: region.center, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+        if (searchPin != nil) {
+            searchPin = nil
+            if let region = region {
+                self.region = MKCoordinateRegion(center: region.center, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
+            }
+            
+        } else {
+            searchPin = nil
         }
     }
 }

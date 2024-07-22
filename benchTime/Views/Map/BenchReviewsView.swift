@@ -121,7 +121,6 @@ struct BenchReviewsView: View {
             benchReviewViewModel.getBenchAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)
             
             benchReviewViewModel.fetchReviews(id: String(bench.id))
-            print(bench)
         }
     }
     

@@ -48,7 +48,6 @@ struct SearchBenchesView: View {
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        print("STOP")
                     }
                     
                     SearchBarView(searchText: $searchQueryViewModel.searchText, isSearching: $isSearching, searchResults: $searchResults, showSearchResults: $showSearchResults, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
@@ -61,7 +60,6 @@ struct SearchBenchesView: View {
                                                 isSearching = true
                                                 searchQueryViewModel.searchText = result.uniqueIdentifier
                                                 performSearch(query: searchQueryViewModel.searchText)
-                                                print("SELECTED RESULT")
                         })
                         .padding(.top, 44)
                     }
@@ -76,6 +74,7 @@ struct SearchBenchesView: View {
                 .frame(height: 0.5)
         }
         .onAppear {
+//            print("searchText: \(searchQueryViewModel.searchText)")
             searchQueryViewModel.searchText = searchQueryViewModel.searchText // Update the search text when the view appears
             performSearch(query: searchQueryViewModel.searchText)
             print("-----Requesting location on appear")
@@ -92,7 +91,7 @@ struct SearchBenchesView: View {
                         longitudinalMeters: UIStyles.SearchDistance.lon)
                     benchQueryViewModel.mapViewModel.region = region
                     benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
-                    print("IS FIRST RENDER")
+                
                 } else {
                     print("No location available.")
                 }
@@ -130,17 +129,18 @@ struct SearchBenchesView: View {
             print("Empty query")
             return
         }
-        print("-----PERFORMING SEARCH")
+        print("-----Perfoming search")
         benchQueryViewModel.mapViewModel.performSearch(query: query)
         if let region = benchQueryViewModel.mapViewModel.region {
             benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
         }
+        
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         isSearching = false
     }
     
     private func onSearchClear() {
-        print("-----CLEARING")
+        print("-----Clearing")
         searchQueryViewModel.searchText = ""
         benchQueryViewModel.mapViewModel.clearSearchPin()
     }

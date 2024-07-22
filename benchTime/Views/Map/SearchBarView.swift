@@ -55,6 +55,10 @@ class SearchBarUIView: UIView {
         stackView.backgroundColor = UIColor.white
     }
     
+    func isSearchBarFocused() -> Bool {
+        return searchBar.isFirstResponder
+    }
+    
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: 44)
     }
