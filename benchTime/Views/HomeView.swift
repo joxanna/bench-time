@@ -25,7 +25,6 @@ struct HomeView: View {
                                     .onTapGesture {
                                         withAnimation {
                                             scrollToTop(proxy: proxy)
-                                            print("TO THE TOP")
                                         }
                                     }
                             }
@@ -70,7 +69,6 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            print("LOADING HOME")
             homeViewModel.fetchReviews()
         }
         .animation(.easeInOut, value: homeViewModel.headerVisible)

@@ -132,28 +132,6 @@ class MapViewViewModel: ObservableObject {
         return view
     }
     
-//    func performSearch(query: String) {
-//        print("-----Searching")
-//        let searchRequest = MKLocalSearch.Request()
-//        searchRequest.naturalLanguageQuery = query
-//
-//        let search = MKLocalSearch(request: searchRequest)
-//        search.start { response, error in
-//            guard let response = response else {
-//                print("Search error: \(String(describing: error?.localizedDescription))")
-//                return
-//            }
-//            if let firstItem = response.mapItems.first {
-//                let searchPin = MKPointAnnotation()
-//                searchPin.title = firstItem.name
-//                searchPin.coordinate = firstItem.placemark.coordinate
-//                self.searchPin = searchPin
-//                
-//                self.region = MKCoordinateRegion(center: firstItem.placemark.coordinate, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
-//            }
-//        }
-//    }
-    
     func performSearch(query: String, completion: @escaping (Result<Void, Error>) -> Void) {
         print("-----Searching")
         let searchRequest = MKLocalSearch.Request()
@@ -189,8 +167,6 @@ class MapViewViewModel: ObservableObject {
             }
         }
     }
-
-
     
     func clearSearchPin() {
         if (searchPin != nil) {
@@ -198,7 +174,6 @@ class MapViewViewModel: ObservableObject {
             if let region = region {
                 self.region = MKCoordinateRegion(center: region.center, latitudinalMeters: UIStyles.SearchDistance.lat, longitudinalMeters: UIStyles.SearchDistance.lon)
             }
-            
         } else {
             searchPin = nil
         }

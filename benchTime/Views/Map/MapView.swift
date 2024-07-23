@@ -31,7 +31,7 @@ struct MapView: UIViewRepresentable {
         
         compassButton.translatesAutoresizingMaskIntoConstraints = false
         compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.medium).isActive = true
-        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 56).isActive = true
+        compassButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 8).isActive = true
         
         // Add tracking button
         let trackingButton = UIButton(type: .system)
@@ -42,7 +42,7 @@ struct MapView: UIViewRepresentable {
         
         trackingButton.translatesAutoresizingMaskIntoConstraints = false
         trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 108).isActive = true
+        trackingButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 64).isActive = true
         
         // Add pin button
         let pinButton = UIButton(type: .system)
@@ -53,7 +53,7 @@ struct MapView: UIViewRepresentable {
         
         pinButton.translatesAutoresizingMaskIntoConstraints = false
         pinButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
-        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 144).isActive = true
+        pinButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 102).isActive = true
         
         if let imageView = pinButton.imageView {
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,21 +88,17 @@ struct MapView: UIViewRepresentable {
             
             // Select or deselect annotations as needed
             if let selectedAnnotation = selectedAnnotation {
-                print("Select annotation")
                 uiView.selectAnnotation(selectedAnnotation, animated: true)
             } else {
-                print("De-select annotation")
                 uiView.deselectAnnotation(uiView.selectedAnnotations.first, animated: true)
             }
 
             // Remove annotations if isSelected is false
             if !isSelected {
-                print("Remove annotations")
                 uiView.removeAnnotations(uiView.annotations)
             }
             
             if let searchPin = mapViewModel.searchPin {
-                print("Adding search pin at: \(searchPin.coordinate.latitude), \(searchPin.coordinate.longitude)")
                 uiView.addAnnotation(searchPin)
             }
             
@@ -113,7 +109,6 @@ struct MapView: UIViewRepresentable {
             }
 
             uiView.addAnnotations(mapViewModel.annotations)
-            print("Add annotations")
         }
     }
 

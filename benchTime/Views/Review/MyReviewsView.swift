@@ -22,7 +22,6 @@ struct MyReviewsView: View {
                         .onTapGesture {
                             withAnimation {
                                 scrollToTop(proxy: proxy)
-                                print("TO THE TOP")
                             }
                         }
                         .frame(height: 64)

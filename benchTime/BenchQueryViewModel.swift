@@ -40,7 +40,7 @@ class BenchQueryViewModel: ObservableObject {
         print("No annotation found for bench")
         return nil
     }
-    
+
     func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>, completion: @escaping (Result<Void, Error>) -> Void
     ) {
         print("-----Fetching from benchQueryModel")

@@ -131,7 +131,6 @@ struct BTCard: View {
                         
                         Button(action: {
                             viewModel.isConfirmingAction.toggle()
-                            print("Confirming action: \(viewModel.isConfirmingAction)")
                         }) {
                             ZStack {
                                 Circle()

@@ -69,6 +69,7 @@ struct SearchBarView: UIViewRepresentable {
     @Binding var isSearching: Bool
     @Binding var searchResults: [MKLocalSearchCompletion]
     @Binding var showSearchResults: Bool
+    
     var placeholder: String
     var onSearch: ((String) -> Void)
     var onClear: (() -> Void)

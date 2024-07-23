@@ -32,36 +32,37 @@ struct SearchBenchesView: View {
     var body: some View {
         VStack {
             ZStack {
-                ZStack(alignment: .top) {
-                    MapView(mapViewModel: benchQueryViewModel.mapViewModel,
-                            onRegionChange: { region, isLoading in
-                                if !isSearching, !isSelected { // Check if not searching or selected
-                                    print("-----Fetching benches in onRegionChange")
-                                    benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading) { result in }
-                                }
-                            },
-                            isSelected: $isSelected,
-                            selectedAnnotation: $selectedAnnotation,
-                            isLoading: $isLoading,
-                            isSearching: $isSearching
-                    )
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    }
-                    
+                VStack {
                     SearchBarView(searchText: $searchQueryViewModel.searchText, isSearching: $isSearching, searchResults: $searchResults, showSearchResults: $showSearchResults, placeholder: "Search benches", onSearch: performSearch, onClear: onSearchClear)
                         .frame(height: 44)
                     
-                    if showSearchResults {
-                        SearchResultsView(searchResults: $searchResults,
-                                          isSearching: $isSearching,
-                                          onSelectResult: { result in
-                                                isSearching = true
-                                                searchQueryViewModel.searchText = result.uniqueIdentifier
-                                                performSearch(query: searchQueryViewModel.searchText)
-                        })
-                        .padding(.top, 44)
+                    ZStack(alignment: .top) {
+                        MapView(mapViewModel: benchQueryViewModel.mapViewModel,
+                                onRegionChange: { region, isLoading in
+                                    if !isSearching, !isSelected { // Check if not searching or selected
+                                        print("-----Fetching benches in onRegionChange")
+                                        benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading) { result in }
+                                    }
+                                },
+                                isSelected: $isSelected,
+                                selectedAnnotation: $selectedAnnotation,
+                                isLoading: $isLoading,
+                                isSearching: $isSearching
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                        
+                        if showSearchResults {
+                            SearchResultsView(searchResults: $searchResults,
+                                              isSearching: $isSearching,
+                                              onSelectResult: { result in
+                                                    isSearching = true
+                                                    searchQueryViewModel.searchText = result.uniqueIdentifier
+                                                    performSearch(query: searchQueryViewModel.searchText)
+                            })
+                        }
                     }
                 }
                 
@@ -113,10 +114,6 @@ struct SearchBenchesView: View {
             if !newValue {
                 self.selectedAnnotation = nil
                 self.isSelected = false
-            }
-            
-            if let annotation = selectedAnnotation {
-                print(annotation)
             }
         }
         .onChange(of: locationManager.lastLocation) { _, newLocation in
