@@ -12,49 +12,71 @@ struct RootView: View {
     @StateObject private var rootViewModel = RootViewViewModel()
     @ObservedObject var authManager = AuthenticationManager.shared
 
+    @State private var scrollToTopHome = false
+    @State private var scrollToTopMyReviews = false
+
     var body: some View {
         ZStack {
             TabView(selection: $rootViewModel.selectedTab) {
-                HomeView()
+                HomeView(toTop: $scrollToTopHome)
                     .tabItem {
                         Label("Home", systemImage: "house")
                     }
-                    .padding(.top, 10)
-                    .tag(0)  // Tag for the Home tab
+                    .tag(0)
                 
                 SearchBenchesView()
-                    .environmentObject(rootViewModel.searchQueryViewModel)  // Pass the view model to the tab
+                    .environmentObject(rootViewModel.searchQueryViewModel)
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }
-                    .padding(.top, 10)
-                    .tag(1)  // Tag for the SearchBenchesView tab
+                    .tag(1)
                 
-                MyReviewsView()
+                MyReviewsView(toTop: $scrollToTopMyReviews)
                     .tabItem {
                         Label("My reviews", systemImage: "chair")
                     }
-                    .padding(.top, 10)
-                    .tag(2)  // Tag for the MyReviews tab
+                    .tag(2)
                 
                 SettingsView()
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
-                    .padding(.top, 10)
-                    .tag(3)  // Tag for the Settings tab
+                    .tag(3)
             }
-            .onChange(of: rootViewModel.selectedTab) { newValue, _ in
-                if newValue == 1 {  // Switch to SearchBenchesView tab
+            .onChange(of: rootViewModel.selectedTab) { newValue, oldValue in
+                if newValue == 1 {
                     rootViewModel.searchQueryViewModel.searchText = rootViewModel.searchQueryViewModel.searchText
                 }
             }
-            .fullScreenCover(isPresented: $authManager.showSignInView) {
-                NavigationStack {
-                    LoginView()
+            
+            VStack {
+                Spacer()
+                HStack {
+                    ForEach(0..<4) { index in
+                        Button(action: {
+                            if rootViewModel.selectedTab == index {
+                                if index == 0 {
+                                    scrollToTopHome.toggle()
+                                } else if index == 2 {
+                                    scrollToTopMyReviews.toggle()
+                                }
+                            } else {
+                                rootViewModel.selectedTab = index
+                            }
+                        }) {
+                            Color.clear
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
+                .frame(height: 50) // Adjust this height to match your tab bar height
             }
         }
-        .environmentObject(rootViewModel)  // Provide RootViewModel to the environment
+        .environmentObject(rootViewModel)
+        .fullScreenCover(isPresented: $authManager.showSignInView) {
+            NavigationStack {
+                LoginView()
+            }
+        }
     }
 }

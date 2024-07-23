@@ -10,12 +10,13 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewViewModel()
     
+    @Binding var toTop: Bool
+    
     var body: some View {
         VStack {
             ZStack(alignment: .top) {
                 ScrollViewReader { proxy in
                     VStack(spacing: 0) {
-                        // Header
                         if homeViewModel.headerVisible {
                             HStack {
                                 Image("BT")
@@ -34,8 +35,7 @@ struct HomeView: View {
                             .zIndex(1)
                         }
                         
-                        // Scrollable content
-                        ScrollView(showsIndicators: false){
+                        ScrollView(showsIndicators: false) {
                             VStack {
                                 if let reviews = homeViewModel.currentReviews {
                                     ForEach(reviews) { review in
@@ -58,21 +58,28 @@ struct HomeView: View {
                             )
                             .padding(.top, 8)
                             .padding(.bottom)
-                            .id("scrollToTop") // Adding the id for scroll to top
+                            .id("scrollToTop")
                         }
                         .coordinateSpace(name: "scrollView")
                         .refreshable {
                             homeViewModel.fetchReviews()
                         }
                     }
+                    .onAppear {
+                        homeViewModel.fetchReviews()
+                        scrollToTop(proxy: proxy)
+                    }
+                    .onChange(of: toTop) { _, _ in
+                        withAnimation {
+                            scrollToTop(proxy: proxy)
+                        }
+                    }
                 }
             }
-        }
-        .onAppear {
-            homeViewModel.fetchReviews()
         }
         .animation(.easeInOut, value: homeViewModel.headerVisible)
     }
 }
+
 
 

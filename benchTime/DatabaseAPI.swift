@@ -223,10 +223,6 @@ extension DatabaseAPI {
             // Sort reviews by createdTimestamp
             reviews.sort(by: compareReviewsByDate)
             
-//            for review in reviews {
-//                print("Review \(review.title) - Created: \(review.createdTimestamp)")
-//            }
-            
             completion(reviews, nil)
         }) { error in
             // Handle Firebase error

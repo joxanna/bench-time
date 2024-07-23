@@ -8,66 +8,72 @@
 import SwiftUI
 
 struct MyReviewsView: View {
-    @ObservedObject var myReviewsViewModel = MyReviewsViewViewModel()
+    @StateObject var myReviewsViewModel = MyReviewsViewViewModel()
+    
+    @Binding var toTop: Bool
 
     var body: some View {
-        NavigationView {
-            ScrollViewReader { proxy in
-                VStack {
-                    if myReviewsViewModel.headerVisible {
-                        HStack {
-                            Text("My reviews")
-                                .font(.headline)
-                        }
-                        .onTapGesture {
-                            withAnimation {
-                                scrollToTop(proxy: proxy)
-                            }
-                        }
-                        .frame(height: 64)
-                        .transition(.move(edge: .top))
-                        .zIndex(1)
-                    }
-                    
-                     ScrollView(showsIndicators: false) {
-//                    NoBounceScrollView {
-                        VStack {
-                            if let reviews = myReviewsViewModel.currentUserReviews {
-                                ForEach(reviews) { review in
-                                    BTCard(review: review, currentUser: true, address: true) {
-                                        myReviewsViewModel.fetchReviews()
+        VStack {
+            ZStack(alignment: .top) {
+                ScrollViewReader { proxy in
+                    VStack(spacing: 0) {
+                        if myReviewsViewModel.headerVisible {
+                            HStack {
+                                Text("My reviews")
+                                    .font(.headline)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            scrollToTop(proxy: proxy)
+                                        }
                                     }
-                                    .padding()
+                            }
+                            .frame(width: UIScreen.main.bounds.width, height: 64)
+                            .transition(.move(edge: .top))
+                            .zIndex(1)
+                        }
+
+                        ScrollView(showsIndicators: false) {
+                            VStack {
+                                if let reviews = myReviewsViewModel.currentUserReviews {
+                                    ForEach(reviews) { review in
+                                        BTCard(review: review, currentUser: true, address: true) {
+                                            myReviewsViewModel.fetchReviews()
+                                        }
+                                        .padding()
+                                    }
+                                } else {
+                                    ProgressView()
                                 }
-                            } else {
-                                ProgressView()
                             }
+                            .background(
+                                GeometryReader { geo in
+                                    Color.clear
+                                        .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
+                                            myReviewsViewModel.updateScrollPosition(offset: newValue)
+                                        }
+                                }
+                            )
+                            .padding(.top, 8)
+                            .padding(.bottom)
+                            .id("scrollToTop")
                         }
-                        .background(
-                            GeometryReader { geo in
-                                Color.clear
-                                    .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
-                                        myReviewsViewModel.updateScrollPosition(offset: newValue)
-                                    }
-                            }
-                        )
-                        .id("scrollToTop")
+                        .coordinateSpace(name: "scrollView")
+                        .refreshable {
+                            myReviewsViewModel.fetchReviews()
+                        }
                     }
-                    .coordinateSpace(name: "scroll")
-                    .refreshable {
+                    .onAppear {
                         myReviewsViewModel.fetchReviews()
+                        scrollToTop(proxy: proxy)
+                    }
+                    .onChange(of: toTop) { _, _ in
+                        withAnimation {
+                            scrollToTop(proxy: proxy)
+                        }
                     }
                 }
-                .onAppear {
-                    myReviewsViewModel.fetchReviews()
-                    scrollToTop(proxy: proxy)
-                }
-                .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
             }
         }
-    }
-
-    private func scrollToTop(proxy: ScrollViewProxy) {
-        proxy.scrollTo("scrollToTop", anchor: .top)
+        .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
     }
 }
