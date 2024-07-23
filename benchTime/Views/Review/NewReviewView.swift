@@ -72,7 +72,9 @@ struct NewReviewView: View {
                         if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
                             Image(uiImage: image)
                                 .resizable()
-                                .scaledToFit()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.width)
+                                .clipped()
                                 .frame(alignment: .center)
                                 .cornerRadius(15)
                         }

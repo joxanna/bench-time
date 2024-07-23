@@ -58,10 +58,10 @@ struct BTCard: View {
                 AsyncImage(url: URL(string: viewModel.review.imageURLs![0])) { image in
                     image
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.width)
                         .clipped()
                         .cornerRadius(15)
-                        .frame(maxWidth: UIScreen.main.bounds.width)
-                        .aspectRatio(1, contentMode: .fit)
                 } placeholder: {
                     ProgressView()
                         .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.width)
