@@ -18,7 +18,6 @@ struct BenchReviewsView: View {
 
     var body: some View {
         NavigationView {
-            
             VStack {
                 VStack {
                     ZStack {
@@ -28,7 +27,7 @@ struct BenchReviewsView: View {
                         
                         HStack {
                             Spacer()
-                            NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: { benchReviewViewModel.fetchReviews(id: String(bench.id)) } )) {
+                            NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: { benchReviewViewModel.fetchReviews(id: String(bench.id))})) {
                                 HStack {
                                     Image(systemName: "square.and.pencil")
                                 }

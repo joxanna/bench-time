@@ -81,5 +81,21 @@ struct HomeView: View {
     }
 }
 
-
-
+//
+//
+//
+//struct HomeView: View {
+//    @State private var isShowingFullScreenCover = false
+//
+//    var body: some View {
+//        Button("Show Full Screen Cover") {
+//            isShowingFullScreenCover.toggle()
+//        }
+//        .fullScreenCover(isPresented: $isShowingFullScreenCover) {
+//            // Pass any content you want to display
+//            FullScreenCoverView {
+//                Text("Hello")
+//            }
+//        }
+//    }
+//}
