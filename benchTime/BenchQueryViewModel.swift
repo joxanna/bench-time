@@ -30,23 +30,19 @@ class BenchQueryViewModel: ObservableObject {
         return elements[id]
     }
     
-    // Method to find a bench by latitude and longitude
-    func findAnnotation(latitude: Double, longitude: Double) {
-        print(mapViewModel.annotations.count)
-//        return mapViewModel.annotations.first {
-//            $0.coordinate.latitude == latitude && $0.coordinate.longitude == longitude
-//        }
+    func findAnnotation(benchId: String) -> CustomPointAnnotation? {
+        for annotation in mapViewModel.annotations {
+            let id = String(annotation.id)
+            if id == benchId {
+                return annotation
+            }
+        }
+        print("No annotation found for bench")
+        return nil
     }
     
-    // Method to select an annotation and update the map view
-//    func selectAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-//        if let annotation = findAnnotation(latitude: latitude, longitude: longitude) {
-//            mapViewModel.region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-//            mapViewModel.selectAnnotation(annotation, isTrackingModeFollow: true)
-//        }
-//    }
-    
-    func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>) {
+    func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>, completion: @escaping (Result<Void, Error>) -> Void
+    ) {
         print("-----Fetching from benchQueryModel")
 
         // Cancel any existing fetch request
@@ -77,16 +73,14 @@ class BenchQueryViewModel: ObservableObject {
                     
                     switch result {
                     case .failure(let error):
-                        print("Error fetching elements: \(error.localizedDescription)")
-                        if let urlError = error as? URLError {
-                            print("URLError code: \(urlError.code)")
-                        }
+                        completion(.failure(error))
                     case .success(let elements):
                         self.elements = elements // Update elements on the main thread
                         // Generate mapKit visualizations for the returned elements using a static visualization generator
                         let visualizations = OPVisualizationGenerator.mapKitVisualizations(forElements: elements)
                         self.mapViewModel.addVisualizations(visualizations)
                         print("Successful fetch to Overpass API")
+                        completion(.success(()))
                     }
                 }
             }

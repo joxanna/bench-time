@@ -28,17 +28,14 @@ struct LoginView: View {
                                     case .success:
                                         print("Login successful")
                                         authManager.showSignInView = false
-                                    case .failure(let error):
+                                    case .failure:
                                         print("\(viewModel.errorMessage)")
                                 }
                             }
                         }
                     }
                 }
-//<<<<<<< Updated upstream
-//                if (errorMessage != "") {
-//                    Text(errorMessage).foregroundColor(.red)
-//=======
+
                 .padding(25)
                 
                 VStack{
@@ -51,7 +48,6 @@ struct LoginView: View {
                             .foregroundColor(.cyan)
                             .font(.headline)
                     }
-//>>>>>>> Stashed changes
                 }
                 Spacer()
             }

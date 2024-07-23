@@ -11,10 +11,9 @@ class RootViewViewModel: ObservableObject {
     @Published var selectedTab: Int = 0  // Index of the SearchBenchesView tab
     @Published var searchQueryViewModel = SearchQueryViewModel()  // Shared view model
     
-    func openSearchBenchesView(address: String, latitude: Double, longitude: Double) {
+    func openSearchBenchesView(address: String, benchId: String) {
         searchQueryViewModel.searchText = address
-        searchQueryViewModel.latitude = latitude
-        searchQueryViewModel.longitude = longitude
+        searchQueryViewModel.benchId = benchId
         selectedTab = 1  // Switch to the SearchBenchesView tab
     }
 }

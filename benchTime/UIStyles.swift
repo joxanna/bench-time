@@ -40,7 +40,7 @@ struct UIStyles {
     }
     
     struct SearchDistance {
-        static let lat: CGFloat = 300
-        static let lon: CGFloat = 300
+        static let lat: CGFloat = 400
+        static let lon: CGFloat = 400
     }
 }

@@ -10,6 +10,5 @@ import Combine
 
 class SearchQueryViewModel: ObservableObject {
     @Published var searchText: String = ""
-    @Published var latitude: Double?
-    @Published var longitude: Double?
+    @Published var benchId: String = ""
 }

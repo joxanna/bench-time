@@ -37,7 +37,7 @@ struct SearchBenchesView: View {
                             onRegionChange: { region, isLoading in
                                 if !isSearching, !isSelected { // Check if not searching or selected
                                     print("-----Fetching benches in onRegionChange")
-                                    benchQueryViewModel.fetchBenches(for: region, isLoading: isLoading)
+                                    benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading) { result in }
                                 }
                             },
                             isSelected: $isSelected,
@@ -74,26 +74,26 @@ struct SearchBenchesView: View {
                 .frame(height: 0.5)
         }
         .onAppear {
-//            print("searchText: \(searchQueryViewModel.searchText)")
-            searchQueryViewModel.searchText = searchQueryViewModel.searchText // Update the search text when the view appears
-            performSearch(query: searchQueryViewModel.searchText)
             print("-----Requesting location on appear")
-            locationManager.requestLocation { location, error in
-                if let error = error {
-                    print("Error fetching location: \(error.localizedDescription)")
-                    return
-                }
-                
-                if let location = location {
-                    let region = MKCoordinateRegion(
-                        center: location.coordinate,
-                        latitudinalMeters: UIStyles.SearchDistance.lat,
-                        longitudinalMeters: UIStyles.SearchDistance.lon)
-                    benchQueryViewModel.mapViewModel.region = region
-                    benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
-                
-                } else {
-                    print("No location available.")
+            if !searchQueryViewModel.searchText.isEmpty {
+                performSearch(query: searchQueryViewModel.searchText)
+            } else {
+                locationManager.requestLocation { location, error in
+                    if let error = error {
+                        print("Error fetching location: \(error.localizedDescription)")
+                        return
+                    }
+    
+                    if let location = location {
+                        let region = MKCoordinateRegion(
+                            center: location.coordinate,
+                            latitudinalMeters: UIStyles.SearchDistance.lat,
+                            longitudinalMeters: UIStyles.SearchDistance.lon)
+                        benchQueryViewModel.mapViewModel.region = region
+                        benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading) { result in }
+                    } else {
+                        print("No location available.")
+                    }
                 }
             }
         }
@@ -129,10 +129,32 @@ struct SearchBenchesView: View {
             print("Empty query")
             return
         }
+        
         print("-----Perfoming search")
-        benchQueryViewModel.mapViewModel.performSearch(query: query)
-        if let region = benchQueryViewModel.mapViewModel.region {
-            benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading)
+        benchQueryViewModel.mapViewModel.performSearch(query: query) { result in
+            switch result {
+            case .success:
+                if let region = benchQueryViewModel.mapViewModel.region {
+                    benchQueryViewModel.fetchBenches(for: region, isLoading: $isLoading) { result in
+                        switch result {
+                        case .failure(let error):
+                            print("Fetch error: \(error.localizedDescription)")
+                        case .success():
+                            if let annotation = benchQueryViewModel.findAnnotation(benchId: searchQueryViewModel.benchId) {
+                                isSelected = true
+                                selectedAnnotation = annotation
+                                benchQueryViewModel.mapViewModel.selectAnnotation(annotation, isTrackingModeFollow: true)
+                                // to select that annotation only once when you click on the location on the card
+                                searchQueryViewModel.benchId = ""
+                            }
+                        }
+                    }
+                } else {
+                    print("No region")
+                }
+            case .failure(let error):
+                print("Search failed with error: \(error.localizedDescription)")
+            }
         }
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

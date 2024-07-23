@@ -30,7 +30,7 @@ struct RegisterView: View {
                                     case .success:
                                         print("Register successful")
                                         authManager.showSignInView = false
-                                    case .failure(let error):
+                                    case .failure:
                                         print("\(viewModel.errorMessage)")
                                 }
                             }

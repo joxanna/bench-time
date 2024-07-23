@@ -93,7 +93,7 @@ struct BTCard: View {
                             .font(.system(size: 14))
                     } else {
                         Button(action: {
-                            rootViewModel.openSearchBenchesView(address: viewModel.addressText, latitude: viewModel.review.latitude, longitude: viewModel.review.longitude )
+                            rootViewModel.openSearchBenchesView(address: viewModel.addressText, benchId: viewModel.review.benchId ?? "")
                         }) {
                             Text("📍 \(viewModel.addressText)")
                                 .foregroundColor(.gray)
