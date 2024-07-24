@@ -25,6 +25,8 @@ struct SearchBenchesView: View {
     
     @State private var searchText: String = "" 
     
+    @State private var isDismissDisabled = false
+    
     init() {
         _searchText = State(initialValue: SearchQueryViewModel().searchText)  // Initialize with the default value from the view model
     }
@@ -98,15 +100,29 @@ struct SearchBenchesView: View {
                 }
             }
         }
-        .sheet(isPresented: $isSelected, onDismiss: {
-            print("-----Dismissing sheet")
-            selectedAnnotation = nil
-            isSelected = false
-        }) {
+//        .sheet(isPresented: $isSelected, onDismiss: {
+//            print("-----Dismissing sheet")
+//            selectedAnnotation = nil
+//            isSelected = false
+//        }) {
+//            if let annotation = selectedAnnotation {
+//                if let bench = benchQueryViewModel.getBench(annotation: annotation) {
+//                    BenchReviewsView(bench: bench, benchAnnotation: annotation, isDismissDisabled: $isDismissDisabled)
+//                        .presentationDetents(isDismissDisabled ? [.fraction(1)] : [.large])
+//                        .interactiveDismissDisabled(isDismissDisabled)
+//                }
+//            }
+//        }
+        .fullScreenCover(isPresented: $isSelected) {
             if let annotation = selectedAnnotation {
                 if let bench = benchQueryViewModel.getBench(annotation: annotation) {
-                    LargeModalView(contentView: BenchReviewsView(bench: bench, benchAnnotation: annotation))
-                        .presentationDragIndicator(.visible)
+                    FullScreenCoverView(isDismissDisabled: $isDismissDisabled, content: {
+                        BenchReviewsView(bench: bench, benchAnnotation: annotation, isDismissDisabled: $isDismissDisabled)
+                    }, onDismiss: {
+                        print("-----Dismissing sheet")
+                        selectedAnnotation = nil
+                        isSelected = false
+                    })
                 }
             }
         }

@@ -17,10 +17,15 @@ struct NewReviewView: View {
 
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "review_images")
     
-    init(benchId: String, latitude: Double, longitude: Double, onDismiss: @escaping () -> Void) {
+    @Binding var isDismissDisabled: Bool
+    
+    init(benchId: String, latitude: Double, longitude: Double, onDismiss: @escaping () -> Void, isDismissDisabled: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: NewReviewViewViewModel(benchId: benchId, latitude: latitude, longitude: longitude))
         self.onDismiss = onDismiss
+        _isDismissDisabled = isDismissDisabled
     }
+    
+    @State var showAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -130,6 +135,43 @@ struct NewReviewView: View {
             .padding()
         }
         .navigationBarTitle("New review")
+        .navigationBarBackButtonHidden(true) 
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    if (viewModel.isNotEmpty()) {
+                        showAlert = true
+                    } else {
+                        onClose()
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                }
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you want to discard changes?"),
+                primaryButton: .destructive(Text("Discard")) {
+                    onClose()
+                    viewModel.clear()
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        .onAppear {
+            isDismissDisabled = true
+        }
+    }
+    
+    private func onClose() {
+        isDismissDisabled = false
+        presentationMode.wrappedValue.dismiss()
+        onDismiss()
     }
     
     private func handleImageUpload() async {

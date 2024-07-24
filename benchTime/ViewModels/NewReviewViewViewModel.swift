@@ -52,6 +52,11 @@ class NewReviewViewViewModel: ObservableObject {
         return title == "" || description == "" || imageURLs == []
     }
     
+    func isNotEmpty() -> Bool {
+        return !title.isEmpty || !description.isEmpty || !imageURLs.isEmpty
+    }
+
+    
     private func reset() {
         title = ""
         description = ""

@@ -10,12 +10,13 @@ import SwiftUI
 struct FullScreenCoverView<Content: View>: View {
     @Environment(\.presentationMode) var presentationMode
     @GestureState private var dragOffset = CGSize.zero
+    @Binding var isDismissDisabled: Bool // Use @State to track dismissal state
+    
     let content: Content
     let onDismiss: () -> Void
 
-    @State private var showAlert = false
-
-    init(@ViewBuilder content: () -> Content, onDismiss: @escaping () -> Void) {
+    init(isDismissDisabled: Binding<Bool>, @ViewBuilder content: () -> Content, onDismiss: @escaping () -> Void) {
+        _isDismissDisabled = isDismissDisabled
         self.content = content()
         self.onDismiss = onDismiss
     }
@@ -28,28 +29,18 @@ struct FullScreenCoverView<Content: View>: View {
         .background(Color.white)
         .gesture(
             DragGesture()
-                .updating($dragOffset, body: { (value, state, transaction) in
-                    if value.translation.height > 0 {
+                .updating($dragOffset) { value, state, _ in
+                    if !isDismissDisabled && value.translation.height > 0 {
                         state = value.translation
                     }
-                })
+                }
                 .onEnded { value in
-                    if value.translation.height > 100 {
-                        showAlert = true
+                    if !isDismissDisabled && value.translation.height > 100 {
+                        dismiss()
                     }
                 }
         )
         .edgesIgnoringSafeArea(.all)
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text("Are you sure?"),
-                message: Text("Do you want to discard changes?"),
-                primaryButton: .destructive(Text("Discard")) {
-                    dismiss()
-                },
-                secondaryButton: .cancel()
-            )
-        }
     }
     
     private func dismiss() {

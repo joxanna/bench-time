@@ -14,7 +14,9 @@ struct BenchReviewsView: View {
     var benchAnnotation: CustomPointAnnotation
 
     @ObservedObject var authManager = AuthenticationManager.shared
-    @ObservedObject var benchReviewViewModel = BenchReviewsViewViewModel()
+    @StateObject var benchReviewViewModel = BenchReviewsViewViewModel()
+    
+    @Binding var isDismissDisabled: Bool
 
     var body: some View {
         NavigationView {
@@ -27,7 +29,9 @@ struct BenchReviewsView: View {
                         
                         HStack {
                             Spacer()
-                            NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: { benchReviewViewModel.fetchReviews(id: String(bench.id))})) {
+                            NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
+                                benchReviewViewModel.fetchReviews(id: String(bench.id))
+                            }, isDismissDisabled: $isDismissDisabled)) {
                                 HStack {
                                     Image(systemName: "square.and.pencil")
                                 }
@@ -118,7 +122,6 @@ struct BenchReviewsView: View {
         }
         .onAppear {
             benchReviewViewModel.getBenchAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)
-            
             benchReviewViewModel.fetchReviews(id: String(bench.id))
         }
     }
