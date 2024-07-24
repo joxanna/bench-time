@@ -13,67 +13,69 @@ struct MyReviewsView: View {
     @Binding var toTop: Bool
 
     var body: some View {
-        VStack {
-            ZStack(alignment: .top) {
-                ScrollViewReader { proxy in
-                    VStack(spacing: 0) {
-                        if myReviewsViewModel.headerVisible {
-                            HStack {
-                                Text("My reviews")
-                                    .font(.headline)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            scrollToTop(proxy: proxy)
-                                        }
-                                    }
-                            }
-                            .frame(width: UIScreen.main.bounds.width, height: 64)
-                            .transition(.move(edge: .top))
-                            .zIndex(1)
-                        }
-
-                        ScrollView(showsIndicators: false) {
-                            VStack {
-                                if let reviews = myReviewsViewModel.currentUserReviews {
-                                    ForEach(reviews) { review in
-                                        BTCard(review: review, currentUser: true, address: true) {
-                                            myReviewsViewModel.fetchReviews()
-                                        }
-                                        .padding()
-                                    }
-                                } else {
-                                    ProgressView()
-                                }
-                            }
-                            .background(
-                                GeometryReader { geo in
-                                    Color.clear
-                                        .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
-                                            myReviewsViewModel.updateScrollPosition(offset: newValue)
+        NavigationView {
+            VStack {
+                ZStack(alignment: .top) {
+                    ScrollViewReader { proxy in
+                        VStack(spacing: 0) {
+                            if myReviewsViewModel.headerVisible {
+                                HStack {
+                                    Text("My reviews")
+                                        .font(.headline)
+                                        .onTapGesture {
+                                            withAnimation {
+                                                scrollToTop(proxy: proxy)
+                                            }
                                         }
                                 }
-                            )
-                            .padding(.top, 8)
-                            .padding(.bottom)
-                            .id("scrollToTop")
+                                .frame(width: UIScreen.main.bounds.width, height: 64)
+                                .transition(.move(edge: .top))
+                                .zIndex(1)
+                            }
+                            
+                            ScrollView(showsIndicators: false) {
+                                VStack {
+                                    if let reviews = myReviewsViewModel.currentUserReviews {
+                                        ForEach(reviews) { review in
+                                            BTCard(review: review, currentUser: true, address: true) {
+                                                myReviewsViewModel.fetchReviews()
+                                            }
+                                            .padding()
+                                        }
+                                    } else {
+                                        ProgressView()
+                                    }
+                                }
+                                .background(
+                                    GeometryReader { geo in
+                                        Color.clear
+                                            .onChange(of: geo.frame(in: .global).minY) { newValue, _ in
+                                                myReviewsViewModel.updateScrollPosition(offset: newValue)
+                                            }
+                                    }
+                                )
+                                .padding(.top, 8)
+                                .padding(.bottom)
+                                .id("scrollToTop")
+                            }
+                            .coordinateSpace(name: "scrollView")
+                            .refreshable {
+                                myReviewsViewModel.fetchReviews()
+                            }
                         }
-                        .coordinateSpace(name: "scrollView")
-                        .refreshable {
+                        .onAppear {
                             myReviewsViewModel.fetchReviews()
-                        }
-                    }
-                    .onAppear {
-                        myReviewsViewModel.fetchReviews()
-                        scrollToTop(proxy: proxy)
-                    }
-                    .onChange(of: toTop) { _, _ in
-                        withAnimation {
                             scrollToTop(proxy: proxy)
+                        }
+                        .onChange(of: toTop) { _, _ in
+                            withAnimation {
+                                scrollToTop(proxy: proxy)
+                            }
                         }
                     }
                 }
             }
+            .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
         }
-        .animation(.easeInOut, value: myReviewsViewModel.headerVisible)
     }
 }
