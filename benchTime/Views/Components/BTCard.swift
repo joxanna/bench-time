@@ -87,8 +87,8 @@ struct BTCard: View {
                     .foregroundStyle(Color.black)
                 
                 if (address) {
-                    if (viewModel.addressText.isEmpty) {
-                        Text("No address")
+                    if (viewModel.addressText == "No address") {
+                        Text("📍 No address available, please try again")
                             .foregroundColor(.gray)
                             .font(.system(size: 14))
                     } else {
