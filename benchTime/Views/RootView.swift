@@ -17,31 +17,39 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
+            Rectangle()
+                .frame(height: 50)
+                .background(.white)
+            
             TabView(selection: $rootViewModel.selectedTab) {
-                HomeView(toTop: $scrollToTopHome)
-                    .tabItem {
-                        Label("Home", systemImage: "house")
-                    }
-                    .tag(0)
-                
-                SearchBenchesView()
-                    .environmentObject(rootViewModel.searchQueryViewModel)
-                    .tabItem {
-                        Label("Map", systemImage: "map")
-                    }
-                    .tag(1)
-                
-                MyReviewsView(toTop: $scrollToTopMyReviews)
-                    .tabItem {
-                        Label("My reviews", systemImage: "chair")
-                    }
-                    .tag(2)
-                
-                SettingsView()
-                    .tabItem {
-                        Label("Settings", systemImage: "gear")
-                    }
-                    .tag(3)
+                Group {
+                    HomeView(toTop: $scrollToTopHome)
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+                        .tag(0)
+                    
+                    SearchBenchesView()
+                        .environmentObject(rootViewModel.searchQueryViewModel)
+                        .tabItem {
+                            Label("Map", systemImage: "map")
+                        }
+                        .tag(1)
+                    
+                    MyReviewsView(toTop: $scrollToTopMyReviews)
+                        .tabItem {
+                            Label("My reviews", systemImage: "chair")
+                        }
+                        .tag(2)
+                    
+                    SettingsView()
+                        .tabItem {
+                            Label("Settings", systemImage: "gear")
+                        }
+                        .tag(3)
+                }
+                .toolbarBackground(.white, for: .tabBar)
+                .toolbarBackground(.visible, for: .tabBar)
             }
             .onChange(of: rootViewModel.selectedTab) { newValue, oldValue in
                 if newValue == 1 {

@@ -23,9 +23,7 @@ struct SearchBenchesView: View {
     @State private var searchResults: [MKLocalSearchCompletion] = []
     @State private var showSearchResults: Bool = false
     
-    @State private var searchText: String = "" 
-    
-    @State private var isDismissDisabled = false
+    @State private var searchText: String = ""
     
     @EnvironmentObject var sheetStateManager: SheetStateManager
     
@@ -102,33 +100,15 @@ struct SearchBenchesView: View {
                 }
             }
         }
-//        .sheet(isPresented: $isSelected, onDismiss: {
-//            print("-----Dismissing sheet")
-//            selectedAnnotation = nil
-//            isSelected = false
-//        }) {
-//            if let annotation = selectedAnnotation {
-//                if let bench = benchQueryViewModel.getBench(annotation: annotation) {
-//                    BenchReviewsView(bench: bench, benchAnnotation: annotation, isDismissDisabled: $isDismissDisabled)
-//                        .presentationDetents(isDismissDisabled ? [.fraction(1)] : [.large])
-//                        .interactiveDismissDisabled(isDismissDisabled)
-//                }
-//            }
-//        }
-        .fullScreenCover(isPresented: $isSelected) {
+        .customSheet(isPresented: $isSelected, sheetContent: {
             if let annotation = selectedAnnotation {
                 if let bench = benchQueryViewModel.getBench(annotation: annotation) {
-                    FullScreenCoverView(content: {
-                        BenchReviewsView(bench: bench, benchAnnotation: annotation)
-                    }, onDismiss: {
-                        print("-----Dismissing sheet")
-                        selectedAnnotation = nil
-                        isSelected = false
-                    })
-                    .environmentObject(sheetStateManager)
+                    BenchReviewsView(bench: bench, benchAnnotation: annotation)
                 }
-            }
-        }
+            }}, onDismiss: {
+                    selectedAnnotation = nil
+                    isSelected = false
+            })
         .onChange(of: isSelected) { _,newValue in
             if !newValue {
                 self.selectedAnnotation = nil
@@ -137,6 +117,10 @@ struct SearchBenchesView: View {
         }
         .onChange(of: locationManager.lastLocation) { _, newLocation in
 
+        }
+        .onDisappear {
+            selectedAnnotation = nil
+            isSelected = false
         }
     }
     

@@ -72,6 +72,7 @@ struct MyReviewsView: View {
                                 scrollToTop(proxy: proxy)
                             }
                         }
+
                     }
                 }
             }

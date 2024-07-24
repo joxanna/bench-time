@@ -19,102 +19,110 @@ struct BenchReviewsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                VStack {
-                    ZStack {
-                        Text(benchReviewViewModel.titleText)
-                            .font(.title3)
-                            .bold()
-                        
-                        HStack {
-                            Spacer()
-                            NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
-                                benchReviewViewModel.fetchReviews(id: String(bench.id))
-                            })) {
-                                HStack {
-                                    Image(systemName: "square.and.pencil")
-                                }
+                if (benchReviewViewModel.addressText.isEmpty) {
+                    ProgressView()
+                } else {
+                    VStack {
+                        ZStack {
+                            Text(benchReviewViewModel.titleText)
                                 .font(.title3)
-                                .background(.clear)
-                                .foregroundColor(Color.cyan)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
-                    .padding(.top, 24)
-
-                    // bench details
-                    VStack {
-                        HStack(alignment: .center) {
-                            Text(benchReviewViewModel.addressText)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, 8)
-                            Spacer()
-                            VStack(alignment: .trailing) {
-                                BTStars(rating: benchReviewViewModel.averageRating)
-                                Text(String(format: "%.1f", benchReviewViewModel.averageRating))
-                                    .foregroundColor(.orange)
-                                    .font(.caption)
-                                    .padding(.top, 4)
-                            }
-                        }
-                        .padding(.top, 8)
-                        
-                        ForEach(bench.tags.sorted(by: <), id: \.key) { key, value in
-                            if (key != "amenity") {
-                                HStack {
-                                    Image(systemName: getIcon(for: key))
-                                        .frame(width: 8, height: 8)
-                                    Spacer()
-                                        .frame(width: 8)
-                                    
-                                    if (key == "two_sided") {
-                                        Text("Two sided:")
-                                            .bold()
-                                    } else {
-                                        Text("\(key.capitalized):")
-                                            .bold()
-                                    }
-                                    
-                                    if (value == "yes") {
-                                        Image(systemName: "checkmark")
-                                            .frame(width: 8, height: 8)
-                                            .bold()
-                                            .foregroundColor(.green)
-                                    } else if (value == "no") {
-                                        Image(systemName: "xmark")
-                                            .frame(width: 8, height: 8)
-                                            .bold()
-                                            .foregroundColor(.red)
-                                    } else {
-                                        Text("\(value.capitalized)")
-                                    }
-                                }
-                                .font(.caption)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 4)
-                    }
-                    .padding(.vertical, 12)
-                }
-                .padding(.horizontal, 20)
-                
-                // reviews
-                ScrollView(showsIndicators: false) {
-                    VStack {
-                        if let benchReviews = benchReviewViewModel.benchReviews {
-                            ForEach(benchReviews) { review in
-                                BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
+                                .bold()
+                            
+                            HStack {
+                                Spacer()
+                                NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
                                     benchReviewViewModel.fetchReviews(id: String(bench.id))
+                                })) {
+                                    HStack {
+                                        Image(systemName: "square.and.pencil")
+                                    }
+                                    .font(.title3)
+                                    .background(.clear)
+                                    .foregroundColor(Color.cyan)
                                 }
-                                .padding()
+                                .buttonStyle(PlainButtonStyle())
+                                .onTapGesture {
+                                    print("TAP")
+                                }
                             }
-                        } else {
-                            ProgressView()
+                        }
+                        .padding(.top, 24)
+                        
+                        // bench details
+                        VStack {
+                            HStack(alignment: .center) {
+                                Text(benchReviewViewModel.addressText)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom, 8)
+                                Spacer()
+                                VStack(alignment: .trailing) {
+                                    BTStars(rating: benchReviewViewModel.averageRating)
+                                    Text(String(format: "%.1f", benchReviewViewModel.averageRating))
+                                        .foregroundColor(.orange)
+                                        .font(.caption)
+                                        .padding(.top, 4)
+                                }
+                            }
+                            .padding(.top, 8)
+                            
+                            ForEach(bench.tags.sorted(by: <), id: \.key) { key, value in
+                                if (key != "amenity") {
+                                    HStack {
+                                        Image(systemName: getIcon(for: key))
+                                            .frame(width: 8, height: 8)
+                                        Spacer()
+                                            .frame(width: 8)
+                                        
+                                        if (key == "two_sided") {
+                                            Text("Two sided:")
+                                                .bold()
+                                        } else {
+                                            Text("\(key.capitalized):")
+                                                .bold()
+                                        }
+                                        
+                                        if (value == "yes") {
+                                            Image(systemName: "checkmark")
+                                                .frame(width: 8, height: 8)
+                                                .bold()
+                                                .foregroundColor(.green)
+                                        } else if (value == "no") {
+                                            Image(systemName: "xmark")
+                                                .frame(width: 8, height: 8)
+                                                .bold()
+                                                .foregroundColor(.red)
+                                        } else {
+                                            Text("\(value.capitalized)")
+                                        }
+                                    }
+                                    .font(.caption)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 4)
+                        }
+                        .padding(.vertical, 12)
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    // reviews
+                    ScrollView(showsIndicators: false) {
+                        VStack {
+                            if let benchReviews = benchReviewViewModel.benchReviews {
+                                ForEach(benchReviews) { review in
+                                    BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
+                                        benchReviewViewModel.fetchReviews(id: String(bench.id))
+                                    }
+                                    .padding()
+                                }
+                            } else {
+                                ProgressView()
+                            }
                         }
                     }
+                    
                 }
             }
         }

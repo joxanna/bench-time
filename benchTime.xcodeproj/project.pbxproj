@@ -25,6 +25,7 @@
 		FF4336AF2C2B8C4F00671537 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */; };
 		FF48F8782C39463000A41941 /* BTRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8772C39463000A41941 /* BTRating.swift */; };
 		FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */; };
+		FF4ED6372C514575006CC89C /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4ED6362C514575006CC89C /* RoundedCorner.swift */; };
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
@@ -75,7 +76,7 @@
 		FFD1FB622BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1FB612BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift */; };
 		FFDCC4A92C3294E4004875E4 /* BenchReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */; };
 		FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */; };
-		FFED0B412C4F8A08003D0DCD /* FullScreenCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFED0B402C4F8A08003D0DCD /* FullScreenCoverView.swift */; };
+		FFED0B412C4F8A08003D0DCD /* CustomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */; };
 		FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */; };
 		FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */; };
 		FFEDE55E2C3CC1DA00EC9317 /* BTCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE55D2C3CC1DA00EC9317 /* BTCardViewModel.swift */; };
@@ -123,6 +124,7 @@
 		FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		FF48F8772C39463000A41941 /* BTRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTRating.swift; sourceTree = "<group>"; };
 		FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsViewViewModel.swift; sourceTree = "<group>"; };
+		FF4ED6362C514575006CC89C /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
 		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
@@ -168,7 +170,7 @@
 		FFD1FB612BE9F29800671C1A /* benchTimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = benchTimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FFDCC4A82C3294E4004875E4 /* BenchReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchReviewsViewViewModel.swift; sourceTree = "<group>"; };
 		FFDCC4AA2C340C07004875E4 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
-		FFED0B402C4F8A08003D0DCD /* FullScreenCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCoverView.swift; sourceTree = "<group>"; };
+		FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetModifier.swift; sourceTree = "<group>"; };
 		FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountDetailsView.swift; sourceTree = "<group>"; };
 		FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
 		FFEDE55D2C3CC1DA00EC9317 /* BTCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewModel.swift; sourceTree = "<group>"; };
@@ -301,7 +303,8 @@
 				FF29122F2C3663BF00ADA699 /* BTFormField.swift */,
 				FF48F8772C39463000A41941 /* BTRating.swift */,
 				FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */,
-				FFED0B402C4F8A08003D0DCD /* FullScreenCoverView.swift */,
+				FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */,
+				FF4ED6362C514575006CC89C /* RoundedCorner.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -705,7 +708,7 @@
 				FF81E1CA2BECAFCE0023E743 /* SettingsView.swift in Sources */,
 				FF1539382BFF40D600DFB92A /* MapViewViewModel.swift in Sources */,
 				FFB7D8A72BEF51F700DCD7DE /* UserModel.swift in Sources */,
-				FFED0B412C4F8A08003D0DCD /* FullScreenCoverView.swift in Sources */,
+				FFED0B412C4F8A08003D0DCD /* CustomSheetModifier.swift in Sources */,
 				FF9C308C2C215209003E90DF /* ReviewViewModel.swift in Sources */,
 				FF7053ED2BFACB9A00965435 /* NewReviewView.swift in Sources */,
 				FF7054032BFC7EA300965435 /* UpdateReviewView.swift in Sources */,
@@ -732,6 +735,7 @@
 				FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */,
 				FF7053FD2BFC37EE00965435 /* BTStars.swift in Sources */,
 				FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */,
+				FF4ED6372C514575006CC89C /* RoundedCorner.swift in Sources */,
 				FFDCC4A92C3294E4004875E4 /* BenchReviewsViewViewModel.swift in Sources */,
 				FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */,
 				FF4336AF2C2B8C4F00671537 /* SearchResultsView.swift in Sources */,

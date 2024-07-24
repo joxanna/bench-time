@@ -64,6 +64,7 @@ struct HomeView: View {
                         .refreshable {
                             homeViewModel.fetchReviews()
                         }
+                    
                     }
                     .onAppear {
                         homeViewModel.fetchReviews()

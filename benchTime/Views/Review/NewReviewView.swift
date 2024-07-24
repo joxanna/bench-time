@@ -12,19 +12,21 @@ import SwiftOverpassAPI
 struct NewReviewView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var sheetStateManager: SheetStateManager
-    
+    @StateObject private var rootViewModel = RootViewViewModel()
+
     @StateObject var viewModel: NewReviewViewViewModel
     var onDismiss: () -> Void
 
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "review_images")
-    
+
     init(benchId: String, latitude: Double, longitude: Double, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: NewReviewViewViewModel(benchId: benchId, latitude: latitude, longitude: longitude))
         self.onDismiss = onDismiss
     }
     
-    @State var showAlert: Bool = false
-    
+    @State private var showAlert: Bool = false
+    @State private var pendingTabChange: Int? = nil
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -71,7 +73,7 @@ struct NewReviewView: View {
                         }
                     }
                     
-                    ZStack(alignment: .topTrailing)  {
+                    ZStack(alignment: .topTrailing) {
                         if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
                             Image(uiImage: image)
                                 .resizable()
@@ -133,7 +135,7 @@ struct NewReviewView: View {
             .padding()
         }
         .navigationBarTitle("New review")
-        .navigationBarBackButtonHidden(true) 
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -155,14 +157,25 @@ struct NewReviewView: View {
                 title: Text("Are you sure?"),
                 message: Text("Do you want to discard changes?"),
                 primaryButton: .destructive(Text("Discard")) {
-                    onClose()
+                    if let tab = pendingTabChange {
+                        rootViewModel.selectedTab = tab
+                    }
                     viewModel.clear()
+                    sheetStateManager.isDismissDisabled = false
+                    onClose()
                 },
                 secondaryButton: .cancel()
             )
         }
         .onAppear {
             sheetStateManager.isDismissDisabled = true
+        }
+        .onChange(of: rootViewModel.selectedTab) { newValue in
+            if viewModel.isNotEmpty() {
+                // Set the desired tab change before showing the alert
+                pendingTabChange = newValue
+                showAlert = true
+            }
         }
     }
     

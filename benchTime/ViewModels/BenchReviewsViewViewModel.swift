@@ -10,7 +10,7 @@ import MapKit
 import SwiftOverpassAPI
 
 class BenchReviewsViewViewModel: ObservableObject {
-    @Published var addressText: String = "No address"
+    @Published var addressText: String = ""
     @Published var benchReviews: [ReviewModel]?
     @Published var errorMessage: String?
     @Published var averageRating: Double = 0.0
