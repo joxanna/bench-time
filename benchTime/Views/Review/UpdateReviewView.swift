@@ -10,6 +10,7 @@ import SwiftUI
 struct UpdateReviewView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var sheetStateManager: SheetStateManager
+    @EnvironmentObject private var rootViewModel: RootViewViewModel
     
     @StateObject var viewModel: UpdateReviewViewViewModel
     var onDismiss: () -> Void
@@ -63,6 +64,7 @@ struct UpdateReviewView: View {
                     if (viewModel.isNotEmpty()) {
                         showAlert = true
                     } else {
+                        rootViewModel.isPaused = false
                         onClose()
                     }
                 }) {
@@ -78,6 +80,11 @@ struct UpdateReviewView: View {
                 title: Text("Are you sure?"),
                 message: Text("Do you want to discard changes?"),
                 primaryButton: .destructive(Text("Discard")) {
+                    rootViewModel.isPaused = false
+                    if let nextTab = rootViewModel.nextTab {
+                        rootViewModel.changeTab(to: nextTab)
+                        rootViewModel.nextTab = nil
+                    }
                     onClose()
                 },
                 secondaryButton: .cancel()
@@ -86,6 +93,13 @@ struct UpdateReviewView: View {
         .onAppear {
             sheetStateManager.isDismissDisabled = true
             viewModel.reset()
+        }
+        .onChange(of: rootViewModel.selectedTab) { oldValue, newValue in
+            if viewModel.isNotEmpty() {
+                showAlert = true
+                rootViewModel.isPaused = true
+                rootViewModel.nextTab = oldValue
+            }
         }
     }
                           

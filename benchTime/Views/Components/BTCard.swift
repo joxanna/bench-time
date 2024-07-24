@@ -163,14 +163,7 @@ struct BTCard: View {
             }
             
             if (viewModel.isLoading) {
-                ZStack {
-                    Rectangle()
-                        .fill(Color.white.opacity(0.6))
-                        .frame(width: 72, height: 72)
-                        .cornerRadius(15)
-                    ProgressView()
-                        .frame(width: 32, height: 32)
-                }
+                Loading()
             }
         }
     }

@@ -65,6 +65,7 @@ class NewReviewViewViewModel: ObservableObject {
     }
     
     func clear() {
+        print("Clearing...")
         // delete images if uploaded
         if !imageURLs.isEmpty {
             for image in imageURLs {

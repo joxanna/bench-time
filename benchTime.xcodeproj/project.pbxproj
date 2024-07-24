@@ -26,10 +26,10 @@
 		FF48F8782C39463000A41941 /* BTRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8772C39463000A41941 /* BTRating.swift */; };
 		FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */; };
 		FF4ED6372C514575006CC89C /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4ED6362C514575006CC89C /* RoundedCorner.swift */; };
+		FF4ED6392C514B01006CC89C /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4ED6382C514B01006CC89C /* Loading.swift */; };
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
-		FF5D30662C464C8300ED2A77 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30652C464C8300ED2A77 /* BottomSheet.swift */; };
 		FF5D30682C4654DA00ED2A77 /* SearchQueryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30672C4654DA00ED2A77 /* SearchQueryViewModel.swift */; };
 		FF5D306A2C46574300ED2A77 /* RootViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30692C46574300ED2A77 /* RootViewViewModel.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
@@ -125,10 +125,10 @@
 		FF48F8772C39463000A41941 /* BTRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTRating.swift; sourceTree = "<group>"; };
 		FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsViewViewModel.swift; sourceTree = "<group>"; };
 		FF4ED6362C514575006CC89C /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		FF4ED6382C514B01006CC89C /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBenchesView.swift; sourceTree = "<group>"; };
 		FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
-		FF5D30652C464C8300ED2A77 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		FF5D30672C4654DA00ED2A77 /* SearchQueryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryViewModel.swift; sourceTree = "<group>"; };
 		FF5D30692C46574300ED2A77 /* RootViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewViewModel.swift; sourceTree = "<group>"; };
 		FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -305,6 +305,7 @@
 				FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */,
 				FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */,
 				FF4ED6362C514575006CC89C /* RoundedCorner.swift */,
+				FF4ED6382C514B01006CC89C /* Loading.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -334,7 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				FF81E1D22BECC6AD0023E743 /* FormFieldViewModifier.swift */,
-				FF5D30652C464C8300ED2A77 /* BottomSheet.swift */,
 			);
 			name = ViewModifiers;
 			sourceTree = "<group>";
@@ -696,7 +696,6 @@
 				FF8D197B2C26D5F300AB957F /* SearchBarView.swift in Sources */,
 				FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */,
 				FF81E1CE2BECB5AE0023E743 /* RegisterViewViewModel.swift in Sources */,
-				FF5D30662C464C8300ED2A77 /* BottomSheet.swift in Sources */,
 				FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */,
 				FF5D30682C4654DA00ED2A77 /* SearchQueryViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
@@ -734,6 +733,7 @@
 				FF92819F2BF4358C00E1A85A /* DatabaseAPI.swift in Sources */,
 				FF6FB9342C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift in Sources */,
 				FF7053FD2BFC37EE00965435 /* BTStars.swift in Sources */,
+				FF4ED6392C514B01006CC89C /* Loading.swift in Sources */,
 				FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */,
 				FF4ED6372C514575006CC89C /* RoundedCorner.swift in Sources */,
 				FFDCC4A92C3294E4004875E4 /* BenchReviewsViewViewModel.swift in Sources */,

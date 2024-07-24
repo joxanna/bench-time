@@ -17,10 +17,6 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .frame(height: 50)
-                .background(.white)
-            
             TabView(selection: $rootViewModel.selectedTab) {
                 Group {
                     HomeView(toTop: $scrollToTopHome)
@@ -51,9 +47,17 @@ struct RootView: View {
                 .toolbarBackground(.white, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
-            .onChange(of: rootViewModel.selectedTab) { newValue, oldValue in
-                if newValue == 1 {
-                    rootViewModel.searchQueryViewModel.searchText = rootViewModel.searchQueryViewModel.searchText
+            .onChange(of: rootViewModel.selectedTab) { oldValue, newValue in
+                if rootViewModel.isPaused {
+                    rootViewModel.revertTab()
+                } else {
+                    rootViewModel.lastTab = oldValue
+                    rootViewModel.changeTab(to: newValue)
+                }
+            }
+            .onChange(of: rootViewModel.isPaused) { _, newValue in
+                if (newValue) {
+                    rootViewModel.revertTab()
                 }
             }
             
