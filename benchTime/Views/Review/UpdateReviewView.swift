@@ -9,10 +9,17 @@ import SwiftUI
 
 struct UpdateReviewView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var sheetStateManager: SheetStateManager
     
-    let review: ReviewModel
-    @StateObject var viewModel = UpdateReviewViewViewModel()
+    @StateObject var viewModel: UpdateReviewViewViewModel
     var onDismiss: () -> Void
+    
+    init(review: ReviewModel, onDismiss: @escaping () -> Void) {
+        _viewModel = StateObject(wrappedValue: UpdateReviewViewViewModel(review: review))
+        self.onDismiss = onDismiss
+    }
+    
+    @State var showAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -30,8 +37,8 @@ struct UpdateReviewView: View {
                
                 Spacer()
                 
-                BTButton(title: "Save", backgroundColor: (viewModel.isEmpty(review: review) ? Color.gray : Color.cyan)) {
-                    viewModel.updateReview(id: review.id!) { error in
+                BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                    viewModel.updateReview() { error in
                         if let error = error {
                             print(error.localizedDescription)
                         } else {
@@ -41,18 +48,51 @@ struct UpdateReviewView: View {
                         }
                     }
                 }
-                .disabled(viewModel.isEmpty(review: review))
+                .disabled(viewModel.isEmpty())
                 
                 Spacer()
                     .frame(height: 16)
             }
             .padding()
         }
-        .onAppear() {
-            viewModel.title = review.title
-            viewModel.description = review.description
-            viewModel.rating = review.rating
-        }
         .navigationBarTitle("Edit review")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    if (viewModel.isNotEmpty()) {
+                        showAlert = true
+                    } else {
+                        onClose()
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                }
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you want to discard changes?"),
+                primaryButton: .destructive(Text("Discard")) {
+                    onClose()
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        .onAppear {
+            sheetStateManager.isDismissDisabled = true
+            viewModel.reset()
+        }
+    }
+                          
+    private func onClose() {
+        sheetStateManager.isDismissDisabled = false
+        viewModel.reset()
+        presentationMode.wrappedValue.dismiss()
+        onDismiss()
     }
 }

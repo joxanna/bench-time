@@ -21,6 +21,7 @@
 		FF29D6492BF8B65B00C054B2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D6482BF8B65B00C054B2 /* HomeView.swift */; };
 		FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64A2BF8B66900C054B2 /* MapView.swift */; };
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
+		FF2A158B2C50D84900097C50 /* SheetStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2A158A2C50D84900097C50 /* SheetStateManager.swift */; };
 		FF4336AF2C2B8C4F00671537 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */; };
 		FF48F8782C39463000A41941 /* BTRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8772C39463000A41941 /* BTRating.swift */; };
 		FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */; };
@@ -118,6 +119,7 @@
 		FF29D6482BF8B65B00C054B2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FF29D64A2BF8B66900C054B2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
+		FF2A158A2C50D84900097C50 /* SheetStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetStateManager.swift; sourceTree = "<group>"; };
 		FF4336AE2C2B8C4F00671537 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		FF48F8772C39463000A41941 /* BTRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTRating.swift; sourceTree = "<group>"; };
 		FF48F8792C3966DF00A41941 /* MyReviewsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsViewViewModel.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				FF6FB9332C00167F0077AC2C /* MKCoordinateRegion+Extensions.swift */,
+				FF2A158A2C50D84900097C50 /* SheetStateManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -711,6 +714,7 @@
 				FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */,
 				FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */,
 				FF7053FF2BFC5CA200965435 /* UIStyles.swift in Sources */,
+				FF2A158B2C50D84900097C50 /* SheetStateManager.swift in Sources */,
 				FF8435872C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift in Sources */,
 				FFDCC4AB2C340C07004875E4 /* HomeViewViewModel.swift in Sources */,
 				FF7053F72BFB4AA500965435 /* ImageUploader.swift in Sources */,

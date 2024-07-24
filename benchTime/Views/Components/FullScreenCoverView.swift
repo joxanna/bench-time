@@ -9,14 +9,13 @@ import SwiftUI
 
 struct FullScreenCoverView<Content: View>: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var sheetStateManager: SheetStateManager
     @GestureState private var dragOffset = CGSize.zero
-    @Binding var isDismissDisabled: Bool // Use @State to track dismissal state
     
     let content: Content
     let onDismiss: () -> Void
 
-    init(isDismissDisabled: Binding<Bool>, @ViewBuilder content: () -> Content, onDismiss: @escaping () -> Void) {
-        _isDismissDisabled = isDismissDisabled
+    init(@ViewBuilder content: () -> Content, onDismiss: @escaping () -> Void) {
         self.content = content()
         self.onDismiss = onDismiss
     }
@@ -30,12 +29,12 @@ struct FullScreenCoverView<Content: View>: View {
         .gesture(
             DragGesture()
                 .updating($dragOffset) { value, state, _ in
-                    if !isDismissDisabled && value.translation.height > 0 {
+                    if !sheetStateManager.isDismissDisabled && value.translation.height > 0 {
                         state = value.translation
                     }
                 }
                 .onEnded { value in
-                    if !isDismissDisabled && value.translation.height > 100 {
+                    if !sheetStateManager.isDismissDisabled && value.translation.height > 100 {
                         dismiss()
                     }
                 }

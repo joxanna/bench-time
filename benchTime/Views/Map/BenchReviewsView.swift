@@ -15,8 +15,6 @@ struct BenchReviewsView: View {
 
     @ObservedObject var authManager = AuthenticationManager.shared
     @StateObject var benchReviewViewModel = BenchReviewsViewViewModel()
-    
-    @Binding var isDismissDisabled: Bool
 
     var body: some View {
         NavigationView {
@@ -31,7 +29,7 @@ struct BenchReviewsView: View {
                             Spacer()
                             NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
                                 benchReviewViewModel.fetchReviews(id: String(bench.id))
-                            }, isDismissDisabled: $isDismissDisabled)) {
+                            })) {
                                 HStack {
                                     Image(systemName: "square.and.pencil")
                                 }

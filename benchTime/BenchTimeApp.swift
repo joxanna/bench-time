@@ -23,11 +23,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct BenchTimeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var rootViewModel = RootViewViewModel()  // Initialize RootViewModel
+    @StateObject private var sheetStateManager = SheetStateManager()
     
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(rootViewModel)  // Provide RootViewModel to the environment
+                .environmentObject(sheetStateManager)
                 .ignoresSafeArea(.keyboard, edges: .all)
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }

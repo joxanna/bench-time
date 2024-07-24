@@ -11,18 +11,16 @@ import SwiftOverpassAPI
 
 struct NewReviewView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var sheetStateManager: SheetStateManager
     
     @StateObject var viewModel: NewReviewViewViewModel
     var onDismiss: () -> Void
 
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "review_images")
     
-    @Binding var isDismissDisabled: Bool
-    
-    init(benchId: String, latitude: Double, longitude: Double, onDismiss: @escaping () -> Void, isDismissDisabled: Binding<Bool>) {
+    init(benchId: String, latitude: Double, longitude: Double, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: NewReviewViewViewModel(benchId: benchId, latitude: latitude, longitude: longitude))
         self.onDismiss = onDismiss
-        _isDismissDisabled = isDismissDisabled
     }
     
     @State var showAlert: Bool = false
@@ -164,12 +162,12 @@ struct NewReviewView: View {
             )
         }
         .onAppear {
-            isDismissDisabled = true
+            sheetStateManager.isDismissDisabled = true
         }
     }
     
     private func onClose() {
-        isDismissDisabled = false
+        sheetStateManager.isDismissDisabled = false
         presentationMode.wrappedValue.dismiss()
         onDismiss()
     }

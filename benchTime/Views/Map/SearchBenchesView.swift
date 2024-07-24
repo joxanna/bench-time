@@ -27,6 +27,8 @@ struct SearchBenchesView: View {
     
     @State private var isDismissDisabled = false
     
+    @EnvironmentObject var sheetStateManager: SheetStateManager
+    
     init() {
         _searchText = State(initialValue: SearchQueryViewModel().searchText)  // Initialize with the default value from the view model
     }
@@ -116,13 +118,14 @@ struct SearchBenchesView: View {
         .fullScreenCover(isPresented: $isSelected) {
             if let annotation = selectedAnnotation {
                 if let bench = benchQueryViewModel.getBench(annotation: annotation) {
-                    FullScreenCoverView(isDismissDisabled: $isDismissDisabled, content: {
-                        BenchReviewsView(bench: bench, benchAnnotation: annotation, isDismissDisabled: $isDismissDisabled)
+                    FullScreenCoverView(content: {
+                        BenchReviewsView(bench: bench, benchAnnotation: annotation)
                     }, onDismiss: {
                         print("-----Dismissing sheet")
                         selectedAnnotation = nil
                         isSelected = false
                     })
+                    .environmentObject(sheetStateManager)
                 }
             }
         }
