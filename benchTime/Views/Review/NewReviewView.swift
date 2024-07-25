@@ -165,6 +165,7 @@ struct NewReviewView: View {
                 
             }
         }
+        .padding(.top, 20)
         .padding(.horizontal, 20)
         .alert(isPresented: $showAlert) {
             Alert(
