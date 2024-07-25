@@ -22,55 +22,60 @@ struct UpdateReviewView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    if (viewModel.isNotEmpty()) {
-                        showAlert = true
-                    } else {
-                        onClose()
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                }
-                Spacer()
+            ZStack {
                 Text("Update review")
                     .bold()
-                Spacer()
-            }
-            
-            BTFormField(label: "Title", text:  $viewModel.title)
-            
-            BTTextEditor(label: "Description", text: $viewModel.description)
-            
-            Text("Rating")
-                .font(.caption)
-                .padding(.top, 8)
-                .padding(.bottom, 4)
-            BTRating(rating: $viewModel.rating)
-                .padding(.bottom, 24)
-            
-            Spacer()
-            
-            BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
-                viewModel.updateReview() { error in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else {
-                        print("Review updated successfully")
-                        onDismiss()
-                        presentationMode.wrappedValue.dismiss()
+                
+                HStack {
+                    Button(action: {
+                        if (viewModel.isNotEmpty()) {
+                            showAlert = true
+                        } else {
+                            onClose()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
                     }
+                    Spacer()
                 }
             }
-            .disabled(viewModel.isEmpty())
+            .padding(.bottom, 20)
             
-            Spacer()
-                .frame(height: 16)
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    BTFormField(label: "Title", text:  $viewModel.title)
+                    
+                    BTTextEditor(label: "Description", text: $viewModel.description)
+                    
+                    Text("Rating")
+                        .font(.caption)
+                        .padding(.top, 8)
+                        .padding(.bottom, 4)
+                    BTRating(rating: $viewModel.rating)
+                        .padding(.bottom, 24)
+                    
+                    Spacer()
+                    
+                    BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                        viewModel.updateReview() { error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                print("Review updated successfully")
+                                onDismiss()
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                    }
+                    .disabled(viewModel.isEmpty())
+                }
+            }
+            
         }
-        .padding()
+        .padding(.horizontal, 20)
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),

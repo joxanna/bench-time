@@ -29,27 +29,29 @@ struct NewReviewView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    if (viewModel.isNotEmpty()) {
-                        showAlert = true
-                    } else {
-                        onClose()
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                }
-                Spacer()
+            ZStack {
                 Text("New review")
                     .bold()
-                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        if (viewModel.isNotEmpty()) {
+                            showAlert = true
+                        } else {
+                            onClose()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                    }
+                    Spacer()
+                }
             }
-            .padding()
+            .padding(.bottom, 20)
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 ZStack {
                     VStack(alignment: .leading) {
                         BTFormField(label: "Title*", text:  $viewModel.title)
@@ -140,7 +142,6 @@ struct NewReviewView: View {
                         }
                         
                         Spacer()
-                            .frame(height: 24)
                         
                         BTButton(title: "Post", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
                             viewModel.createReview() { error in
@@ -155,28 +156,26 @@ struct NewReviewView: View {
                             }
                         }
                         .disabled(viewModel.isEmpty())
-                        
-                        Spacer()
-                            .frame(height: 16)
                     }
                     
                     if (isLoadingImagePicker) {
                         Loading()
                     }
                 }
-                .padding()
+                
             }
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Are you sure?"),
-                    message: Text("Do you want to discard changes?"),
-                    primaryButton: .destructive(Text("Discard")) {
-                        viewModel.clear()
-                        onClose()
-                    },
-                    secondaryButton: .cancel()
-                )
-            }
+        }
+        .padding(.horizontal, 20)
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you want to discard changes?"),
+                primaryButton: .destructive(Text("Discard")) {
+                    viewModel.clear()
+                    onClose()
+                },
+                secondaryButton: .cancel()
+            )
         }
     }
     
