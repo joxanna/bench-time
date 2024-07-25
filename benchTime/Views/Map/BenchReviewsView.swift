@@ -15,6 +15,8 @@ struct BenchReviewsView: View {
 
     @ObservedObject var authManager = AuthenticationManager.shared
     @StateObject var benchReviewViewModel = BenchReviewsViewViewModel()
+    
+    @State var isShowingNewReview: Bool = false
 
     var body: some View {
         NavigationView {
@@ -30,9 +32,9 @@ struct BenchReviewsView: View {
                             
                             HStack {
                                 Spacer()
-                                NavigationLink(destination: NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
-                                    benchReviewViewModel.fetchReviews(id: String(bench.id))
-                                })) {
+                                Button(action: {
+                                    isShowingNewReview = true
+                                }) {
                                     HStack {
                                         Image(systemName: "square.and.pencil")
                                     }
@@ -41,9 +43,6 @@ struct BenchReviewsView: View {
                                     .foregroundColor(Color.cyan)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                .onTapGesture {
-                                    print("TAP")
-                                }
                             }
                         }
                         .padding(.top, 24)
@@ -125,6 +124,12 @@ struct BenchReviewsView: View {
                     
                 }
             }
+            .fullScreenCover(isPresented: $isShowingNewReview, content: {
+                NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
+                        isShowingNewReview = false
+                        benchReviewViewModel.fetchReviews(id: String(bench.id))
+                    })
+            })
         }
         .onAppear {
             benchReviewViewModel.getBenchAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)

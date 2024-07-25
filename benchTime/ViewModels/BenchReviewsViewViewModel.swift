@@ -24,7 +24,6 @@ class BenchReviewsViewViewModel: ObservableObject {
                 print(error.localizedDescription)
                 self.errorMessage = error.localizedDescription
             } else if let reviews = reviews {
-//                print("Reviews: \(reviews.count)")
                 self.benchReviews = reviews
                 
                 if (reviews.count > 0) {
@@ -55,6 +54,5 @@ class BenchReviewsViewViewModel: ObservableObject {
                 self.addressText = result
             }
         }
-//        print(addressText)
     }
 }

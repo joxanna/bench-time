@@ -48,16 +48,8 @@ struct RootView: View {
                 .toolbarBackground(.visible, for: .tabBar)
             }
             .onChange(of: rootViewModel.selectedTab) { oldValue, newValue in
-                if rootViewModel.isPaused {
-                    rootViewModel.revertTab()
-                } else {
-                    rootViewModel.lastTab = oldValue
-                    rootViewModel.changeTab(to: newValue)
-                }
-            }
-            .onChange(of: rootViewModel.isPaused) { _, newValue in
-                if (newValue) {
-                    rootViewModel.revertTab()
+                if newValue == 1 {
+                    rootViewModel.searchQueryViewModel.searchText = rootViewModel.searchQueryViewModel.searchText
                 }
             }
             

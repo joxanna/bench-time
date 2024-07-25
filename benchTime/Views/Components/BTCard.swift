@@ -22,6 +22,8 @@ struct BTCard: View {
         self.address = address
     }
     
+    @State var isShowingUpdateReview: Bool = false
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 20.0) {
@@ -116,7 +118,9 @@ struct BTCard: View {
 
                     Spacer()
                     if (currentUser) {
-                        NavigationLink(destination: UpdateReviewView(review: viewModel.review, onDismiss: viewModel.onUpdate)) {
+                        Button(action: {
+                            isShowingUpdateReview = true
+                        }) {
                             ZStack {
                                 Circle()
                                     .fill(UIStyles.Colors.lightGray)
@@ -166,5 +170,11 @@ struct BTCard: View {
                 Loading()
             }
         }
+        .fullScreenCover(isPresented: $isShowingUpdateReview, content: {
+            UpdateReviewView(review: viewModel.review, onDismiss: {
+                viewModel.onUpdate()
+                isShowingUpdateReview = false
+            })
+        })
     }
 }

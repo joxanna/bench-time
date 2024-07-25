@@ -9,8 +9,6 @@ import SwiftUI
 
 struct UpdateReviewView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var sheetStateManager: SheetStateManager
-    @EnvironmentObject private var rootViewModel: RootViewViewModel
     
     @StateObject var viewModel: UpdateReviewViewViewModel
     var onDismiss: () -> Void
@@ -24,47 +22,11 @@ struct UpdateReviewView: View {
     
     var body: some View {
         VStack {
-            VStack(alignment: .leading) {
-                BTFormField(label: "Title", text:  $viewModel.title)
-                
-                BTTextEditor(label: "Description", text: $viewModel.description)
-
-                Text("Rating")
-                    .font(.caption)
-                    .padding(.top, 8)
-                    .padding(.bottom, 4)
-                BTRating(rating: $viewModel.rating)
-                    .padding(.bottom, 24)
-               
-                Spacer()
-                
-                BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
-                    viewModel.updateReview() { error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        } else {
-                            print("Review updated successfully")
-                            onDismiss() 
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
-                }
-                .disabled(viewModel.isEmpty())
-                
-                Spacer()
-                    .frame(height: 16)
-            }
-            .padding()
-        }
-        .navigationBarTitle("Edit review")
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            HStack {
                 Button(action: {
                     if (viewModel.isNotEmpty()) {
                         showAlert = true
                     } else {
-                        rootViewModel.isPaused = false
                         onClose()
                     }
                 }) {
@@ -73,38 +35,58 @@ struct UpdateReviewView: View {
                         Text("Back")
                     }
                 }
+                Spacer()
+                Text("Update review")
+                    .bold()
+                Spacer()
             }
+            
+            BTFormField(label: "Title", text:  $viewModel.title)
+            
+            BTTextEditor(label: "Description", text: $viewModel.description)
+            
+            Text("Rating")
+                .font(.caption)
+                .padding(.top, 8)
+                .padding(.bottom, 4)
+            BTRating(rating: $viewModel.rating)
+                .padding(.bottom, 24)
+            
+            Spacer()
+            
+            BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                viewModel.updateReview() { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        print("Review updated successfully")
+                        onDismiss()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            }
+            .disabled(viewModel.isEmpty())
+            
+            Spacer()
+                .frame(height: 16)
         }
+        .padding()
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),
                 message: Text("Do you want to discard changes?"),
                 primaryButton: .destructive(Text("Discard")) {
-                    rootViewModel.isPaused = false
-                    if let nextTab = rootViewModel.nextTab {
-                        rootViewModel.changeTab(to: nextTab)
-                        rootViewModel.nextTab = nil
-                    }
                     onClose()
                 },
                 secondaryButton: .cancel()
             )
         }
         .onAppear {
-            sheetStateManager.isDismissDisabled = true
             viewModel.reset()
-        }
-        .onChange(of: rootViewModel.selectedTab) { oldValue, newValue in
-            if viewModel.isNotEmpty() {
-                showAlert = true
-                rootViewModel.isPaused = true
-                rootViewModel.nextTab = oldValue
-            }
         }
     }
                           
     private func onClose() {
-        sheetStateManager.isDismissDisabled = false
         viewModel.reset()
         presentationMode.wrappedValue.dismiss()
         onDismiss()

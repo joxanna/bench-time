@@ -22,7 +22,7 @@ class BenchQueryViewModel: ObservableObject {
         self.client = OPClient()
         self.mapViewModel = MapViewViewModel()
         self.client.endpoint = .kumiSystems
-        print("Initialised endpoint: ", client.endpoint.urlString)
+        print("Initialized endpoint: ", client.endpoint.urlString)
     }
     
     func getBench(annotation: CustomPointAnnotation) -> OPElement? {
@@ -41,8 +41,7 @@ class BenchQueryViewModel: ObservableObject {
         return nil
     }
 
-    func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>, completion: @escaping (Result<Void, Error>) -> Void
-    ) {
+    func fetchBenches(for region: MKCoordinateRegion, isLoading: Binding<Bool>, completion: @escaping (Result<Void, Error>) -> Void) {
         print("-----Fetching from benchQueryModel")
 
         // Cancel any existing fetch request
@@ -50,7 +49,10 @@ class BenchQueryViewModel: ObservableObject {
 
         // Create a new work item
         let workItem = DispatchWorkItem { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                print("Self is nil")
+                return
+            }
 
             DispatchQueue.main.async {
                 isLoading.wrappedValue = true
@@ -69,10 +71,12 @@ class BenchQueryViewModel: ObservableObject {
 
             self.client.fetchElements(query: query) { result in
                 DispatchQueue.main.async {
+                    print("Fetch completed")
                     isLoading.wrappedValue = false // Update regardless of result
                     
                     switch result {
                     case .failure(let error):
+                        print("Error: \(error)")
                         completion(.failure(error))
                     case .success(let elements):
                         self.elements = elements // Update elements on the main thread
