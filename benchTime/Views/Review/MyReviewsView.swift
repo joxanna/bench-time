@@ -31,6 +31,8 @@ struct MyReviewsView: View {
                                 .frame(width: UIScreen.main.bounds.width, height: 64)
                                 .transition(.move(edge: .top))
                                 .zIndex(1)
+                            } else {
+                                Spacer()
                             }
                             
                             ScrollView(showsIndicators: false) {
@@ -72,7 +74,6 @@ struct MyReviewsView: View {
                                 scrollToTop(proxy: proxy)
                             }
                         }
-
                     }
                 }
             }

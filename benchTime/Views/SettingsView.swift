@@ -127,7 +127,6 @@ struct SettingsView: View {
             }
             .padding()
         }
-//        .ignoresSafeArea(.keyboard, edges: .all)
         .frame(alignment: .topLeading)
         .alert(isPresented: $isConfirmingAction) {
             Alert(

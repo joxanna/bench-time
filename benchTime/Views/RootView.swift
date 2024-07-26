@@ -73,7 +73,7 @@ struct RootView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
-                .frame(height: 50) // Adjust this height to match your tab bar height
+                .frame(height: 50)
             }
         }
         .environmentObject(rootViewModel)

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewViewModel()
-    
     @Binding var toTop: Bool
     
     var body: some View {
@@ -33,6 +32,8 @@ struct HomeView: View {
                             .background(Color.white)
                             .transition(.move(edge: .top))
                             .zIndex(1)
+                        } else {
+                            Spacer()
                         }
                         
                         ScrollView(showsIndicators: false) {
@@ -57,14 +58,12 @@ struct HomeView: View {
                                 }
                             )
                             .padding(.top, 8)
-                            .padding(.bottom)
                             .id("scrollToTop")
                         }
                         .coordinateSpace(name: "scrollView")
                         .refreshable {
                             homeViewModel.fetchReviews()
                         }
-                    
                     }
                     .onAppear {
                         homeViewModel.fetchReviews()
@@ -82,21 +81,3 @@ struct HomeView: View {
     }
 }
 
-//
-//
-//
-//struct HomeView: View {
-//    @State private var isShowingFullScreenCover = false
-//
-//    var body: some View {
-//        Button("Show Full Screen Cover") {
-//            isShowingFullScreenCover.toggle()
-//        }
-//        .fullScreenCover(isPresented: $isShowingFullScreenCover) {
-//            // Pass any content you want to display
-//            FullScreenCoverView {
-//                Text("Hello")
-//            }
-//        }
-//    }
-//}
