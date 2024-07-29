@@ -73,10 +73,8 @@ struct UpdateReviewView: View {
                     .disabled(viewModel.isEmpty())
                 }
             }
-            
         }
-        .padding(.top, 20)
-        .padding(.horizontal, 20)
+        .padding()
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),
@@ -89,6 +87,9 @@ struct UpdateReviewView: View {
         }
         .onAppear {
             viewModel.reset()
+        }
+        .onDisappear {
+            onDismiss()
         }
     }
                           

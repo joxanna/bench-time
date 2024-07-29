@@ -17,7 +17,7 @@ struct BenchReviewsView: View {
     @StateObject var benchReviewViewModel = BenchReviewsViewViewModel()
     
     @State var isShowingNewReview: Bool = false
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -109,7 +109,7 @@ struct BenchReviewsView: View {
                     // reviews
                     ScrollView(showsIndicators: false) {
                         VStack {
-                            if let benchReviews = benchReviewViewModel.benchReviews {
+                            if benchReviewViewModel.showReviews, let benchReviews = benchReviewViewModel.benchReviews {
                                 ForEach(benchReviews) { review in
                                     BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
                                         benchReviewViewModel.fetchReviews(id: String(bench.id))

@@ -165,8 +165,7 @@ struct NewReviewView: View {
                 
             }
         }
-        .padding(.top, 20)
-        .padding(.horizontal, 20)
+        .padding()
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),
@@ -177,6 +176,9 @@ struct NewReviewView: View {
                 },
                 secondaryButton: .cancel()
             )
+        }
+        .onDisappear {
+            onDismiss()
         }
     }
     

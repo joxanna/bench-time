@@ -37,7 +37,7 @@ struct MyReviewsView: View {
                             
                             ScrollView(showsIndicators: false) {
                                 VStack {
-                                    if let reviews = myReviewsViewModel.currentUserReviews {
+                                    if myReviewsViewModel.showReviews, let reviews = myReviewsViewModel.currentUserReviews {
                                         ForEach(reviews) { review in
                                             BTCard(review: review, currentUser: true, address: true) {
                                                 myReviewsViewModel.fetchReviews()
@@ -62,6 +62,7 @@ struct MyReviewsView: View {
                             }
                             .coordinateSpace(name: "scrollView")
                             .refreshable {
+                                print("Refreshing reviews...")
                                 myReviewsViewModel.fetchReviews()
                             }
                         }
