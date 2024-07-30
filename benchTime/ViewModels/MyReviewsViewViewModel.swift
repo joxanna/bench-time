@@ -37,6 +37,7 @@ class MyReviewsViewViewModel: ObservableObject {
                     self?.currentUserReviews = reviews
                     self?.showReviews = true
                     print("Success")
+                    print(reviews)
                 }
             }
         }

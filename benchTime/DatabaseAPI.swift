@@ -90,7 +90,27 @@ extension DatabaseAPI {
         if uid.isEmpty {
             throw NSError(domain: "BenchTime", code: 1002, userInfo: [NSLocalizedDescriptionKey: "UID must not be empty."])
         }
-        
+
+        let reviewIds = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[String], Error>) in
+            DatabaseAPI.shared.readReviewsByUserReturnIds(uid: uid) { reviews, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let reviews = reviews {
+                    continuation.resume(returning: reviews)
+                }
+            }
+        }
+        print("Deleting reviews: \(reviewIds)")
+        for id in reviewIds {
+            try await DatabaseAPI.shared.deleteReview(id: id) { error in
+                if let error = error {
+                    print("Deleting failed: \(error.localizedDescription)")
+                } else {
+                    print("Delete successful")
+                }
+            }
+        }
+
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             database.child(users).child(uid).removeValue { error, _ in
                 if let error = error {
@@ -229,6 +249,43 @@ extension DatabaseAPI {
             completion(nil, error)
         }
     }
+    
+    func readReviewsByUserReturnIds(uid: String, completion: @escaping ([String]?, Error?) -> Void) {
+        print("Reading reviews from user:", uid)
+        
+        if uid.isEmpty {
+            completion(nil, NSError(domain: "BenchTime", code: 1002, userInfo: [NSLocalizedDescriptionKey: "UID must not be empty."]))
+            return
+        }
+        
+        let reviewRef = database.child("reviews")  // Reference to the "reviews" node
+
+        reviewRef.observeSingleEvent(of: .value, with: { snapshot in
+            guard let reviewDict = snapshot.value as? [String: Any] else {
+                // If no review data found, complete with an empty array
+                completion([], nil)
+                return
+            }
+
+            // Filter reviews by user ID
+            let reviews: [String] = reviewDict.compactMap { (key, value) -> String? in
+                guard let reviewData = value as? [String: Any],
+                      let reviewUID = reviewData["uid"] as? String,
+                      reviewUID == uid else {
+                    return nil // Skip reviews not belonging to the specified user
+                }
+                
+                // Return review id
+                return key
+            }
+            
+            completion(reviews, nil)
+        }) { error in
+            // Handle Firebase error
+            completion(nil, error)
+        }
+    }
+
 
     func readReviewsByBench(benchId: String, completion: @escaping ([ReviewModel]?, Error?) -> Void) {
         print("Reading reviews for bench:", benchId)
@@ -271,10 +328,6 @@ extension DatabaseAPI {
             }
             // Sort reviews by createdTimestamp
             reviews.sort(by: compareReviewsByDate)
-            
-//            for review in reviews {
-//                print("Review \(review.title) - Created: \(review.createdTimestamp)")
-//            }
             
             completion(reviews, nil)
         }) { error in

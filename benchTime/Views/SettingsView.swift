@@ -16,115 +16,122 @@ struct SettingsView: View {
     @State private var user: UserModel?
     
     @State private var isConfirmingAction = false
+    @State private var isDeleting = false
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                Spacer()
-                    .frame(height: 32)
-                
-                Text("Profile")
-                    .font(.title2)
-                    .bold()
-                HStack {
-                    if let user = authManager.currentUserDetails {
-                        // Display user details
-                        if user.profileImageURL != "" {
-                            URLImage(URL(string: user.profileImageURL)!) { image in
-                               // Use the loaded image
-                               image
-                                   .resizable()
-                                   .aspectRatio(contentMode: .fill)
-                           }
-                           .frame(width: 64, height: 64)
-                           .clipShape(Circle())
-                        } else {
-                            Image("no-profile-image")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 64, height: 64)
-                                .clipShape(Circle())
-                        }
-                        Spacer()
-                            .frame(width: 16)
-                        
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("Display name:")
-                                    .font(.subheadline)
-                                    .bold()
-                                Text("\(user.displayName)")
-                                    .font(.subheadline)
+            ZStack {
+                VStack(alignment: .leading) {
+                    Spacer()
+                        .frame(height: 32)
+                    
+                    Text("Profile")
+                        .font(.title2)
+                        .bold()
+                    HStack {
+                        if let user = authManager.currentUserDetails {
+                            // Display user details
+                            if user.profileImageURL != "" {
+                                URLImage(URL(string: user.profileImageURL)!) { image in
+                                   // Use the loaded image
+                                   image
+                                       .resizable()
+                                       .aspectRatio(contentMode: .fill)
+                               }
+                               .frame(width: 64, height: 64)
+                               .clipShape(Circle())
+                            } else {
+                                Image("no-profile-image")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
                             }
                             Spacer()
-                                .frame(height: 8)
-                            HStack {
-                                Text("Email:")
-                                    .font(.subheadline)
-                                    .bold()
-                                Text("\(user.email)")
-                                    .font(.subheadline)
+                                .frame(width: 16)
+                            
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("Display name:")
+                                        .font(.subheadline)
+                                        .bold()
+                                    Text("\(user.displayName)")
+                                        .font(.subheadline)
+                                }
+                                Spacer()
+                                    .frame(height: 8)
+                                HStack {
+                                    Text("Email:")
+                                        .font(.subheadline)
+                                        .bold()
+                                    Text("\(user.email)")
+                                        .font(.subheadline)
+                                }
                             }
-                        }
-                    } else if let error = error {
-                        // Display error
-                        Text("Error: \(error.localizedDescription)")
-                    }
-                }
-                .padding(.leading, 8)
-                
-                Spacer()
-                    .frame(height: 32)
-                
-                Text("Settings")
-                    .font(.title2)
-                    .bold()
-                
-                NavigationLink(destination: UpdateAccountDetailsView()) {
-                    BTNavigationItem(icon: "person.circle", title: "Update account details", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
-                }
-                
-                NavigationLink(destination: UpdatePasswordView()) {
-                    BTNavigationItem(icon: "key", title: "Update password", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
-                }
-                
-                Spacer()
-                
-                Button(action: {
-                    Task {
-                        authManager.signOut() { error in
-                            if let error = error {
-                                print(error.localizedDescription)
-                            }
+                        } else if let error = error {
+                            // Display error
+                            Text("Error: \(error.localizedDescription)")
                         }
                     }
-                }) {
-                    HStack {
-                        Text("Stand up")
-                            .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
-                            .bold()
-                        Spacer()
+                    .padding(.leading, 8)
+                    
+                    Spacer()
+                        .frame(height: 32)
+                    
+                    Text("Settings")
+                        .font(.title2)
+                        .bold()
+                    
+                    NavigationLink(destination: UpdateAccountDetailsView()) {
+                        BTNavigationItem(icon: "person.circle", title: "Update account details", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                     }
-                    .frame(maxWidth: .infinity)
-                }
-                .frame(height: 44, alignment: .leading)
-                
-                Button(action: {
-                    isConfirmingAction.toggle()
-                }) {
-                    HStack {
-                        Text("Delete account")
-                            .foregroundColor(UIStyles.Colors.red)
-                            .bold()
-                        Spacer()
+                    
+                    NavigationLink(destination: UpdatePasswordView()) {
+                        BTNavigationItem(icon: "key", title: "Update password", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                     }
-                    .frame(maxWidth: .infinity)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        Task {
+                            authManager.signOut() { error in
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                }
+                            }
+                        }
+                    }) {
+                        HStack {
+                            Text("Stand up")
+                                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
+                                .bold()
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .frame(height: 44, alignment: .leading)
+                    
+                    Button(action: {
+                        isConfirmingAction.toggle()
+                    }) {
+                        HStack {
+                            Text("Delete account")
+                                .foregroundColor(UIStyles.Colors.red)
+                                .bold()
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .foregroundColor(UIStyles.Colors.red)
+                    .frame(height: 44, alignment: .leading)
+                    
+                    Spacer()
+                        .frame(height: 24)
                 }
-                .foregroundColor(UIStyles.Colors.red)
-                .frame(height: 44, alignment: .leading)
                 
-                Spacer()
-                    .frame(height: 24)
+                if (isDeleting) {
+                    Loading()
+                }
             }
             .padding()
         }
@@ -132,15 +139,19 @@ struct SettingsView: View {
         .alert(isPresented: $isConfirmingAction) {
             Alert(
                 title: Text("Confirm Action"),
-                message: Text("Are you sure you want to delete your account?"),
+                message: Text("Are you sure you want to delete your account and associated reviews?"),
                 primaryButton: .destructive(Text("Delete")) {
                     Task {
                         do {
+                            isDeleting = true
+                            
                             try await DatabaseAPI.shared.deleteUserAsync(uid: authManager.currentUser?.uid ?? "")
                             
                             try await authManager.deleteCurrentUserAsync()
                             
                             authManager.showSignInView = true
+                            
+                            isDeleting = false
                             
                             print("Delete successful")
                         } catch {
