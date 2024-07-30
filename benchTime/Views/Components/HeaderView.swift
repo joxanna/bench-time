@@ -17,7 +17,7 @@ struct HeaderView: View {
                 .padding(.horizontal, 20)
             Text("by FILLET")
                 .font(.caption)
-                .foregroundColor(.orange)
+                .foregroundColor(UIStyles.Colors.accent)
         }
     }
 }

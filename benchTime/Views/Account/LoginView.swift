@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var authManager = AuthenticationManager.shared
     @StateObject var viewModel = LoginViewViewModel()
     
@@ -21,7 +22,7 @@ struct LoginView: View {
                     
                     BTSecureField(label: "Password", text:  $viewModel.password)
 
-                    BTButton(title: "Take a seat", backgroundColor: Color.cyan) {
+                    BTButton(title: "Take a seat", isDisabled: false) {
                         Task {
                             viewModel.login() { result in
                                 switch result {
@@ -45,7 +46,7 @@ struct LoginView: View {
                         RegisterView()
                     } label: {
                         Text("Create an account")
-                            .foregroundColor(.cyan)
+                            .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                             .font(.headline)
                     }
                 }
@@ -53,7 +54,7 @@ struct LoginView: View {
             }
             
             if (viewModel.isLoading) {
-                ProgressView()
+                Loading()
             }
         }
         .navigationBarBackButtonHidden(true)

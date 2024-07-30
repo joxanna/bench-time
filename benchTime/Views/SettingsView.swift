@@ -11,6 +11,7 @@ import URLImage
 
 struct SettingsView: View {
     @ObservedObject var authManager = AuthenticationManager.shared
+    @Environment(\.colorScheme) var colorScheme
     @State private var error: Error?
     @State private var user: UserModel?
     
@@ -80,11 +81,11 @@ struct SettingsView: View {
                     .bold()
                 
                 NavigationLink(destination: UpdateAccountDetailsView()) {
-                    BTNavigationItem(icon: "person.circle", title: "Update account details", color: .black)
+                    BTNavigationItem(icon: "person.circle", title: "Update account details", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 }
                 
                 NavigationLink(destination: UpdatePasswordView()) {
-                    BTNavigationItem(icon: "key", title: "Update password", color: .black)
+                    BTNavigationItem(icon: "key", title: "Update password", color: colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 }
                 
                 Spacer()
@@ -100,7 +101,7 @@ struct SettingsView: View {
                 }) {
                     HStack {
                         Text("Stand up")
-                            .foregroundColor(.cyan)
+                            .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                             .bold()
                         Spacer()
                     }
@@ -113,13 +114,13 @@ struct SettingsView: View {
                 }) {
                     HStack {
                         Text("Delete account")
-                            .foregroundColor(.red)
+                            .foregroundColor(UIStyles.Colors.red)
                             .bold()
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .foregroundColor(.red)
+                .foregroundColor(UIStyles.Colors.red)
                 .frame(height: 44, alignment: .leading)
                 
                 Spacer()

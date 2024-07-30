@@ -11,6 +11,7 @@ class HomeViewViewModel: ObservableObject {
     @ObservedObject var authManager = AuthenticationManager.shared
     
     @Published var currentReviews: [ReviewModel]?
+    @Published var showReviews: Bool = false
     @Published var errorMessage: String?
     
     @Published var headerVisible: Bool = true
@@ -18,6 +19,8 @@ class HomeViewViewModel: ObservableObject {
     
     func fetchReviews() {
         print("Fetching...")
+        
+        showReviews = false
         
         guard let uid = authManager.currentUser?.uid else {
             print("UID issue")
@@ -32,6 +35,7 @@ class HomeViewViewModel: ObservableObject {
             } else if let reviews = reviews {
                 // Assign currentUserReviews here
                 self.currentReviews = reviews
+                self.showReviews = true
                 print("Success")
             }
         }

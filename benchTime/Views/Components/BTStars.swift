@@ -14,7 +14,7 @@ struct BTStars: View {
         HStack {
             ForEach(0..<5) { index in
                 starType(for: index)
-                    .foregroundColor(.orange)
+                    .foregroundColor(UIStyles.Colors.accent)
             }
         }
     }

@@ -26,7 +26,6 @@ struct CustomSheetModifier<SheetContent: View>: ViewModifier {
                     
                     sheetContent()
                         .frame(width: UIScreen.main.bounds.width, height: finalSheetHeight)
-                        .background(Color.white)
                         .cornerRadius(20, corners: [.topLeft, .topRight])
                         .shadow(radius: 10)
                         .offset(y: sheetOffset + dragOffset) // Adjust based on drag

@@ -10,6 +10,7 @@ import URLImage
 
 struct UpdateAccountDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel = UpdateAccountDetailsViewViewModel()
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "profile_images")
@@ -55,7 +56,7 @@ struct UpdateAccountDetailsView: View {
                     imageUploaderViewModel.selectNewImage()
                 }) {
                     Text("Edit profile picture")
-                        .foregroundColor(imageUploaderViewModel.isLoading ? .gray : .cyan)
+                        .foregroundColor(imageUploaderViewModel.isLoading ? UIStyles.Colors.disabled : (colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link))
                         .bold()
                 }
                 .disabled(imageUploaderViewModel.isLoading)
@@ -90,7 +91,7 @@ struct UpdateAccountDetailsView: View {
                             }
                         }) {
                             Text("Done")
-                                .foregroundColor(.cyan)
+                                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                                 .bold()
                         }
                         .transition(.opacity)

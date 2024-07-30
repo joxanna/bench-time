@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BTFormField: View {
+    @Environment(\.colorScheme) var colorScheme
     let label: String
     @Binding var text: String
     
@@ -25,7 +26,7 @@ struct BTFormField: View {
             
             Text(label)
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label )
                 .padding(.leading, 10)  // Ensure label padding is consistent
                 .padding(.top, 10)      // Adjust top padding for consistent label positioning
                 .background(Color.clear)  // Ensure background doesn’t interfere
@@ -38,6 +39,7 @@ struct BTFormField: View {
 }
 
 struct BTSecureField: View {
+    @Environment(\.colorScheme) var colorScheme
     let label: String
     @Binding var text: String
     
@@ -55,7 +57,7 @@ struct BTSecureField: View {
             
             Text(label)
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 .padding(.leading, 10)  // Ensure label padding is consistent
                 .padding(.top, 10)      // Adjust top padding for consistent label positioning
                 .background(Color.clear)  // Ensure background doesn’t interfere
@@ -68,6 +70,7 @@ struct BTSecureField: View {
 }
 
 struct BTTextEditor: View {
+    @Environment(\.colorScheme) var colorScheme
     let label: String
     @Binding var text: String
     
@@ -84,7 +87,7 @@ struct BTTextEditor: View {
             
             Text(label)
                 .font(.caption)
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 .padding(.leading, 10)  // Adjusted to avoid magic numbers and maintain consistency
                 .padding(.top, 10)  // Added top padding to align with TextEditor padding
                 .background(Color.clear)  // Ensure background doesn’t interfere with the TextEditor

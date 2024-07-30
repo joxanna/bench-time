@@ -11,6 +11,8 @@ import SwiftOverpassAPI
 
 struct NewReviewView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
+    
     @EnvironmentObject var sheetStateManager: SheetStateManager
     @EnvironmentObject private var rootViewModel: RootViewViewModel
 
@@ -91,7 +93,7 @@ struct NewReviewView: View {
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 44, height: 44)
-                                                .foregroundColor(.cyan)
+                                                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                                             Spacer()
                                         }
                                     }
@@ -116,11 +118,11 @@ struct NewReviewView: View {
                                     }) {
                                         ZStack {
                                             Circle()
-                                                .fill(UIStyles.Colors.lightGray)
+                                                .fill(colorScheme == .dark ? UIStyles.Colors.darkGray : UIStyles.Colors.lightGray)
                                                 .frame(width: 44, height: 44)
                                             
                                             Image(systemName: "pencil")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(UIStyles.Colors.gray)
                                                 .font(.system(size: 24))
                                                 .bold()
                                         }
@@ -142,8 +144,9 @@ struct NewReviewView: View {
                         }
                         
                         Spacer()
+                            .frame(height: 20)
                         
-                        BTButton(title: "Post", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                        BTButton(title: "Post", isDisabled: viewModel.isEmpty()) {
                             viewModel.createReview() { error in
                                 if let error = error {
                                     print(error.localizedDescription)

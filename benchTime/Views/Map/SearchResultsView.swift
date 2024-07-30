@@ -27,7 +27,7 @@ struct SearchResultsView: View {
             }
             .listStyle(.plain)
             .listStyle(.insetGrouped) 
-            .background(.white)
+            .background((Color(.systemBackground)))
             .scrollContentBackground(.hidden)
         }
     }
@@ -35,19 +35,20 @@ struct SearchResultsView: View {
 
 struct ResultCell: View {
     let result: MKLocalSearchCompletion
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         VStack(alignment: .leading) { // Adjusted alignment and spacing
             Text(result.title)
                 .font(.headline)
-                .foregroundStyle(.black)
+                .foregroundStyle(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 .lineLimit(nil)
             if !result.subtitle.isEmpty && result.subtitle != "Search Nearby" {
                 Spacer()
                     .frame(height: 5)
                 Text(result.subtitle)
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundColor(UIStyles.Colors.gray)
                     .lineLimit(nil)
             }
         }

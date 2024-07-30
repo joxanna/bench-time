@@ -44,7 +44,7 @@ struct RootView: View {
                         }
                         .tag(3)
                 }
-                .toolbarBackground(.white, for: .tabBar)
+                .toolbarBackground((Color(.systemBackground)), for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
             }
             .onChange(of: rootViewModel.selectedTab) { oldValue, newValue in

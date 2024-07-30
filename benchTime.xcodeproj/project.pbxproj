@@ -17,7 +17,7 @@
 		FF1B113D2BEA0D8500676036 /* BTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B113C2BEA0D8500676036 /* BTButton.swift */; };
 		FF1B11422BEA123400676036 /* BTCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11412BEA123400676036 /* BTCard.swift */; };
 		FF1B11482BEA138E00676036 /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B11472BEA138E00676036 /* LoginViewViewModel.swift */; };
-		FF2912302C3663BF00ADA699 /* BTFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29122F2C3663BF00ADA699 /* BTFormField.swift */; };
+		FF2912302C3663BF00ADA699 /* BTFormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29122F2C3663BF00ADA699 /* BTFormFields.swift */; };
 		FF29D6492BF8B65B00C054B2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D6482BF8B65B00C054B2 /* HomeView.swift */; };
 		FF29D64B2BF8B66900C054B2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64A2BF8B66900C054B2 /* MapView.swift */; };
 		FF29D64D2BF8B67A00C054B2 /* MyReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */; };
@@ -116,7 +116,7 @@
 		FF1B113C2BEA0D8500676036 /* BTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTButton.swift; sourceTree = "<group>"; };
 		FF1B11412BEA123400676036 /* BTCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCard.swift; sourceTree = "<group>"; };
 		FF1B11472BEA138E00676036 /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
-		FF29122F2C3663BF00ADA699 /* BTFormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTFormField.swift; sourceTree = "<group>"; };
+		FF29122F2C3663BF00ADA699 /* BTFormFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTFormFields.swift; sourceTree = "<group>"; };
 		FF29D6482BF8B65B00C054B2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FF29D64A2BF8B66900C054B2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FF29D64C2BF8B67A00C054B2 /* MyReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewsView.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 				FF1B11412BEA123400676036 /* BTCard.swift */,
 				FF7054002BFC5D8800965435 /* LargeModalView.swift */,
 				FFCCCC742C36239D005EAF6F /* BTNavigationItem.swift */,
-				FF29122F2C3663BF00ADA699 /* BTFormField.swift */,
+				FF29122F2C3663BF00ADA699 /* BTFormFields.swift */,
 				FF48F8772C39463000A41941 /* BTRating.swift */,
 				FF8435862C3FC0DC00E230E8 /* DisableBottomBouncingScrollView.swift */,
 				FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */,
@@ -688,7 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1B11372BEA012C00676036 /* LoginView.swift in Sources */,
-				FF2912302C3663BF00ADA699 /* BTFormField.swift in Sources */,
+				FF2912302C3663BF00ADA699 /* BTFormFields.swift in Sources */,
 				FFCCCC752C36239D005EAF6F /* BTNavigationItem.swift in Sources */,
 				FF7053F12BFACC7800965435 /* ReviewModel.swift in Sources */,
 				FF81E1D32BECC6AD0023E743 /* FormFieldViewModifier.swift in Sources */,
@@ -927,6 +927,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -981,6 +982,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

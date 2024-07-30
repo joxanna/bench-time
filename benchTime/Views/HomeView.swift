@@ -29,7 +29,6 @@ struct HomeView: View {
                                     }
                             }
                             .frame(width: UIScreen.main.bounds.width, height: 64)
-                            .background(Color.white)
                             .transition(.move(edge: .top))
                             .zIndex(1)
                         } else {
@@ -38,15 +37,13 @@ struct HomeView: View {
                         
                         ScrollView(showsIndicators: false) {
                             VStack {
-                                if let reviews = homeViewModel.currentReviews {
+                                if homeViewModel.showReviews, let reviews = homeViewModel.currentReviews {
                                     ForEach(reviews) { review in
                                         BTCard(review: review, currentUser: false, address: true) {
                                             homeViewModel.fetchReviews()
                                         }
                                         .padding()
                                     }
-                                } else {
-                                    ProgressView()
                                 }
                             }
                             .background(

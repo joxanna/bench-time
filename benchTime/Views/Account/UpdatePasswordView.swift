@@ -10,6 +10,7 @@ import SwiftUI
 struct UpdatePasswordView: View {
     @ObservedObject var authManager = AuthenticationManager.shared
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
@@ -29,7 +30,7 @@ struct UpdatePasswordView: View {
             
             if (!errorMessage.isEmpty) {
                 Text(errorMessage)
-                    .foregroundColor(.red)
+                    .foregroundColor(UIStyles.Colors.red)
                     .padding()
             }
             
@@ -56,7 +57,7 @@ struct UpdatePasswordView: View {
                             }
                         }) {
                             Text("Done")
-                                .foregroundColor(.cyan)
+                                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                                 .bold()
                         }
                         .transition(.opacity)

@@ -44,8 +44,6 @@ struct MyReviewsView: View {
                                             }
                                             .padding()
                                         }
-                                    } else {
-                                        ProgressView()
                                     }
                                 }
                                 .background(

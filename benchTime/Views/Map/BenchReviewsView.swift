@@ -14,6 +14,8 @@ struct BenchReviewsView: View {
     var benchAnnotation: CustomPointAnnotation
 
     @ObservedObject var authManager = AuthenticationManager.shared
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var benchReviewViewModel = BenchReviewsViewViewModel()
     
     @State var isShowingNewReview: Bool = false
@@ -40,7 +42,7 @@ struct BenchReviewsView: View {
                                     }
                                     .font(.title3)
                                     .background(.clear)
-                                    .foregroundColor(Color.cyan)
+                                    .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                                 }
                                 .buttonStyle(PlainButtonStyle())
                             }
@@ -52,14 +54,14 @@ struct BenchReviewsView: View {
                             HStack(alignment: .center) {
                                 Text(benchReviewViewModel.addressText)
                                     .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(UIStyles.Colors.gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.bottom, 8)
                                 Spacer()
                                 VStack(alignment: .trailing) {
                                     BTStars(rating: benchReviewViewModel.averageRating)
                                     Text(String(format: "%.1f", benchReviewViewModel.averageRating))
-                                        .foregroundColor(.orange)
+                                        .foregroundColor(UIStyles.Colors.accent)
                                         .font(.caption)
                                         .padding(.top, 4)
                                 }
@@ -91,7 +93,7 @@ struct BenchReviewsView: View {
                                             Image(systemName: "xmark")
                                                 .frame(width: 8, height: 8)
                                                 .bold()
-                                                .foregroundColor(.red)
+                                                .foregroundColor(UIStyles.Colors.red)
                                         } else {
                                             Text("\(value.capitalized)")
                                         }

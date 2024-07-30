@@ -10,6 +10,7 @@ import URLImage
 
 struct BTCard: View {
     @EnvironmentObject private var rootViewModel: RootViewViewModel 
+    @Environment(\.colorScheme) var colorScheme
     
     @StateObject private var viewModel: BTCardViewModel
     
@@ -52,7 +53,7 @@ struct BTCard: View {
                         
                         Text("\(user.displayName)")
                             .font(.subheadline)
-                            .foregroundStyle(Color.black)
+                            .foregroundStyle(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                             .bold()
                     }
                 }
@@ -75,30 +76,30 @@ struct BTCard: View {
                     Text(viewModel.review.title)
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                     Spacer()
                     VStack(alignment: .trailing) {
                         BTStars(rating: viewModel.review.rating)
                         Text(viewModel.ratingText)
-                            .foregroundColor(.orange)
+                            .foregroundColor(UIStyles.Colors.accent)
                             .font(.caption)
                     }
                 }
                 
                 Text(viewModel.review.description)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(colorScheme == .dark ? UIStyles.Colors.Dark.label : UIStyles.Colors.Light.label)
                 
                 if (address) {
                     if (viewModel.addressText == "No address") {
                         Text("📍 No address available, please try again")
-                            .foregroundColor(.gray)
+                            .foregroundColor(UIStyles.Colors.gray)
                             .font(.system(size: 14))
                     } else {
                         Button(action: {
                             rootViewModel.openSearchBenchesView(address: viewModel.addressText, benchId: viewModel.review.benchId ?? "")
                         }) {
                             Text("📍 \(viewModel.addressText)")
-                                .foregroundColor(.gray)
+                                .foregroundColor(UIStyles.Colors.gray)
                                 .font(.system(size: 14))
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -108,11 +109,11 @@ struct BTCard: View {
                 HStack {
                     if (!viewModel.review.updatedTimestamp.isEmpty) {
                         Text("Updated on: \(viewModel.review.updatedTimestamp)")
-                            .foregroundColor(.gray)
+                            .foregroundColor(UIStyles.Colors.gray)
                             .font(.system(size: 12))
                     } else {
                         Text("Posted on: \(viewModel.review.createdTimestamp)")
-                            .foregroundColor(.gray)
+                            .foregroundColor(UIStyles.Colors.gray)
                             .font(.system(size: 12))
                     }
 
@@ -123,11 +124,11 @@ struct BTCard: View {
                         }) {
                             ZStack {
                                 Circle()
-                                    .fill(UIStyles.Colors.lightGray)
+                                    .fill(colorScheme == .dark ? UIStyles.Colors.darkGray : UIStyles.Colors.lightGray)
                                     .frame(width: 30, height: 30)
 
                                 Image(systemName: "pencil")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(UIStyles.Colors.gray)
                                     .font(.system(size: 16))
                             }
                         }
@@ -138,7 +139,7 @@ struct BTCard: View {
                         }) {
                             ZStack {
                                 Circle()
-                                    .fill(UIStyles.Colors.lightGray)
+                                    .fill(colorScheme == .dark ? UIStyles.Colors.darkGray : UIStyles.Colors.lightGray)
                                     .frame(width: 30, height: 30)
                                 
                                 Image(systemName: "trash.fill")
@@ -151,9 +152,9 @@ struct BTCard: View {
             }
             .padding()
             .background(
-                Rectangle().foregroundColor(.white)
+                Rectangle().foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.card : UIStyles.Colors.Light.card)
                     .cornerRadius(15)
-                    .shadow(color: .gray.opacity(0.3), radius: 6)
+                    .shadow(color: colorScheme == .dark ? .clear : UIStyles.Colors.Light.shadow, radius: 6)
             )
             .alert(isPresented: $viewModel.isConfirmingAction) {
                 Alert(

@@ -58,8 +58,9 @@ struct UpdateReviewView: View {
                         .padding(.bottom, 24)
                     
                     Spacer()
+                        .frame(height: 20)
                     
-                    BTButton(title: "Save", backgroundColor: (viewModel.isEmpty() ? Color.gray : Color.cyan)) {
+                    BTButton(title: "Save", isDisabled: viewModel.isEmpty()) {
                         viewModel.updateReview() { error in
                             if let error = error {
                                 print(error.localizedDescription)

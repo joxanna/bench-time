@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var authManager = AuthenticationManager.shared
     @StateObject var viewModel = RegisterViewViewModel()
 
@@ -23,7 +24,7 @@ struct RegisterView: View {
                     
                     BTSecureField(label: "Password", text:  $viewModel.password)
 
-                    BTButton(title: "Register", backgroundColor: Color.cyan) {
+                    BTButton(title: "Register", isDisabled: false) {
                         Task {
                             viewModel.register() { result in
                                 switch result {
@@ -47,7 +48,7 @@ struct RegisterView: View {
                         LoginView()
                     } label: {
                         Text("Take a seat")
-                            .foregroundColor(.cyan)
+                            .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                             .font(.headline)
                     }
                 }
@@ -55,7 +56,7 @@ struct RegisterView: View {
             }
             
             if viewModel.isLoading {
-                ProgressView()
+                Loading()
             }
         }
         .navigationBarBackButtonHidden(true)

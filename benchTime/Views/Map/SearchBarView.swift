@@ -28,7 +28,7 @@ class SearchBarUIView: UIView {
 
         backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         backButton.setTitleColor(.systemBlue, for: .normal)
-        backButton.backgroundColor = UIColor.white
+        backButton.backgroundColor = .systemBackground
         backButton.isHidden = true
         
         // Customize button size
@@ -52,7 +52,7 @@ class SearchBarUIView: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        stackView.backgroundColor = UIColor.white
+        stackView.backgroundColor = .systemBackground
     }
     
     func isSearchBarFocused() -> Bool {

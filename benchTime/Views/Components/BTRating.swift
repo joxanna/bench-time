@@ -19,7 +19,7 @@ struct BTRating: View {
                 }) {
                     starType(for: index)
                         .resizable()
-                        .foregroundColor(.orange)
+                        .foregroundColor(UIStyles.Colors.accent)
                         .frame(width: 32, height: 32)
                 }
                 Spacer()
