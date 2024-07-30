@@ -12,6 +12,8 @@ import URLImage
 struct SettingsView: View {
     @ObservedObject var authManager = AuthenticationManager.shared
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var rootViewModel: RootViewViewModel
+    
     @State private var error: Error?
     @State private var user: UserModel?
     
@@ -97,6 +99,8 @@ struct SettingsView: View {
                             authManager.signOut() { error in
                                 if let error = error {
                                     print(error.localizedDescription)
+                                } else {
+                                    rootViewModel.selectedTab = 0
                                 }
                             }
                         }
@@ -152,6 +156,8 @@ struct SettingsView: View {
                             authManager.showSignInView = true
                             
                             isDeleting = false
+                            
+                            rootViewModel.selectedTab = 0
                             
                             print("Delete successful")
                         } catch {

@@ -63,6 +63,7 @@ struct HomeView: View {
                         }
                     }
                     .onAppear {
+                        print("APPEAR")
                         homeViewModel.fetchReviews()
                         scrollToTop(proxy: proxy)
                     }
