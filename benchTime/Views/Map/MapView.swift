@@ -35,7 +35,7 @@ struct MapView: UIViewRepresentable {
         let trackingButton = UIButton(type: .system)
         trackingButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
         trackingButton.tintColor = .systemBlue
-        trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .touchUpInside)
+        trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .allTouchEvents)
         mapView.addSubview(trackingButton)
         trackingButton.translatesAutoresizingMaskIntoConstraints = false
         trackingButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
@@ -45,7 +45,7 @@ struct MapView: UIViewRepresentable {
         let pinButton = UIButton(type: .system)
         pinButton.setImage(UIImage(systemName: "mappin"), for: .normal)
         pinButton.tintColor = .systemRed
-        pinButton.addTarget(context.coordinator, action: #selector(context.coordinator.pinButtonTapped), for: .touchUpInside)
+        pinButton.addTarget(context.coordinator, action: #selector(context.coordinator.pinButtonTapped), for: .allTouchEvents)
         mapView.addSubview(pinButton)
         pinButton.translatesAutoresizingMaskIntoConstraints = false
         pinButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -UIStyles.Padding.xlarge).isActive = true
