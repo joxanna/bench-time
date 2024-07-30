@@ -128,7 +128,7 @@ class MapViewViewModel: ObservableObject {
             annotation: pointAnnotation,
             reuseIdentifier: markerReuseIdentifier)
         
-        view.markerTintColor = .systemRed
+        view.markerTintColor = .red
         return view
     }
     

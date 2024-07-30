@@ -99,6 +99,7 @@ struct UpdateAccountDetailsView: View {
                 .padding(.leading, -10)
                 .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
             }
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !viewModel.isEmpty() {
                     NavigationLink(destination: SettingsView()) {
@@ -138,7 +139,6 @@ struct UpdateAccountDetailsView: View {
     
     private func handleImageUpload() async {
         await imageUploaderViewModel.uploadImage()
-        print("finished:", imageUploaderViewModel.imageURL?.absoluteString ?? "")
         if let newImageURL = imageUploaderViewModel.imageURL?.absoluteString {
             viewModel.profileImageURL = newImageURL
         }

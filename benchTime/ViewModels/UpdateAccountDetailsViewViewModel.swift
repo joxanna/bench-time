@@ -44,6 +44,15 @@ class UpdateAccountDetailsViewViewModel: ObservableObject {
     
     func clear() {
         displayName = currentUserDetails?.displayName ?? ""
-        profileImageURL = currentUserDetails?.profileImageURL ?? ""
+        
+        if profileImageURL != currentUserDetails?.profileImageURL {
+            DatabaseAPI.shared.deleteImageFromStorage(imageURL: profileImageURL) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    self.profileImageURL = self.currentUserDetails?.profileImageURL ?? ""
+                }
+            }
+        }
     }
 }
