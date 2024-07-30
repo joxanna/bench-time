@@ -64,7 +64,7 @@ extension DatabaseAPI {
         for (key, value) in newData.toDictionary() {
             if (value as! String != ""){
                 print("Updating", key, "to", value ?? "default value")
-                if (key == "profileImageURL" && oldData.profileImageURL != newData.profileImageURL) {
+                if (key == "profileImageURL" && oldData.profileImageURL != newData.profileImageURL && oldData.profileImageURL != "") {
                     deleteImageFromStorage(imageURL: oldData.profileImageURL) { error in
                         if let error = error {
                             print("Failed to delete old profile picture \(oldData.profileImageURL): \(error.localizedDescription)")

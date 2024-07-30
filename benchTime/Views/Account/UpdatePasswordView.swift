@@ -18,28 +18,35 @@ struct UpdatePasswordView: View {
     @State private var isPasswordUpdated: Bool = false
     
     @State private var showAlert: Bool = false
+    @State private var isUpdating: Bool = false
     
     var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 32)
-            
-            BTSecureField(label: "Current password", text:  $currentPassword)
-            
-            BTSecureField(label: "New password", text:  $newPassword)
-            
-            Spacer()
-            
-            if (!errorMessage.isEmpty) {
-                Text(errorMessage)
-                    .foregroundColor(UIStyles.Colors.red)
-                    .padding()
+        ZStack {
+            VStack {
+                Spacer()
+                    .frame(height: 32)
+                
+                BTSecureField(label: "Current password", text:  $currentPassword)
+                
+                BTSecureField(label: "New password", text:  $newPassword)
+                
+                Spacer()
+                
+                if (!errorMessage.isEmpty) {
+                    Text(errorMessage)
+                        .foregroundColor(UIStyles.Colors.red)
+                        .padding()
+                }
+                
+                if (isPasswordUpdated) {
+                    Text("Password successfully updated!")
+                        .foregroundColor(.green)
+                        .padding()
+                }
             }
             
-            if (isPasswordUpdated) {
-                Text("Password successfully updated!")
-                    .foregroundColor(.green)
-                    .padding()
+            if isUpdating {
+                Loading()
             }
         }
         .padding()
@@ -70,12 +77,14 @@ struct UpdatePasswordView: View {
                 if (!isEmpty()) {
                     NavigationLink(destination: SettingsView()) {
                         Button(action: {
+                            isUpdating = true
                             authManager.updatePassword(currentPassword: currentPassword, newPassword: newPassword) { error in
                                 if let error = error {
                                     errorMessage = error.localizedDescription
                                 } else {
                                     isPasswordUpdated = true
                                     presentationMode.wrappedValue.dismiss()
+                                    isUpdating = false
                                 }
                             }
                         }) {

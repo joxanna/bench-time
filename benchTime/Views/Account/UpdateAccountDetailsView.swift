@@ -16,67 +16,74 @@ struct UpdateAccountDetailsView: View {
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "profile_images")
     
     @State private var showAlert: Bool = false
-
+    @State private var isUpdating: Bool = false
+    
     var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 32)
+        ZStack {
             VStack {
-                if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .frame(width: 64, height: 64)
-                } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 64, height: 64)
-                        .clipShape(Circle())
-                } else {
-                    if viewModel.profileImageURL != "" {
-                        AsyncImage(url: URL(string: viewModel.profileImageURL)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 64, height: 64)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            ProgressView()
-                                .frame(width: 64, height: 64)
-                        }
-                    } else {
-                        Image("no-profile-image")
+                Spacer()
+                    .frame(height: 32)
+                VStack {
+                    if let _ = imageUploaderViewModel.image, imageUploaderViewModel.imageURL == nil {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .frame(width: 64, height: 64)
+                    } else if let image = imageUploaderViewModel.image, let _ = imageUploaderViewModel.imageURL {
+                        Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 64, height: 64)
                             .clipShape(Circle())
+                    } else {
+                        if viewModel.profileImageURL != "" {
+                            AsyncImage(url: URL(string: viewModel.profileImageURL)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                ProgressView()
+                                    .frame(width: 64, height: 64)
+                            }
+                        } else {
+                            Image("no-profile-image")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 64, height: 64)
+                                .clipShape(Circle())
+                        }
                     }
+                    
+                    Button(action: {
+                        imageUploaderViewModel.isShowingImagePicker = true
+                        imageUploaderViewModel.selectNewImage()
+                    }) {
+                        Text("Edit profile picture")
+                            .foregroundColor(imageUploaderViewModel.isLoading ? UIStyles.Colors.disabled : (colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link))
+                            .bold()
+                    }
+                    .disabled(imageUploaderViewModel.isLoading)
                 }
+                .sheet(isPresented: $imageUploaderViewModel.isShowingImagePicker, onDismiss: {
+                    Task {
+                        await handleImageUpload()
+                    }
+                }){
+                    ImagePicker(image: $imageUploaderViewModel.image)
+                }
+                Spacer()
+                    .frame(height: 24)
                 
-                Button(action: {
-                    imageUploaderViewModel.isShowingImagePicker = true
-                    imageUploaderViewModel.selectNewImage()
-                }) {
-                    Text("Edit profile picture")
-                        .foregroundColor(imageUploaderViewModel.isLoading ? UIStyles.Colors.disabled : (colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link))
-                        .bold()
-                }
-                .disabled(imageUploaderViewModel.isLoading)
+                BTFormField(label: "Display name", text:  $viewModel.displayName)
+                Spacer()
             }
-            .sheet(isPresented: $imageUploaderViewModel.isShowingImagePicker, onDismiss: {
-                Task {
-                    await handleImageUpload()
-                }
-            }){
-                ImagePicker(image: $imageUploaderViewModel.image)
-            }
-            Spacer()
-                .frame(height: 24)
+            .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height, alignment: .topLeading)
             
-            BTFormField(label: "Display name", text:  $viewModel.displayName)
-            Spacer()
+            if isUpdating {
+                Loading()
+            }
         }
-        .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height, alignment: .topLeading)
         .navigationBarTitle("Update account details")
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -104,12 +111,15 @@ struct UpdateAccountDetailsView: View {
                 if !viewModel.isEmpty() {
                     NavigationLink(destination: SettingsView()) {
                         Button(action: {
+                            isUpdating = true
                             viewModel.updateUser() { error in
                                 if let error = error {
                                     print(error.localizedDescription)
+                                    isUpdating = false
                                 } else {
                                     print("Account updated successfully")
                                     presentationMode.wrappedValue.dismiss()
+                                    isUpdating = false
                                 }
                             }
                         }) {

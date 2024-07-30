@@ -22,6 +22,7 @@ class UpdateAccountDetailsViewViewModel: ObservableObject {
     }
     
     func updateUser(completion: @escaping (Error?) -> Void) {
+        print("Updating user...")
         let newData = UserModel(uid: uid, email: "", displayName: displayName, profileImageURL: profileImageURL)
         
         DatabaseAPI.shared.updateUser(uid: uid, newData: newData, oldData: AuthenticationManager.shared.currentUserDetails!) { error in
