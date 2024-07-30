@@ -34,7 +34,7 @@ struct MapView: UIViewRepresentable {
         // Add tracking button
         let trackingButton = UIButton(type: .system)
         trackingButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
-        trackingButton.tintColor = .systemBlue
+        trackingButton.tintColor = UIStyles.Colors.theme
         trackingButton.addTarget(context.coordinator, action: #selector(context.coordinator.trackingButtonTapped), for: .touchUpInside)
         mapView.addSubview(trackingButton)
         trackingButton.translatesAutoresizingMaskIntoConstraints = false

@@ -14,6 +14,8 @@ struct UpdateAccountDetailsView: View {
     
     @StateObject var viewModel = UpdateAccountDetailsViewViewModel()
     @StateObject var imageUploaderViewModel = ImageUploaderViewModel(storage: "profile_images")
+    
+    @State private var showAlert: Bool = false
 
     var body: some View {
         VStack {
@@ -76,7 +78,27 @@ struct UpdateAccountDetailsView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height, alignment: .topLeading)
         .navigationBarTitle("Update account details")
+        .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                HStack {
+                    Button(action: {
+                        if !viewModel.isEmpty() {
+                            showAlert = true
+                        } else {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 16, weight: .medium))
+                            Text("Back")
+                        }
+                    }
+                }
+                .padding(.leading, -10)
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !viewModel.isEmpty() {
                     NavigationLink(destination: SettingsView()) {
@@ -100,6 +122,17 @@ struct UpdateAccountDetailsView: View {
             }
         }
         .animation(.default, value: viewModel.isEmpty())
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you want to discard changes?"),
+                primaryButton: .destructive(Text("Discard")) {
+                    viewModel.clear()
+                    presentationMode.wrappedValue.dismiss()
+                },
+                secondaryButton: .cancel()
+            )
+        }
         .padding()
     }
     

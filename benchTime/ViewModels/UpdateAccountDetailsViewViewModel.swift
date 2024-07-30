@@ -41,4 +41,9 @@ class UpdateAccountDetailsViewViewModel: ObservableObject {
         }
         return true
     }
+    
+    func clear() {
+        displayName = currentUserDetails?.displayName ?? ""
+        profileImageURL = currentUserDetails?.profileImageURL ?? ""
+    }
 }

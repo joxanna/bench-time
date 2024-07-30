@@ -27,7 +27,7 @@ class SearchBarUIView: UIView {
         searchBar.backgroundImage = UIImage()
 
         backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        backButton.setTitleColor(.systemBlue, for: .normal)
+        backButton.setTitleColor(UIStyles.Colors.theme, for: .normal)
         backButton.backgroundColor = .systemBackground
         backButton.isHidden = true
         

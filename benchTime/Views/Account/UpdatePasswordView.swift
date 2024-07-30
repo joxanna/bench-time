@@ -17,6 +17,8 @@ struct UpdatePasswordView: View {
     @State private var errorMessage: String = ""
     @State private var isPasswordUpdated: Bool = false
     
+    @State private var showAlert: Bool = false
+    
     var body: some View {
         VStack {
             Spacer()
@@ -42,7 +44,28 @@ struct UpdatePasswordView: View {
         }
         .padding()
         .navigationBarTitle("Update password")
+        .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                HStack {
+                    Button(action: {
+                        if !isEmpty() {
+                            showAlert = true
+                        } else {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 16, weight: .medium))
+                            Text("Back")
+                        }
+                    }
+                }
+                .padding(.leading, -10)
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
+            }
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 if (!isEmpty()) {
                     NavigationLink(destination: SettingsView()) {
@@ -66,6 +89,16 @@ struct UpdatePasswordView: View {
             }
         }
         .animation(.default, value: isEmpty())
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("Do you want to discard changes?"),
+                primaryButton: .destructive(Text("Discard")) {
+                    presentationMode.wrappedValue.dismiss()
+                },
+                secondaryButton: .cancel()
+            )
+        }
     }
     
     func isEmpty() -> Bool {

@@ -45,13 +45,15 @@ struct NewReviewView: View {
                     }) {
                         HStack {
                             Image(systemName: "chevron.left")
+                                .font(.system(size: 20, weight: .medium))
                             Text("Back")
                         }
                     }
                     Spacer()
                 }
+                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
             }
-            .padding(.bottom, 20)
+            .padding(10)
             
             ScrollView(showsIndicators: false) {
                 ZStack {
@@ -168,11 +170,10 @@ struct NewReviewView: View {
                         Loading()
                     }
                 }
-                
             }
+            .padding(.top, 20)
+            .padding(.horizontal, 20)
         }
-        .padding(.top, 20)
-        .padding(.horizontal, 20)
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),
