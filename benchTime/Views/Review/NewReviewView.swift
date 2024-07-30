@@ -188,6 +188,18 @@ struct NewReviewView: View {
         .onDisappear {
             onDismiss()
         }
+        .onChange(of: viewModel.title) { _, newValue in
+            print(newValue)
+        }
+        .onChange(of: viewModel.description) { _, newValue in
+            print(newValue)
+        }
+        .onChange(of: viewModel.rating) { _, newValue in
+            print(newValue)
+        }
+        .onChange(of: viewModel.imageURLs) { _, newValue in
+            print(newValue)
+        }
     }
     
     private func onClose() {
@@ -197,6 +209,8 @@ struct NewReviewView: View {
     
     private func handleImageUpload() async {
         await imageUploaderViewModel.uploadImage()
+        print("URL: \(imageUploaderViewModel.imageURL)")
+        print("String: \(imageUploaderViewModel.imageURL?.absoluteString)")
         if let newImageURL = imageUploaderViewModel.imageURL?.absoluteString {
             viewModel.imageURLs = [newImageURL]
         }

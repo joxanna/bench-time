@@ -10,37 +10,35 @@ import FirebaseStorage
 import SwiftUI
 
 class ImageUploaderViewModel: ObservableObject {
+    @ObservedObject var authManager: AuthenticationManager
+    
     @Published var imageURL: URL?
     @Published var image: UIImage?
     @Published var isShowingImagePicker = false
     @Published var isLoading = false
     
     private let imageUploader = ImageUploader()
-    private let storage: String
+    private var storage: String = ""
 
-    init(storage: String) {
-        self.storage = storage
+    init(authManager: AuthenticationManager = .shared, storage: String) {
+        self.authManager = authManager
+        if let uid = authManager.currentUser?.uid {
+            self.storage = "\(storage)/\(uid)/"
+        }
     }
     
     func uploadImage() async {
         guard let image = image else { return }
         
         do {
-            DispatchQueue.main.async {
-                self.isLoading = true
-            }
+            self.isLoading = true            
             let url = try await imageUploader.uploadImageToStorage(image: image, child: storage)
-            DispatchQueue.main.async {
-                self.imageURL = url
-                self.isLoading = false
-            }
+            self.imageURL = url
+            self.isLoading = false
             print("Image uploaded successfully: \(url)")
         } catch {
             // Handle error
-            DispatchQueue.main.async {
-                // If you want to update any state related to the error
-                self.isLoading = false
-            }
+            self.isLoading = false
             print("Error uploading image:", error.localizedDescription)
         }
     }
