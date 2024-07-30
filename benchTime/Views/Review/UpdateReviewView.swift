@@ -71,10 +71,14 @@ struct UpdateReviewView: View {
                         }
                     }
                     .disabled(viewModel.isEmpty())
+                    
+                    Spacer()
+                        .frame(height: 20)
                 }
             }
         }
-        .padding()
+        .padding(.top, 20)
+        .padding(.horizontal, 20)
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),

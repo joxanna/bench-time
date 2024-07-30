@@ -156,6 +156,9 @@ struct NewReviewView: View {
                             }
                         }
                         .disabled(viewModel.isEmpty())
+                        
+                        Spacer()
+                            .frame(height: 20)
                     }
                     
                     if (isLoadingImagePicker) {
@@ -165,7 +168,8 @@ struct NewReviewView: View {
                 
             }
         }
-        .padding()
+        .padding(.top, 20)
+        .padding(.horizontal, 20)
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Are you sure?"),
