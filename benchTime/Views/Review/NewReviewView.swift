@@ -139,7 +139,7 @@ struct NewReviewView: View {
                                 await handleImageUpload()
                             }
                         }){
-                            ImagePicker(image: $imageUploaderViewModel.image)
+                            ImagePicker(image: $imageUploaderViewModel.image, cropStyle: .default) 
                                 .onAppear {
                                     isLoadingImagePicker = false
                                 }

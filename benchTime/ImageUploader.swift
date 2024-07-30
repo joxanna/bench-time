@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseStorage
 import SwiftUI
+import CropViewController
 
 final class ImageUploader {
     static let shared = ImageUploader()
@@ -44,7 +45,8 @@ final class ImageUploader {
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.presentationMode) var presentationMode
-    
+    var cropStyle: CropViewCroppingStyle = .default // Add a cropping style property
+
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = context.coordinator
@@ -56,21 +58,39 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self)
+        return Coordinator(parent: self, cropStyle: cropStyle)
     }
     
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
         let parent: ImagePicker
-        
-        init(parent: ImagePicker) {
+        var cropStyle: CropViewCroppingStyle
+
+        init(parent: ImagePicker, cropStyle: CropViewCroppingStyle) {
             self.parent = parent
+            self.cropStyle = cropStyle
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                parent.image = uiImage
+                let cropViewController = CropViewController(croppingStyle: cropStyle, image: uiImage)
+                cropViewController.delegate = self
+                cropViewController.aspectRatioPreset = .presetSquare // Set aspect ratio preset to square
+                cropViewController.aspectRatioLockEnabled = true // Lock the aspect ratio
+                picker.present(cropViewController, animated: true, completion: nil)
             }
-            parent.presentationMode.wrappedValue.dismiss()
+        }
+        
+        func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+            parent.image = image
+            cropViewController.dismiss(animated: true) {
+                self.parent.presentationMode.wrappedValue.dismiss()
+            }
+        }
+        
+        func cropViewControllerDidCancel(_ cropViewController: CropViewController) {
+            cropViewController.dismiss(animated: true) {
+                self.parent.presentationMode.wrappedValue.dismiss()
+            }
         }
         
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

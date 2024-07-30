@@ -40,6 +40,7 @@ struct BTCard: View {
                                     .clipShape(Circle())
                             } placeholder: {
                                 ProgressView()
+                                    .frame(width: 24, height: 24)
                             }
                         } else {
                             Image("no-profile-image")

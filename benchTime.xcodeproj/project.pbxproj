@@ -30,6 +30,8 @@
 		FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A6F2BFF0D130033ADD6 /* SearchBenchesView.swift */; };
 		FF557A742BFF0E8D0033ADD6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A732BFF0E8D0033ADD6 /* LocationManager.swift */; };
 		FF557A782BFF1D860033ADD6 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF557A772BFF1D860033ADD6 /* GlobalFunctions.swift */; };
+		FF5944FE2C5950AF001ABF81 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF5944FD2C5950AF001ABF81 /* CropViewController */; };
+		FF5945002C5950AF001ABF81 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF5944FF2C5950AF001ABF81 /* TOCropViewController */; };
 		FF5D30682C4654DA00ED2A77 /* SearchQueryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30672C4654DA00ED2A77 /* SearchQueryViewModel.swift */; };
 		FF5D306A2C46574300ED2A77 /* RootViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5D30692C46574300ED2A77 /* RootViewViewModel.swift */; };
 		FF6474962BED9B9C0029F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF6474952BED9B9C0029F741 /* GoogleService-Info.plist */; };
@@ -186,9 +188,11 @@
 				FFCC4F852C19592700EFFAC9 /* FirebaseDatabase in Frameworks */,
 				FFCC4F8D2C19592700EFFAC9 /* FirebaseStorage in Frameworks */,
 				FFCC4F812C19592700EFFAC9 /* FirebaseAnalyticsSwift in Frameworks */,
+				FF5944FE2C5950AF001ABF81 /* CropViewController in Frameworks */,
 				FFCC4F7F2C19592700EFFAC9 /* FirebaseAnalytics in Frameworks */,
 				935627E9B726599B98FEC663 /* Pods_benchTime.framework in Frameworks */,
 				FFCC4F832C19592700EFFAC9 /* FirebaseAuth in Frameworks */,
+				FF5945002C5950AF001ABF81 /* TOCropViewController in Frameworks */,
 				FFCC4F892C19592700EFFAC9 /* FirebaseFirestore in Frameworks */,
 				FFCC4F8F2C19593300EFFAC9 /* URLImage in Frameworks */,
 				FFCC4F8B2C19592700EFFAC9 /* FirebaseFirestoreSwift in Frameworks */,
@@ -459,6 +463,8 @@
 				FFCC4F8C2C19592700EFFAC9 /* FirebaseStorage */,
 				FFCC4F8E2C19593300EFFAC9 /* URLImage */,
 				FFCC4F902C19593300EFFAC9 /* URLImageStore */,
+				FF5944FD2C5950AF001ABF81 /* CropViewController */,
+				FF5944FF2C5950AF001ABF81 /* TOCropViewController */,
 			);
 			productName = benchTime;
 			productReference = FFD1FB402BE9F29300671C1A /* benchTime.app */;
@@ -538,6 +544,7 @@
 			packageReferences = (
 				FF81E1B52BEB2E550023E743 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				FF29D6502BF8C70000C054B2 /* XCRemoteSwiftPackageReference "url-image" */,
+				FF5944FC2C5950AF001ABF81 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = FFD1FB412BE9F29300671C1A /* Products */;
 			projectDirPath = "";
@@ -1188,6 +1195,14 @@
 				minimumVersion = 3.1.1;
 			};
 		};
+		FF5944FC2C5950AF001ABF81 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.4;
+			};
+		};
 		FF81E1B52BEB2E550023E743 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1199,6 +1214,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FF5944FD2C5950AF001ABF81 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF5944FC2C5950AF001ABF81 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		FF5944FF2C5950AF001ABF81 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF5944FC2C5950AF001ABF81 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
+		};
 		FFCC4F7E2C19592700EFFAC9 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FF81E1B52BEB2E550023E743 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -70,7 +70,7 @@ struct UpdateAccountDetailsView: View {
                         await handleImageUpload()
                     }
                 }){
-                    ImagePicker(image: $imageUploaderViewModel.image)
+                    ImagePicker(image: $imageUploaderViewModel.image, cropStyle: .circular) 
                 }
                 Spacer()
                     .frame(height: 24)
