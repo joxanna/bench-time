@@ -45,7 +45,7 @@ final class ImageUploader {
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.presentationMode) var presentationMode
-    var cropStyle: CropViewCroppingStyle = .default // Add a cropping style property
+    var cropStyle: CropViewCroppingStyle = .default
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
@@ -58,13 +58,13 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self, cropStyle: cropStyle)
+        Coordinator(parent: self, cropStyle: cropStyle)
     }
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
-        let parent: ImagePicker
+        var parent: ImagePicker
         var cropStyle: CropViewCroppingStyle
-
+        
         init(parent: ImagePicker, cropStyle: CropViewCroppingStyle) {
             self.parent = parent
             self.cropStyle = cropStyle
@@ -72,29 +72,51 @@ struct ImagePicker: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
+                print("Image picked")
                 let cropViewController = CropViewController(croppingStyle: cropStyle, image: uiImage)
                 cropViewController.delegate = self
-                cropViewController.aspectRatioPreset = .presetSquare // Set aspect ratio preset to square
-                cropViewController.aspectRatioLockEnabled = true // Lock the aspect ratio
-                picker.present(cropViewController, animated: true, completion: nil)
+                cropViewController.aspectRatioPreset = .presetSquare
+                cropViewController.aspectRatioLockEnabled = true
+                DispatchQueue.main.async {
+                    picker.present(cropViewController, animated: true, completion: nil)
+                }
             }
         }
         
         func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-            parent.image = image
-            cropViewController.dismiss(animated: true) {
-                self.parent.presentationMode.wrappedValue.dismiss()
+            print("Crop view controller")
+            DispatchQueue.main.async {
+                self.parent.image = image
+                cropViewController.dismiss(animated: false) {
+                    print("Dismissing after crop")
+                    self.parent.presentationMode.wrappedValue.dismiss()
+                }
             }
         }
         
-        func cropViewControllerDidCancel(_ cropViewController: CropViewController) {
-            cropViewController.dismiss(animated: true) {
-                self.parent.presentationMode.wrappedValue.dismiss()
+        func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+            print("-----Closing crop view")
+            
+            // Dismiss the crop view controller
+            cropViewController.dismiss(animated: false) {
+                // Ensure we are on the main thread before dismissing the parent view
+                DispatchQueue.main.async {
+                    if self.parent.presentationMode.wrappedValue.isPresented {
+                        self.parent.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        print("Presentation mode is not presented. Cannot dismiss.")
+                    }
+                }
             }
         }
         
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.presentationMode.wrappedValue.dismiss()
+            print("-----Closing image picker view")
+            DispatchQueue.main.async {
+                picker.dismiss(animated: true) {
+                    self.parent.presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
     }
 }
