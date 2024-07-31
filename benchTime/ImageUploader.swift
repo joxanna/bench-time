@@ -78,7 +78,7 @@ struct ImagePicker: UIViewControllerRepresentable {
                 cropViewController.aspectRatioPreset = .presetSquare
                 cropViewController.aspectRatioLockEnabled = true
                 DispatchQueue.main.async {
-                    picker.present(cropViewController, animated: true, completion: nil)
+                    picker.present(cropViewController, animated: false, completion: nil)
                 }
             }
         }
