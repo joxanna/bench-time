@@ -72,11 +72,11 @@ struct ImagePicker: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                print("Image picked")
                 let cropViewController = CropViewController(croppingStyle: cropStyle, image: uiImage)
                 cropViewController.delegate = self
                 cropViewController.aspectRatioPreset = .presetSquare
                 cropViewController.aspectRatioLockEnabled = true
+                cropViewController.aspectRatioPickerButtonHidden = true
                 DispatchQueue.main.async {
                     picker.present(cropViewController, animated: false, completion: nil)
                 }
