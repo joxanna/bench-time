@@ -21,7 +21,7 @@ struct SettingsView: View {
     @State private var isDeleting = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack(alignment: .leading) {
                     Spacer()

@@ -21,118 +21,115 @@ struct BenchReviewsView: View {
     @State var isShowingNewReview: Bool = false
     
     var body: some View {
-        NavigationView {
-            VStack {
-                if (benchReviewViewModel.addressText.isEmpty) {
-                    ProgressView()
-                } else {
-                    VStack {
-                        ZStack {
-                            Text(benchReviewViewModel.titleText)
-                                .font(.title3)
-                                .bold()
-                            
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    isShowingNewReview = true
-                                }) {
-                                    HStack {
-                                        Image(systemName: "square.and.pencil")
-                                    }
-                                    .font(.title3)
-                                    .background(.clear)
-                                    .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                        }
-                        .padding(.top, 24)
+        VStack {
+            if (benchReviewViewModel.addressText.isEmpty) {
+                ProgressView()
+            } else {
+                VStack {
+                    ZStack {
+                        Text(benchReviewViewModel.titleText)
+                            .font(.title3)
+                            .bold()
                         
-                        // bench details
-                        VStack {
-                            HStack(alignment: .center) {
-                                Text(benchReviewViewModel.addressText)
-                                    .font(.subheadline)
-                                    .foregroundColor(UIStyles.Colors.gray)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom, 8)
-                                Spacer()
-                                VStack(alignment: .trailing) {
-                                    BTStars(rating: benchReviewViewModel.averageRating)
-                                    Text(String(format: "%.1f", benchReviewViewModel.averageRating))
-                                        .foregroundColor(UIStyles.Colors.accent)
-                                        .font(.caption)
-                                        .padding(.top, 4)
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                isShowingNewReview = true
+                            }) {
+                                HStack {
+                                    Image(systemName: "square.and.pencil")
                                 }
+                                .font(.title3)
+                                .background(.clear)
+                                .foregroundColor(colorScheme == .dark ? UIStyles.Colors.Dark.link : UIStyles.Colors.Light.link)
                             }
-                            .padding(.top, 8)
-                            
-                            ForEach(bench.tags.sorted(by: <), id: \.key) { key, value in
-                                if (key != "amenity") {
-                                    HStack {
-                                        Image(systemName: getIcon(for: key))
-                                            .frame(width: 8, height: 8)
-                                        Spacer()
-                                            .frame(width: 8)
-                                        
-                                        if (key == "two_sided") {
-                                            Text("Two sided:")
-                                                .bold()
-                                        } else {
-                                            Text("\(key.capitalized):")
-                                                .bold()
-                                        }
-                                        
-                                        if (value == "yes") {
-                                            Image(systemName: "checkmark")
-                                                .frame(width: 8, height: 8)
-                                                .bold()
-                                                .foregroundColor(.green)
-                                        } else if (value == "no") {
-                                            Image(systemName: "xmark")
-                                                .frame(width: 8, height: 8)
-                                                .bold()
-                                                .foregroundColor(UIStyles.Colors.red)
-                                        } else {
-                                            Text("\(value.capitalized)")
-                                        }
-                                    }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                    .padding(.top, 24)
+                    
+                    // bench details
+                    VStack {
+                        HStack(alignment: .center) {
+                            Text(benchReviewViewModel.addressText)
+                                .font(.subheadline)
+                                .foregroundColor(UIStyles.Colors.gray)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom, 8)
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                BTStars(rating: benchReviewViewModel.averageRating)
+                                Text(String(format: "%.1f", benchReviewViewModel.averageRating))
+                                    .foregroundColor(UIStyles.Colors.accent)
                                     .font(.caption)
-                                }
+                                    .padding(.top, 4)
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 4)
                         }
-                        .padding(.vertical, 12)
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    // reviews
-                    ScrollView(showsIndicators: false) {
-                        VStack {
-                            if benchReviewViewModel.showReviews, let benchReviews = benchReviewViewModel.benchReviews {
-                                ForEach(benchReviews) { review in
-                                    BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
-                                        benchReviewViewModel.fetchReviews(id: String(bench.id))
+                        .padding(.top, 8)
+                        
+                        ForEach(bench.tags.sorted(by: <), id: \.key) { key, value in
+                            if (key != "amenity") {
+                                HStack {
+                                    Image(systemName: getIcon(for: key))
+                                        .frame(width: 8, height: 8)
+                                    Spacer()
+                                        .frame(width: 8)
+                                    
+                                    if (key == "two_sided") {
+                                        Text("Two sided:")
+                                            .bold()
+                                    } else {
+                                        Text("\(key.capitalized):")
+                                            .bold()
                                     }
-                                    .padding()
+                                    
+                                    if (value == "yes") {
+                                        Image(systemName: "checkmark")
+                                            .frame(width: 8, height: 8)
+                                            .bold()
+                                            .foregroundColor(.green)
+                                    } else if (value == "no") {
+                                        Image(systemName: "xmark")
+                                            .frame(width: 8, height: 8)
+                                            .bold()
+                                            .foregroundColor(UIStyles.Colors.red)
+                                    } else {
+                                        Text("\(value.capitalized)")
+                                    }
                                 }
-                            } else {
-                                ProgressView()
+                                .font(.caption)
                             }
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 4)
                     }
-                    
+                    .padding(.vertical, 12)
+                }
+                .padding(.horizontal, 20)
+                
+                // reviews
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        if benchReviewViewModel.showReviews, let benchReviews = benchReviewViewModel.benchReviews {
+                            ForEach(benchReviews) { review in
+                                BTCard(review: review, currentUser: (review.uid == authManager.currentUser?.uid), address: false) {
+                                    benchReviewViewModel.fetchReviews(id: String(bench.id))
+                                }
+                                .padding()
+                            }
+                        } else {
+                            ProgressView()
+                        }
+                    }
                 }
             }
-            .fullScreenCover(isPresented: $isShowingNewReview, content: {
-                NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
-                        isShowingNewReview = false
-                        benchReviewViewModel.fetchReviews(id: String(bench.id))
-                    })
-            })
         }
+        .fullScreenCover(isPresented: $isShowingNewReview, content: {
+            NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
+                    isShowingNewReview = false
+                    benchReviewViewModel.fetchReviews(id: String(bench.id))
+                })
+        })
         .onAppear {
             benchReviewViewModel.getBenchAddress(latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude)
             benchReviewViewModel.fetchReviews(id: String(bench.id))
