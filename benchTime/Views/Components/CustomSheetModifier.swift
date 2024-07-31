@@ -49,7 +49,6 @@ struct CustomSheetModifier<SheetContent: View>: ViewModifier {
                                     }
                                 }
                         )
-                        .background(Color(.systemBackground))
                         .transition(.move(edge: .bottom))
                         .animation(.easeInOut, value: isPresented) // Animate when the sheet is presented
                         .onAppear {

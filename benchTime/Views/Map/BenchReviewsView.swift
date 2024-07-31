@@ -124,6 +124,7 @@ struct BenchReviewsView: View {
                 }
             }
         }
+        .background(Color(.systemBackground))
         .fullScreenCover(isPresented: $isShowingNewReview, content: {
             NewReviewView(benchId: String(bench.id), latitude: benchAnnotation.coordinate.latitude, longitude: benchAnnotation.coordinate.longitude, onDismiss: {
                     isShowingNewReview = false
