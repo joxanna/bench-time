@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class BTCardViewModel: ObservableObject {
+class BTCardViewViewModel: ObservableObject {
     @Published var ratingText: String = ""
     @Published var addressText: String = ""
     @Published var user: UserModel?

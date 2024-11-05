@@ -18,7 +18,7 @@ struct BTCard: View {
     let address: Bool
         
     init(review: ReviewModel, currentUser: Bool, address: Bool, onUpdate: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: BTCardViewModel(review: review, onUpdate: onUpdate))
+        _viewModel = StateObject(wrappedValue: BTCardViewViewModel(review: review, onUpdate: onUpdate))
         self.currentUser = currentUser
         self.address = address
     }
@@ -180,3 +180,4 @@ struct BTCard: View {
         })
     }
 }
+
