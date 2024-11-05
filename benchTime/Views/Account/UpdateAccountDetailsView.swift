@@ -9,7 +9,7 @@ import SwiftUI
 import URLImage
 
 struct UpdateAccountDetailsView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode 
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel = UpdateAccountDetailsViewViewModel()
@@ -154,5 +154,3 @@ struct UpdateAccountDetailsView: View {
         }
     }
 }
-
-
