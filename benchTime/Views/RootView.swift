@@ -82,5 +82,10 @@ struct RootView: View {
                 LoginView()
             }
         }
+        .onChange(of: authManager.showSignInView) { newValue, _ in
+            if !newValue {
+                selectedTab = 0
+            }
+        }
     }
 }

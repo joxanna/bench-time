@@ -52,3 +52,22 @@ class MyReviewsViewViewModel: ObservableObject {
         lastScrollPosition = offset
     }
 }
+  
+//    func fetchReviews() async {
+//        do {
+//            // Fetch reviews asynchronously
+//            guard let uid = authManager.currentUser?.uid else {
+//                print("UID issue")
+//                return
+//            }
+//            
+//            let reviews = try await DatabaseAPI.shared.readReviewsByUser(uid: uid)
+//            DispatchQueue.main.async {
+//                self.currentUserReviews = reviews
+//            }
+//        } catch {
+//            self.errorMessage = error.localizedDescription
+//            print("Failed to fetch reviews: \(error.localizedDescription)")
+//        }
+//    }
+//}

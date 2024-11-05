@@ -74,6 +74,7 @@ struct HomeView: View {
                     }
                 }
             }
+            .animation(.easeInOut, value: homeViewModel.headerVisible)
         }
         .animation(.easeInOut, value: homeViewModel.headerVisible)
     }

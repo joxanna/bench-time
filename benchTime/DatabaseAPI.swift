@@ -285,6 +285,53 @@ extension DatabaseAPI {
             completion(nil, error)
         }
     }
+    
+//    func readReviewsByUser(uid: String) async throws -> [ReviewModel] {
+//        print("Reading reviews from user:", uid)
+//        
+//        if uid.isEmpty {
+//            throw NSError(domain: "BenchTime", code: 1002, userInfo: [NSLocalizedDescriptionKey: "UID must not be empty."])
+//        }
+//        
+//        let reviewRef = database.child("reviews")  // Reference to the "reviews" node
+//
+//        // Fetch data from Firebase
+//        let snapshot = try await reviewRef.getData()
+//        
+//        guard let reviewDict = snapshot.value as? [String: Any] else {
+//            // If no review data found, return an empty array
+//            return []
+//        }
+//
+//        // Filter reviews by user ID
+//        var reviews: [ReviewModel] = reviewDict.compactMap { (key, value) -> ReviewModel? in
+//            guard let reviewData = value as? [String: Any],
+//                  let reviewUID = reviewData["uid"] as? String,
+//                  reviewUID == uid else {
+//                return nil // Skip reviews not belonging to the specified user
+//            }
+//            
+//            // Parse review data and return a ReviewModel instance
+//            return ReviewModel(id: key,
+//                               uid: reviewUID,
+//                               benchId: reviewData["benchId"] as? String ?? "",
+//                               title: reviewData["title"] as? String ?? "",
+//                               description: reviewData["description"] as? String ?? "",
+//                               rating: reviewData["rating"] as? Double ?? 0,
+//                               imageURLs: reviewData["imageURLs"] as? [String] ?? [],
+//                               createdTimestamp: reviewData["createdTimestamp"] as? String ?? "",
+//                               updatedTimestamp: reviewData["updatedTimestamp"] as? String ?? "",
+//                               latitude: reviewData["latitude"] as? Double ?? 0,
+//                               longitude: reviewData["longitude"] as? Double ?? 0
+//            )
+//        }
+//        
+//        // Sort reviews by createdTimestamp
+//        reviews.sort(by: compareReviewsByDate)
+//        
+//        return reviews
+//    }
+
 
 
     func readReviewsByBench(benchId: String, completion: @escaping ([ReviewModel]?, Error?) -> Void) {

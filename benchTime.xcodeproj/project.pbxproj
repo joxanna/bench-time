@@ -81,7 +81,7 @@
 		FFED0B412C4F8A08003D0DCD /* CustomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */; };
 		FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */; };
 		FFEDE3652BF7443100D1A4D4 /* UpdatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */; };
-		FFEDE55E2C3CC1DA00EC9317 /* BTCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE55D2C3CC1DA00EC9317 /* BTCardViewModel.swift */; };
+		FFEDE5612C3CCA4F00EC9317 /* BTCardViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEDE5602C3CCA4F00EC9317 /* BTCardViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +111,7 @@
 		C114E5D8FD55D4B9379BBE56 /* Pods-benchTimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-benchTimeTests.debug.xcconfig"; path = "Target Support Files/Pods-benchTimeTests/Pods-benchTimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6A44048C93FC341D8E4D303 /* Pods-benchTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-benchTime.debug.xcconfig"; path = "Target Support Files/Pods-benchTime/Pods-benchTime.debug.xcconfig"; sourceTree = "<group>"; };
 		F235646EBF4C1BFBCE81E92A /* Pods-benchTime-benchTimeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-benchTime-benchTimeUITests.release.xcconfig"; path = "Target Support Files/Pods-benchTime-benchTimeUITests/Pods-benchTime-benchTimeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FF13FAD62C3BBE500038B10D /* BTCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewModel.swift; sourceTree = "<group>"; };
 		FF1539372BFF40D600DFB92A /* MapViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
 		FF1B11362BEA012C00676036 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		FF1B11382BEA04ED00676036 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -175,7 +176,7 @@
 		FFED0B402C4F8A08003D0DCD /* CustomSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetModifier.swift; sourceTree = "<group>"; };
 		FFEDE3622BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountDetailsView.swift; sourceTree = "<group>"; };
 		FFEDE3642BF7443100D1A4D4 /* UpdatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordView.swift; sourceTree = "<group>"; };
-		FFEDE55D2C3CC1DA00EC9317 /* BTCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewModel.swift; sourceTree = "<group>"; };
+		FFEDE5602C3CCA4F00EC9317 /* BTCardViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTCardViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +361,7 @@
 				FFD1FB412BE9F29300671C1A /* Products */,
 				FFEDE3682BF7471600D1A4D4 /* Frameworks */,
 				12EEDB807EAB4A4957D692CA /* Pods */,
+				FFEDE55F2C3CC92B00EC9317 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -432,6 +434,14 @@
 				B04B4415C039DA9DEBCF331F /* Pods_benchTimeTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFEDE55F2C3CC92B00EC9317 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF13FAD62C3BBE500038B10D /* BTCardViewModel.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -706,6 +716,7 @@
 				FF48F87A2C3966DF00A41941 /* MyReviewsViewViewModel.swift in Sources */,
 				FF5D30682C4654DA00ED2A77 /* SearchQueryViewModel.swift in Sources */,
 				FFEDE3632BF710CC00D1A4D4 /* UpdateAccountDetailsView.swift in Sources */,
+				FFEDE5612C3CCA4F00EC9317 /* BTCardViewViewModel.swift in Sources */,
 				FFD1FB462BE9F29300671C1A /* RootView.swift in Sources */,
 				FF5D306A2C46574300ED2A77 /* RootViewViewModel.swift in Sources */,
 				FF81E1C82BECA6350023E743 /* AuthenticationManager.swift in Sources */,
@@ -732,7 +743,6 @@
 				FF7053F32BFACF5300965435 /* NewReviewViewViewModel.swift in Sources */,
 				FF7054012BFC5D8800965435 /* LargeModalView.swift in Sources */,
 				FF1B113D2BEA0D8500676036 /* BTButton.swift in Sources */,
-				FFEDE55E2C3CC1DA00EC9317 /* BTCardViewModel.swift in Sources */,
 				FF7053F92BFB4EB500965435 /* ImageUploaderViewModel.swift in Sources */,
 				FF7054082BFC7F5000965435 /* UpdateReviewViewViewModel.swift in Sources */,
 				FF557A702BFF0D130033ADD6 /* SearchBenchesView.swift in Sources */,
