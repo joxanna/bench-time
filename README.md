@@ -1,13 +1,15 @@
-![BenchTime](benchTime/Assets.xcassets/bench-time.imageset/bench-time.png)
+<div align="center">
+  <img src="benchTime/Assets.xcassets/bench-time.imageset/bench-time.png" alt="BenchTime Logo" width="400"/>
+</div>
 
-# Introduction
+## Introduction
 BenchTime enables users to find, rate, and review benches worldwide.
 
 ## :ledger: Table of Contents
 
-- [Features](#white_check_mark)
+- [Features](#white_check_mark-features)
 - [Usage](#zap-usage)
-  - [Requirements](#pushpin)
+  - [Requirements](#pushpin-requirements)
   - [Installation](#electric_plug-installation)
 - [Resources](#page_facing_up-resources)
 - [Credit/Acknowledgment](#star2-creditacknowledgment)
@@ -17,11 +19,11 @@ BenchTime enables users to find, rate, and review benches worldwide.
 
 ## :zap: Usage
 
-###  :pushpin: Requirements
+### :pushpin: Requirements
 - iOS 17.0+
 - Xcode 15.0+
 
-###  :electric_plug: Installation
+### :electric_plug: Installation
 Install the dependencies using **CocoaPods** by navigating to the project file and run:
 
 ```
@@ -34,7 +36,7 @@ Open the workspace created instead of the ```.xcodeproj``` file to ensure that t
 $ open benchTime.xcworkspace
 ```
 
-##  :page_facing_up: Resources
+## :page_facing_up: Resources
 Add important resources here
 
 ## :star2: Credit/Acknowledgment
