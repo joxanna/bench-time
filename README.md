@@ -3,7 +3,7 @@
 </div>
 
 ## Introduction
-BenchTime enables users to find, rate, and review benches worldwide.
+Bench Time enables users to find, rate, and review benches worldwide. Bench Time prides itself on the removal of a social media aspect, serving as a log for benches.
 
 ## :ledger: Table of Contents
 
@@ -11,8 +11,6 @@ BenchTime enables users to find, rate, and review benches worldwide.
 - [Usage](#zap-usage)
   - [Requirements](#pushpin-requirements)
   - [Installation](#electric_plug-installation)
-- [Resources](#page_facing_up-resources)
-- [Credit/Acknowledgment](#star2-creditacknowledgment)
 - [Future Features](#seedling-future-features)
 - [License](#lock-license)
 
@@ -56,12 +54,6 @@ Open the workspace created instead of the ```.xcodeproj``` file to ensure that t
 $ open benchTime.xcworkspace
 ```
 
-## :page_facing_up: Resources
-Add important resources here
-
-## :star2: Credit/Acknowledgment
-Credit the authors here.
-
 ## :seedling: Future Features
 ### Bench Discovery
   - [ ] **Filter Options:** Filter benches by amenities (e.g., shade, accessibility, proximity to landmarks, nearby facilities).
@@ -74,4 +66,12 @@ Credit the authors here.
   - [ ] **Browse Location:** Set a location to browse through on the home page.
 
 ##  :lock: License
-Add a license here, or a link to it.
+
+This project uses data sourced from **OpenStreetMap** via **Overpass Turbo**, which is licensed under the **Open Database License (ODbL)**. 
+
+- You must attribute OpenStreetMap and its contributors.
+- You may copy, modify, distribute, and use the data as long as you attribute OpenStreetMap.
+- You cannot use the data for unlawful purposes.
+
+For more details, visit [OpenStreetMap License](https://www.openstreetmap.org/copyright).
+
